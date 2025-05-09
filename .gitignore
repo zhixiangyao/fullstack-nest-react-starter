@@ -1,0 +1,14 @@
+.DS_Store
+.idea/
+node_modules
+dist
+--version
+.npmrc
+.cache
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
