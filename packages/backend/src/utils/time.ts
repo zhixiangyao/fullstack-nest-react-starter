@@ -1,7 +1,10 @@
 import dayjs from 'dayjs'
 
-enum FormatOptions {
+export enum FormatOptions {
+  DD = 'DD',
   YYYY_MM_DD = 'YYYY-MM-DD',
+  YYYY_MM_DD_HH_mm = 'YYYY-MM-DD HH:mm',
+  YYYY_MM_DD_HH_mm_ss = 'YYYY-MM-DD HH:mm:ss',
 }
 
 export function formatTime(date: string | number | dayjs.Dayjs | Date, f = FormatOptions.YYYY_MM_DD) {
