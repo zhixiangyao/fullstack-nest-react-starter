@@ -9,10 +9,7 @@ import { jwtConstants } from '~/modules/auth/constants'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private readonly jwtService: JwtService,
-    private readonly reflector: Reflector,
-  ) {}
+  constructor(private readonly jwtService: JwtService, private readonly reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<Parameters<typeof Public>[0]>(IS_PUBLIC_KEY, [

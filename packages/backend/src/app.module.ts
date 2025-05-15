@@ -9,7 +9,7 @@ import { UserModule } from '~/modules/user/user.module'
 import { FrontendStaticModule } from '~/modules/frontend-static.module'
 // Guard
 import { AuthGuard } from '~/common/guards/auth.guard'
-import { RoleGuard } from '~/common/guards/role.guard'
+import { RolesGuard } from '~/common/guards/roles.guard'
 // middleware
 import { loggerMiddleware } from '~/common/middleware/logger.middleware'
 
@@ -18,7 +18,7 @@ import { loggerMiddleware } from '~/common/middleware/logger.middleware'
   controllers: [],
   providers: [
     { provide: APP_GUARD, useClass: AuthGuard },
-    { provide: APP_GUARD, useClass: RoleGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule implements NestModule {

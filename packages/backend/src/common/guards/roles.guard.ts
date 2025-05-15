@@ -7,11 +7,8 @@ import { IS_ROLE_KEY, Role } from '~/common/decorators/role.decorator'
 import { UserService } from '~/modules/user/user.service'
 
 @Injectable()
-export class RoleGuard implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    private readonly userService: UserService,
-  ) {}
+export class RolesGuard implements CanActivate {
+  constructor(private readonly reflector: Reflector, private readonly userService: UserService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isRole = this.reflector.getAllAndOverride<Parameters<typeof Role>[0]>(IS_ROLE_KEY, [
