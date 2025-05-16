@@ -19,8 +19,8 @@
 **Development ENV:**
 
 - git => 2.40.0
-- node => 16
-- pnpm => 8
+- node => 20
+- pnpm => 10
 - pm2 => 5
 - docker & docker compose plugin => 24.0.0
 
