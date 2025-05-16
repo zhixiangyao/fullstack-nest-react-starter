@@ -11,7 +11,9 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector, private readonly userService: UserService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const isRole = this.reflector.getAllAndOverride<Parameters<typeof Role>[0]>(IS_ROLE_KEY, [
+    // `getAllAndOverride` retrieves metadata from both the class and the method, with the method's metadata overriding the class's metadata.
+    // That is to say, if a method has the @Role(['ADMIN']) decorator, then the @Role('USER') decorator on the class will be overridden.
+    const roles = this.reflector.getAllAndOverride<Parameters<typeof Role>[0]>(IS_ROLE_KEY, [
       context.getHandler(),
       context.getClass(),
     ])
@@ -19,10 +21,10 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>()
     const payload = request.user
 
-    if (isRole && Array.isArray(isRole) && payload && payload.username) {
+    if (Array.isArray(roles) && payload && payload.username) {
       const user = await this.userService.find(payload.username)
 
-      if (!isRole.includes(user.role)) {
+      if (!roles.includes(user.role)) {
         throw new ForbiddenException('您没有权限！')
       }
     }
