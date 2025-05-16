@@ -17,7 +17,14 @@ export default ({ command }: ConfigEnv) => {
   if (command === 'serve') {
     return defineConfig({
       ...baseConfig,
-      server: { port: 5089 },
+      server: {
+        port: 5089,
+        proxy: {
+          '/api': {
+            target: 'http://localhost:5088',
+          },
+        },
+      },
     })
   }
   else {
