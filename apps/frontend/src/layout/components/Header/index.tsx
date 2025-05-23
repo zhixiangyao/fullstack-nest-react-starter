@@ -3,10 +3,10 @@ import { UserOutlined } from '@ant-design/icons'
 import { App as AntdApp, Avatar, Dropdown } from 'antd'
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { stringCapitalization } from 'utils'
 
 import { useUserStore } from '~/stores/useUserStore'
 
-import { stringCapitalization } from '~/utils/string'
 import { HeaderUserInfoDrawer } from './components/HeaderUserInfoDrawer'
 
 const items: MenuProps['items'] = [

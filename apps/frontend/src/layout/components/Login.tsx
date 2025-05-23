@@ -1,14 +1,20 @@
+import type { Rule } from 'antd/es/form'
 import type { LoginRequest } from '~/fetchers/type'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons'
 import { Layout as AntdLayout, Button, Checkbox, Form, Input } from 'antd'
-import clsx from 'clsx'
 
+import clsx from 'clsx'
 import React, { memo, useCallback } from 'react'
 import { useAppStore } from '~/stores/useAppStore'
+
 import { useUserStore } from '~/stores/useUserStore'
-import { rules } from '~/utils/ant'
 
 type FieldType = LoginRequest
+
+export const rules = {
+  username: [{ required: true, message: '请输入您的 username!' }] satisfies Rule[],
+  password: [{ required: true, message: '请输入您的 password!' }] satisfies Rule[],
+}
 
 interface Props {
   className?: string

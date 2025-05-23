@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      utils:
+        specifier: link:packages/utils
+        version: link:packages/utils
     devDependencies:
       '@antfu/eslint-config':
         specifier: 4.12.0
@@ -107,6 +111,9 @@ importers:
       rxjs:
         specifier: 7.8.1
         version: 7.8.1
+      utils:
+        specifier: link:packages/utils
+        version: link:packages/utils
     devDependencies:
       '@nestjs/cli':
         specifier: 10.4.8
@@ -186,6 +193,9 @@ importers:
       react-router-dom:
         specifier: 7.0.2
         version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      utils:
+        specifier: link:packages/utils
+        version: link:packages/utils
       zustand:
         specifier: 5.0.1
         version: 5.0.1(@types/react@18.3.12)(react@18.3.1)
@@ -226,6 +236,22 @@ importers:
       vite-plugin-compression:
         specifier: 0.5.1
         version: 0.5.1(vite@6.0.2(@types/node@22.10.1)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.1))
+
+  packages/utils:
+    dependencies:
+      dayjs:
+        specifier: 1.11.13
+        version: 1.11.13
+    devDependencies:
+      '@rollup/plugin-typescript':
+        specifier: 12.1.2
+        version: 12.1.2(rollup@4.28.0)(tslib@2.8.1)(typescript@5.7.2)
+      rollup:
+        specifier: 4.28.0
+        version: 4.28.0
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
 
 packages:
 
@@ -1433,6 +1459,28 @@ packages:
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
+
+  '@rollup/plugin-typescript@12.1.2':
+    resolution: {integrity: sha512-cdtSp154H5sv637uMr1a8OTWB0L1SWDSm1rDGiyfcGcvQ6cuTs4MDk2BVEBGysUWago4OJN4EQZqOTl/QY3Jgg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0||^4.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+
+  '@rollup/pluginutils@5.1.4':
+    resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/rollup-android-arm-eabi@4.28.0':
     resolution: {integrity: sha512-wLJuPLT6grGZsy34g4N1yRfYeouklTgPhH1gWXCYspenKYD0s3cR99ZevOGw5BexMNywkbV3UkjADisozBmpPQ==}
@@ -7273,6 +7321,23 @@ snapshots:
       rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@rollup/plugin-typescript@12.1.2(rollup@4.28.0)(tslib@2.8.1)(typescript@5.7.2)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@4.28.0)
+      resolve: 1.22.10
+      typescript: 5.7.2
+    optionalDependencies:
+      rollup: 4.28.0
+      tslib: 2.8.1
+
+  '@rollup/pluginutils@5.1.4(rollup@4.28.0)':
+    dependencies:
+      '@types/estree': 1.0.7
+      estree-walker: 2.0.2
+      picomatch: 4.0.2
+    optionalDependencies:
+      rollup: 4.28.0
 
   '@rollup/rollup-android-arm-eabi@4.28.0':
     optional: true

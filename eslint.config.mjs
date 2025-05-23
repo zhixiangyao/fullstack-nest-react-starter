@@ -9,6 +9,9 @@ export default antfu(
     },
   },
   {
+    files: ['packages/**/*.ts', 'packages/**/*.mjs'],
+  },
+  {
     files: ['apps/frontend/**/*.ts', 'apps/frontend/**/*.tsx'],
     rules: {
       'no-template-curly-in-string': ['off'],

@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
 import { $Enums, Status } from '@prisma/client'
+import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
 import { RegisterUserDto, UserPageDto, UserUpdateDto } from './dto/user.dto'
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdateUser } from './type'
 
-import { deleteProperty } from '~/utils/object'
 import { Role } from '~/common/decorators/role.decorator'
 import { Public } from '~/common/decorators/public.decorator'
 

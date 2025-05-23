@@ -33,7 +33,8 @@
     "http-proxy-middleware": "3.0.3",
     "prisma": "6.7.0",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1"
+    "rxjs": "7.8.1",
+    "utils": "link:packages/utils"
   },
   "devDependencies": {
     "@nestjs/cli": "10.4.8",

@@ -1,10 +1,10 @@
 import type { DescriptionsProps } from 'antd'
 import { Descriptions, Drawer } from 'antd'
 import React, { memo, useCallback, useMemo } from 'react'
+import { formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 import { useUserStore } from '~/stores/useUserStore'
-import { formatTime } from '~/utils/time'
 
 interface Props {
   open: boolean

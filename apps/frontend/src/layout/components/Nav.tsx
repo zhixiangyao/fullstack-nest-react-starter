@@ -4,12 +4,12 @@ import { Layout as AntdLayout, Menu } from 'antd'
 import clsx from 'clsx'
 import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { stringCapitalization } from 'utils'
 
 import { useIsTablet } from '~/hooks/useIsTablet'
 import { routes } from '~/router'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
-import { stringCapitalization } from '~/utils/string'
 
 interface Props {}
 

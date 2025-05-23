@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import type { NextFunction, Request, Response } from 'express'
-import { FormatOptions, formatTime } from '~/utils/time'
+import { FormatOptions, formatTime } from 'utils'
 
 export function loggerMiddleware(req: Request, res: Response, next: NextFunction) {
   console.log(`[${formatTime(dayjs(), FormatOptions.YYYY_MM_DD_HH_mm_ss)}][${req.url}][${JSON.stringify(req.body)}]`)

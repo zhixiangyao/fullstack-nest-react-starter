@@ -6,7 +6,8 @@ import clsx from 'clsx'
 import React, { memo, useCallback } from 'react'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
-import { rules } from '~/utils/ant'
+
+import { rules } from './Login'
 
 type FieldType = RegisterRequest
 

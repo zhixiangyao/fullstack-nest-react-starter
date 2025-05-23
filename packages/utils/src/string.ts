@@ -27,39 +27,3 @@ export function stringCapitalization(str: string, scope: [number, number] = [0, 
     return acc + cur.toLowerCase()
   }, '')
 }
-
-/**
- *
- * ```ts
- *   // case 1
- *   const s = stringPluralize(1, 'Phone')
- *   console.log(s) // Phone
- *
- *   // case 2
- *   const s = stringPluralize(2, 'Phone')
- *   console.log(s) // Phones
- * ```
- */
-export function stringPluralize(num: number, word: string) {
-  if (num === 1) {
-    return word
-  }
-  else {
-    return `${word}s`
-  }
-}
-
-/**
- *
- * ```ts
- *   const num = stringToHashString('你好')
- *   console.log(num) // 3229
- * ```
- */
-export function stringToHashNumber(str: string, bit = 4) {
-  let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    hash += str.charCodeAt(i)
-  }
-  return hash % 10 ** bit
-}

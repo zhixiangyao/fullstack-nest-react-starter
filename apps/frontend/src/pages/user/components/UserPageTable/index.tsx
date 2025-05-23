@@ -1,11 +1,10 @@
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table'
 import type { TUser } from '~/fetchers/type'
 import { Table } from 'antd'
-
 import React, { memo, useMemo } from 'react'
+import { formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
-import { formatTime } from '~/utils/time'
 import { ActionActive } from './components/ActionActive'
 
 const columns: ColumnsType<TUser> = [

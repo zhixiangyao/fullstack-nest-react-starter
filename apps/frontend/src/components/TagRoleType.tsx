@@ -1,9 +1,9 @@
 import type { PresetColorKey } from 'antd/es/theme/interface'
 import { Tag } from 'antd'
 import React, { memo } from 'react'
+import { stringCapitalization } from 'utils'
 
 import { Role } from '~/fetchers/type'
-import { stringCapitalization } from '~/utils/string'
 
 interface Props {
   value?: Role
