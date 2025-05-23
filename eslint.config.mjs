@@ -9,7 +9,7 @@ export default antfu(
     },
   },
   {
-    files: ['packages/frontend/**/*.ts', 'packages/frontend/**/*.tsx'],
+    files: ['apps/frontend/**/*.ts', 'apps/frontend/**/*.tsx'],
     rules: {
       'no-template-curly-in-string': ['off'],
       'react/no-clone-element': ['off'],
@@ -18,7 +18,7 @@ export default antfu(
     },
   },
   {
-    files: ['packages/backend/**/*.ts', 'packages/backend/**/*.mjs'],
+    files: ['apps/backend/**/*.ts', 'apps/backend/**/*.mjs'],
     rules: {
       'perfectionist/sort-imports': ['off'],
       'ts/consistent-type-imports': ['off'],

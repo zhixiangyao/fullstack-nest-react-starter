@@ -54,7 +54,7 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
 
-  packages/backend:
+  apps/backend:
     dependencies:
       '@nestjs/common':
         specifier: 10.4.13
@@ -151,7 +151,7 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
 
-  packages/frontend:
+  apps/frontend:
     dependencies:
       '@ant-design/icons':
         specifier: 5.5.2
