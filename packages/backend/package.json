@@ -4,14 +4,14 @@
   "version": "0.1.0",
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
   "scripts": {
-    "backend:build": "nest build",
-    "backend:start:dev": "cross-env NODE_ENV=dev nest start --watch",
-    "backend:start:prod": "cross-env NODE_ENV=prod node dist/main",
+    "build": "nest build",
+    "start:dev": "cross-env NODE_ENV=dev nest start --watch",
+    "start:prod": "cross-env NODE_ENV=prod node dist/main",
     "------------- PRISMA -------------": "",
-    "backend:db:init": "npx prisma generate && npx prisma migrate dev --name 'init'",
-    "backend:db:seed": "npx prisma db seed",
+    "db:init": "npx prisma generate && npx prisma migrate dev --name 'init'",
+    "db:seed": "npx prisma db seed",
     "------------- TEST -------------": "",
-    "backend:test": "jest"
+    "test": "jest"
   },
   "prisma": {
     "seed": "node prisma/seed.mjs"

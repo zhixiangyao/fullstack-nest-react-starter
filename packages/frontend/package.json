@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
   "scripts": {
-    "frontend:dev": "vite",
-    "frontend:build": "vite build"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "@ant-design/icons": "5.5.2",
