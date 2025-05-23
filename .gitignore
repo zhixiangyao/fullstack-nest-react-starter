@@ -6,6 +6,7 @@ dist
 .npmrc
 .cache
 logs
+generated
 *.log
 npm-debug.log*
 pnpm-debug.log*

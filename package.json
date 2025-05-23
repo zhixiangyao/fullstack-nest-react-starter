@@ -23,12 +23,15 @@
     "build:backend": "pnpm --filter backend build",
     "build:frontend": "pnpm --filter frontend build",
     "------------- DB -------------": "",
-    "init:db": "pnpm --filter backend db:init",
-    "seed:db": "pnpm --filter backend db:seed",
+    "db:init": "pnpm --filter backend db:init",
+    "db:seed": "pnpm --filter backend db:seed",
     "------------- LINT -------------": "",
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint/",
     "lint:stylelint": "stylelint \"./**/*.css\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "utils": "link:packages/utils"
   },
   "devDependencies": {
     "@antfu/eslint-config": "4.12.0",

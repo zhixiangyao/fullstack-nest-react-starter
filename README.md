@@ -36,8 +36,11 @@ npm install --global pnpm
 cd fullstack-nest-react-starter
 pnpm install
 
-# init prisma type file && seed:db
-pnpm init:db
+# ✨ init prisma type file
+pnpm db:init
+
+# 🍃 First time creating user data
+pnpm db:seed
 
 # start project
 pnpm dev
@@ -56,8 +59,11 @@ npm install --global pnpm pm2
 cd fullstack-nest-react-starter
 pnpm install
 
-# ✨ init prisma type file && seed:db
-pnpm init:db
+# ✨ init prisma type file
+pnpm db:init
+
+# 🍃 First time creating user data
+pnpm db:seed
 
 pnpm build
 

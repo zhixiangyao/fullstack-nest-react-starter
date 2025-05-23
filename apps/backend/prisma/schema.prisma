@@ -8,6 +8,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma/client"
 }
 
 model User {
@@ -17,7 +18,7 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now()) @db.Timestamptz()
   updatedAt DateTime @default(now()) @db.Timestamptz()
-  lastLogin DateTime @default(now()) @db.Timestamptz()
+  lastLogin DateTime? @db.Timestamptz()
   status    Status   @default(Active)
 }
 

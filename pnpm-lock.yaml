@@ -158,6 +158,8 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
 
+  apps/backend/generated/prisma/client: {}
+
   apps/frontend:
     dependencies:
       '@ant-design/icons':
