@@ -23,11 +23,11 @@ async function main() {
         password: hashedPassword0,
         role: $Enums.Role.ADMIN,
       },
-      {
-        username: 'yao',
+      ...Array.from({ length: 100 }).map((_, i) => ({
+        username: `yao${i}`,
         password: hashedPassword1,
         role: $Enums.Role.USER,
-      },
+      })),
     ],
   })
 

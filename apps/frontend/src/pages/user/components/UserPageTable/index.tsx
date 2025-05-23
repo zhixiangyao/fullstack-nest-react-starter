@@ -2,7 +2,7 @@ import type { ColumnsType, TablePaginationConfig } from 'antd/es/table'
 import type { TUser } from '~/fetchers/type'
 import { Table } from 'antd'
 import React, { memo, useMemo } from 'react'
-import { formatTime } from 'utils'
+import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 import { ActionActive } from './components/ActionActive'
@@ -40,14 +40,14 @@ const columns: ColumnsType<TUser> = [
     dataIndex: 'createdAt' satisfies keyof TUser,
     key: 'createdAt',
     width: 200,
-    render: (_, { createdAt }) => <span>{formatTime(createdAt)}</span>,
+    render: (_, { createdAt }) => <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>,
   },
   {
     title: '上一次登录',
     dataIndex: 'lastLogin' satisfies keyof TUser,
     key: 'lastLogin',
     width: 200,
-    render: (_, { lastLogin }) => <span>{formatTime(lastLogin)}</span>,
+    render: (_, { lastLogin }) => <span>{lastLogin ? formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>,
   },
 ]
 

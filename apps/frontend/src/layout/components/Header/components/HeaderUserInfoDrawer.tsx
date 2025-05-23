@@ -1,7 +1,7 @@
 import type { DescriptionsProps } from 'antd'
 import { Descriptions, Drawer } from 'antd'
 import React, { memo, useCallback, useMemo } from 'react'
-import { formatTime } from 'utils'
+import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 import { useUserStore } from '~/stores/useUserStore'
@@ -35,19 +35,19 @@ export const HeaderUserInfoDrawer = memo<Props>(({ open, setOpen }) => {
       {
         key: '3',
         label: '创建于',
-        children: user ? formatTime(user?.createdAt) : '',
+        children: user ? formatTime(user.createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
       {
         key: '3',
         label: '更新于',
-        children: user ? formatTime(user?.updatedAt) : '',
+        children: user ? formatTime(user.updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
       {
         key: '4',
         label: '上一次登录',
-        children: user ? formatTime(user?.lastLogin) : '',
+        children: user && user.lastLogin ? formatTime(user.lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
     ],

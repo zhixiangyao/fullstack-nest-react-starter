@@ -14,7 +14,7 @@ export interface TUser {
   role: Role
   createdAt: Date
   updatedAt: Date
-  lastLogin: Date
+  lastLogin?: Date
   status: Status
 }
 
