@@ -20,9 +20,9 @@ export class AuthService {
 
     await this.userService.check(username)
 
-    const { userId } = await this.userService.update(username, { lastLogin: dayjs().toDate() })
+    const { uuid } = await this.userService.update(username, { lastLogin: dayjs().toDate() })
 
-    const payload: Payload = { userId, username }
+    const payload: Payload = { uuid, username }
 
     return { token: await this.jwtService.signAsync(payload) }
   }

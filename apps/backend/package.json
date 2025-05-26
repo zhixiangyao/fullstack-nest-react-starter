@@ -9,13 +9,10 @@
     "start:prod": "cross-env NODE_ENV=prod node dist/main",
     "------------- PRISMA -------------": "",
     "db:init": "npx prisma generate && npx prisma migrate dev --name 'init'",
-    "db:seed": "npx prisma db seed",
+    "db:seed": "ts-node prisma/seed.ts",
     "db:reset": "npx prisma migrate reset",
     "------------- TEST -------------": "",
     "test": "jest"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "11.1.1",

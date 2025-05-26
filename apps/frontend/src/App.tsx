@@ -13,7 +13,7 @@ const formConfig: ConfigProviderProps['form'] = {
     required: '${label} 是必填项',
   },
 }
-export const getPopupContainerConfig: ConfigProviderProps['getPopupContainer'] = () => {
+const getPopupContainerConfig: ConfigProviderProps['getPopupContainer'] = () => {
   return document.body
 }
 

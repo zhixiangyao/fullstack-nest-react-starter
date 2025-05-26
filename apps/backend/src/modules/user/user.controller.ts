@@ -6,7 +6,7 @@ import { UserService } from './user.service'
 import { RegisterUserDto, UserDeleteDto, UserPageDto, UserUpdateDto } from './dto/user.dto'
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdateUser } from './type'
 
-import { Role } from '~/common/decorators/role.decorator'
+import { Roles } from '~/common/decorators/roles.decorator'
 import { Public } from '~/common/decorators/public.decorator'
 
 @Controller('/user')
@@ -26,7 +26,7 @@ export class UserController {
     return { message: '注册成功' }
   }
 
-  @Role([$Enums.Role.ADMIN])
+  @Roles([$Enums.Role.ADMIN])
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdateUser> {
@@ -49,7 +49,7 @@ export class UserController {
     return { message: '更新成功' }
   }
 
-  @Role([$Enums.Role.ADMIN])
+  @Roles([$Enums.Role.ADMIN])
   @Post('delete')
   @Header('content-type', 'application/json')
   async delete(@Body() body: UserDeleteDto, @Request() req: Request): Promise<ResponseUpdateUser> {
@@ -80,7 +80,7 @@ export class UserController {
     return { data: { user: userWithoutPassword } }
   }
 
-  @Role([$Enums.Role.ADMIN])
+  @Roles([$Enums.Role.ADMIN])
   @Post('page')
   @Header('Content-Type', 'application/json')
   async findAll(@Body() body: UserPageDto): Promise<ResponseFindAll> {

@@ -11,14 +11,17 @@ generator client {
 }
 
 model User {
-  userId    Int      @id @default(autoincrement())
-  username  String   @unique
+  uuid      String    @id @default(uuid()) @db.Uuid
+  username  String    @unique
   password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now()) @db.Timestamptz()
-  updatedAt DateTime @default(now()) @db.Timestamptz()
+  roles     Role[]    @default([USER])
+  status    Status    @default(Active)
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @db.Timestamptz()
   lastLogin DateTime? @db.Timestamptz()
-  status    Status   @default(Active)
+  email     String?
+  sex       Sex?
+  age       Int?
 }
 
 enum Role {
@@ -29,4 +32,10 @@ enum Role {
 enum Status {
   Active
   Inactive
+}
+
+enum Sex {
+  Male
+  Female
+  Other
 }

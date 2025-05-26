@@ -7,7 +7,7 @@ import { stringCapitalization } from 'utils'
 
 import { useUserStore } from '~/stores/useUserStore'
 
-import { HeaderUserInfoDrawer } from './components/HeaderUserInfoDrawer'
+import { DrawerUserInfo } from './components/DrawerUserInfo'
 
 const items: MenuProps['items'] = [
   {
@@ -75,7 +75,7 @@ export const Header = memo<Props>(() => {
         </div>
       </header>
 
-      <HeaderUserInfoDrawer open={open} setOpen={setOpen} />
+      <DrawerUserInfo open={open} setOpen={setOpen} />
     </>
   )
 })

@@ -25,6 +25,7 @@
     "------------- DB -------------": "",
     "db:init": "pnpm --filter backend db:init",
     "db:seed": "pnpm --filter backend db:seed",
+    "db:reset": "pnpm --filter backend db:reset",
     "------------- LINT -------------": "",
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint/",
     "lint:css": "stylelint \"./**/*.css\" --cache --cache-location node_modules/.cache/stylelint/",

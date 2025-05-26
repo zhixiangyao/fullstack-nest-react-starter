@@ -3,10 +3,10 @@ import { Tag } from 'antd'
 import React, { memo } from 'react'
 import { stringCapitalization } from 'utils'
 
-import { Role } from '~/fetchers/type'
+import { EnumRole } from '~/fetchers/type'
 
 interface Props {
-  value?: Role
+  value?: EnumRole
 }
 
 const TagRoleType: React.FC<Props> = memo((props) => {
@@ -19,11 +19,11 @@ const TagRoleType: React.FC<Props> = memo((props) => {
   const text = stringCapitalization(value)
 
   switch (value) {
-    case Role.ADMIN:
+    case EnumRole.ADMIN:
       color = 'gold'
       break
 
-    case Role.USER:
+    case EnumRole.USER:
       color = 'green'
       break
   }

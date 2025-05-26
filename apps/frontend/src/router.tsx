@@ -3,22 +3,22 @@ import React, { memo } from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Spinning } from '~/components/Spinning'
-import { Role } from '~/fetchers/type'
+import { EnumRole } from '~/fetchers/type'
 import { useUserStore } from '~/stores/useUserStore'
 
-interface Props { children: React.ReactNode, roles?: Role[] }
+interface Props { children: React.ReactNode, roles?: EnumRole[] }
 
 const RolesAuthRoute = memo<Props>(({ children, roles }) => {
   const { user } = useUserStore()
 
-  if (user && roles && !roles.includes(user?.role))
-    return <Navigate to="/" />
+  if (user && roles && !roles.some(role => user?.roles.includes(role)))
+    return <Navigate replace to="/" />
 
   return children
 })
 RolesAuthRoute.displayName = 'RolesAuthRoute'
 
-function withRolesAuthRoute(Component: React.FC, options?: { roles: Role[] }) {
+function withRolesAuthRoute(Component: React.FC, options?: { roles: EnumRole[] }) {
   return () => (
     <RolesAuthRoute roles={options?.roles}>
       <Component />
@@ -31,7 +31,7 @@ interface Route {
   icon: React.ReactNode
   path: string
   element: Promise<React.FC>
-  roles: Role[]
+  roles: EnumRole[]
 }
 
 export const routes: Route[] = [
@@ -40,14 +40,14 @@ export const routes: Route[] = [
     path: '/home',
     icon: <HomeOutlined />,
     element: import('./pages/home').then(({ HomePage }) => HomePage),
-    roles: [Role.ADMIN, Role.USER],
+    roles: [EnumRole.ADMIN, EnumRole.USER],
   },
   {
     label: 'User',
     path: '/user',
     icon: <UserOutlined />,
     element: import('./pages/user').then(({ UserPage }) => UserPage),
-    roles: [Role.ADMIN],
+    roles: [EnumRole.ADMIN],
   },
 ]
 

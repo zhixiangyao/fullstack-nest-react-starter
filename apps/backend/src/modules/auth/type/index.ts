@@ -6,4 +6,4 @@ export interface ResponseSignIn {
   }
 }
 
-export type Payload = Pick<User, 'userId' | 'username'>
+export type Payload = Pick<User, 'uuid' | 'username'>

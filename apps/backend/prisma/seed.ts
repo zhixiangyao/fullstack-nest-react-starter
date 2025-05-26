@@ -1,7 +1,7 @@
 import process from 'node:process'
 import * as argon2 from 'argon2'
 
-import { $Enums, PrismaClient } from '@prisma/client'
+import { $Enums, PrismaClient, User } from '@prisma/client'
 
 // initialize Prisma Client
 const prisma = new PrismaClient()
@@ -9,8 +9,8 @@ const prisma = new PrismaClient()
 async function main() {
   const users = await prisma.user.findMany()
   // delete all users
-  for (const { userId } of users) {
-    await prisma.user.delete({ where: { userId } })
+  for (const { uuid } of users) {
+    await prisma.user.delete({ where: { uuid } })
   }
 
   const hashedPassword0 = await argon2.hash('666888qifei')
@@ -21,13 +21,13 @@ async function main() {
       {
         username: 'root',
         password: hashedPassword0,
-        role: $Enums.Role.ADMIN,
+        roles: [$Enums.Role.ADMIN],
       },
       ...Array.from({ length: 100 }).map((_, i) => ({
         username: `yao${i}`,
         password: hashedPassword1,
-        role: $Enums.Role.USER,
-      })),
+        roles: [$Enums.Role.USER],
+      } satisfies Partial<User>)),
     ],
   })
 

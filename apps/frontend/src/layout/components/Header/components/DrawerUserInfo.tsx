@@ -11,7 +11,7 @@ interface Props {
   setOpen: React.Dispatch<boolean>
 }
 
-export const HeaderUserInfoDrawer = memo<Props>(({ open, setOpen }) => {
+export const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
   const { user } = useUserStore()
 
   const handleClose = useCallback(() => {
@@ -29,7 +29,7 @@ export const HeaderUserInfoDrawer = memo<Props>(({ open, setOpen }) => {
       {
         key: '2',
         label: '角色',
-        children: <TagRoleType value={user?.role} />,
+        children: <div className="flex gap-1 items-center">{user?.roles.map(role => <TagRoleType value={role} key={role} />)}</div>,
         span: 1,
       },
       {
@@ -60,4 +60,4 @@ export const HeaderUserInfoDrawer = memo<Props>(({ open, setOpen }) => {
     </Drawer>
   )
 })
-HeaderUserInfoDrawer.displayName = 'HeaderUserInfoDrawer'
+DrawerUserInfo.displayName = 'DrawerUserInfo'

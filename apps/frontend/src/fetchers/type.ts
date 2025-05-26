@@ -1,21 +1,30 @@
-export enum Role {
+export enum EnumRole {
   USER = 'USER',
   ADMIN = 'ADMIN',
 }
 
-export enum Status {
+export enum EnumStatus {
   Active = 'Active',
   Inactive = 'Inactive',
 }
 
+export enum EnumSex {
+  Male = 'Male',
+  Female = 'Female',
+  Other = 'Other',
+}
+
 export interface TUser {
-  userId: number
+  uuid: string
   username: string
-  role: Role
+  roles: EnumRole[]
+  status: EnumStatus
   createdAt: Date
   updatedAt: Date
-  lastLogin?: Date
-  status: Status
+  lastLogin: Date | null
+  email: string | null
+  sex: EnumSex | null
+  age: number | null
 }
 
 export interface LoginRequest { username: string, password: string }

@@ -1,8 +1,8 @@
 import type { LoginRequest, RegisterRequest, RegisterResponse, TUser } from '~/fetchers/type'
 import { getStorageStateByKey } from 'utils'
-
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+
 import { getCurrentUserInfo, login, register } from '~/fetchers'
 
 interface Store {

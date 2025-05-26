@@ -1,38 +1,30 @@
-import type { GetProps } from 'antd'
-import { useRequest } from 'ahooks'
-import React, { useMemo } from 'react'
+import type { TUser } from '~/fetchers/type'
+import { Table } from 'antd'
+import React from 'react'
 
-import { getUserList } from '~/fetchers'
-import { UserPageHeader } from './components/UserPageHeader'
-
-import { UserPageTable } from './components/UserPageTable'
+import { DrawerUserEdit } from './components/DrawerUserEdit'
+import { Header } from './components/Header'
+import { useUserList } from './hooks/useUserList'
 
 export function UserPage() {
-  const { data, loading, runAsync } = useRequest(getUserList, {
-    cacheKey: 'cacheKey-share-getUserList',
-  })
-  const tableProps = useMemo<GetProps<typeof UserPageTable>>(
-    () => ({
-      loading,
-      dataSource: data?.data.list ?? [],
-      pagination: {
-        current: data?.data.pageNo,
-        total: data?.data.total,
-        pageSize: data?.data.pageSize,
-        onChange(page, pageSize) {
-          console.log(page, pageSize)
-          runAsync({ pageNo: page, pageSize })
-        },
-      },
-    }),
-    [data?.data, loading, runAsync],
-  )
+  const userList = useUserList()
 
   return (
     <>
-      <UserPageHeader />
+      <Header />
 
-      <UserPageTable {...tableProps} />
+      <Table
+        bordered
+        size="small"
+        rowKey={'uuid' satisfies keyof TUser}
+        columns={userList.columns}
+        dataSource={userList.dataSource}
+        pagination={userList.pagination}
+        loading={userList.loading}
+        scroll={userList.scroll}
+      />
+
+      <DrawerUserEdit open={userList.open} setOpen={userList.setOpen} />
     </>
   )
 }

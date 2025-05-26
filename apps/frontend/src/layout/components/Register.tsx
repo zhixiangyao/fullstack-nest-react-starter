@@ -2,8 +2,8 @@ import type { RegisterRequest } from '~/fetchers/type'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons'
 import { Layout as AntdLayout, App, Button, Form, Input } from 'antd'
 import clsx from 'clsx'
-
 import React, { memo, useCallback } from 'react'
+
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 

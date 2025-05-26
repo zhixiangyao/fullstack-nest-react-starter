@@ -4,18 +4,24 @@ CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('Active', 'Inactive');
 
+-- CreateEnum
+CREATE TYPE "Sex" AS ENUM ('Male', 'Female', 'Other');
+
 -- CreateTable
 CREATE TABLE "User" (
-    "userId" SERIAL NOT NULL,
+    "uuid" UUID NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'USER',
+    "roles" "Role"[] DEFAULT ARRAY['USER']::"Role"[],
+    "status" "Status" NOT NULL DEFAULT 'Active',
     "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "lastLogin" TIMESTAMPTZ,
-    "status" "Status" NOT NULL DEFAULT 'Active',
+    "email" TEXT,
+    "sex" "Sex",
+    "age" INTEGER,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("userId")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("uuid")
 );
 
 -- CreateIndex

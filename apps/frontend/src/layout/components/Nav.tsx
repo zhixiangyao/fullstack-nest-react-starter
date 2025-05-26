@@ -20,7 +20,7 @@ export const Nav = memo<Props>(() => {
   const { width, collapsed, handleCollapsed, handleDisable } = useAppStore()
   const { user } = useUserStore()
 
-  const handleClick = useCallback<NonNullable<MenuProps['onClick']>>(
+  const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
     ({ key }) => {
       pathname !== key && navigate(key)
     },
@@ -30,9 +30,9 @@ export const Nav = memo<Props>(() => {
   const menus = useMemo(
     () =>
       routes
-        .filter(route => user && route.roles.includes(user.role))
+        .filter(route => route.roles.some(role => user?.roles.includes(role)))
         .map(({ path, label, icon }) => ({ key: path, label, icon })),
-    [user],
+    [user?.roles],
   )
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const Nav = memo<Props>(() => {
         mode="inline"
         forceSubMenuRender={false}
         selectedKeys={[pathname]}
-        onClick={handleClick}
+        onClick={handleMenuClick}
         items={menus}
       />
     </AntdLayout.Sider>

@@ -25,7 +25,7 @@ export class UserService {
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
-    const list = await this.prisma.user.findMany({ skip, take })
+    const list = await this.prisma.user.findMany({ skip, take, orderBy: { lastLogin: 'asc' } })
 
     const total = await this.prisma.user.count()
 
@@ -44,7 +44,7 @@ export class UserService {
       data: {
         username,
         password: hashedPassword,
-        role: $Enums.Role.USER,
+        roles: [$Enums.Role.USER],
       },
     })
 

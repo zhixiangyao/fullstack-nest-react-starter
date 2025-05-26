@@ -3,7 +3,7 @@ import type { ExecutionContext } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import type { Request } from 'express'
 
-import { IS_ROLE_KEY, Role } from '~/common/decorators/role.decorator'
+import { IS_ROLES_KEY, Roles } from '~/common/decorators/roles.decorator'
 import { UserService } from '~/modules/user/user.service'
 
 @Injectable()
@@ -13,7 +13,7 @@ export class RolesGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // `getAllAndOverride` retrieves metadata from both the class and the method, with the method's metadata overriding the class's metadata.
     // That is to say, if a method has the @Role(['ADMIN']) decorator, then the @Role('USER') decorator on the class will be overridden.
-    const roles = this.reflector.getAllAndOverride<Parameters<typeof Role>[0]>(IS_ROLE_KEY, [
+    const roles = this.reflector.getAllAndOverride<Parameters<typeof Roles>[0]>(IS_ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
     ])
@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
     if (Array.isArray(roles) && payload && payload.username) {
       const user = await this.userService.find(payload.username)
 
-      if (!roles.includes(user.role)) {
+      if (!roles.some(role => user.roles.includes(role))) {
         throw new ForbiddenException('您没有权限！')
       }
     }

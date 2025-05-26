@@ -14,7 +14,7 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "types": ["vite/client", "@emotion/react/types/css-prop", "node"],
+    "types": ["vite/client", "node"],
     "allowImportingTsExtensions": true,
 
     /* Linting */
