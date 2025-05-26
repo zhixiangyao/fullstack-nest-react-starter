@@ -1,13 +1,13 @@
 import type { ConfigEnv, UserConfig } from 'vite'
-
 import { resolve } from 'node:path'
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import viteCompression from 'vite-plugin-compression'
 
 const baseConfig: UserConfig = {
-  plugins: [react(), checker({ typescript: true }), viteCompression({ verbose: false })],
+  plugins: [react(), checker({ typescript: true }), viteCompression({ verbose: false }), tailwindcss()],
   resolve: {
     alias: [{ find: '~', replacement: resolve(__dirname, './src') }],
   },

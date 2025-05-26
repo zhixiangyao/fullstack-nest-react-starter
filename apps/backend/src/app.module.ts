@@ -26,6 +26,6 @@ if (process.env.NODE_ENV !== 'dev') {
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(loggerMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL })
+    consumer.apply(loggerMiddleware).forRoutes({ path: '*all', method: RequestMethod.ALL })
   }
 }

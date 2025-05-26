@@ -9,7 +9,7 @@ export default antfu(
     },
   },
   {
-    files: ['packages/**/*.ts', 'packages/**/*.mjs'],
+    files: ['packages/**/*.ts', 'packages/**/*.mjs', 'packages/**/*.js'],
   },
   {
     files: ['apps/frontend/**/*.ts', 'apps/frontend/**/*.tsx'],
@@ -21,7 +21,7 @@ export default antfu(
     },
   },
   {
-    files: ['apps/backend/**/*.ts', 'apps/backend/**/*.mjs'],
+    files: ['apps/backend/**/*.ts', 'apps/backend/**/*.mjs', 'packages/**/*.js'],
     rules: {
       'perfectionist/sort-imports': ['off'],
       'ts/consistent-type-imports': ['off'],

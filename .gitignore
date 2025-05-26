@@ -2,7 +2,6 @@
 .idea/
 node_modules
 dist
---version
 .npmrc
 .cache
 logs

@@ -3,6 +3,7 @@
   "plugins": ["stylelint-order"],
   "extends": ["stylelint-config-standard"],
   "rules": {
+    "import-notation": null,
     "selector-class-pattern": null,
     "selector-pseudo-class-no-unknown": [
       true,
@@ -10,10 +11,16 @@
         "ignorePseudoClasses": ["global"]
       }
     ],
+    "at-rule-no-deprecated": [
+      true,
+      {
+        "ignoreAtRules": ["apply"]
+      }
+    ],
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": ["tailwind"]
+        "ignoreAtRules": ["tailwind", "mixin", "apply"]
       }
     ],
     "no-empty-source": null,
@@ -24,12 +31,6 @@
       "always",
       {
         "ignore": ["after-comment", "first-nested"]
-      }
-    ],
-    "unit-no-unknown": [
-      true,
-      {
-        "ignoreUnits": ["rpx"]
       }
     ],
     "order/properties-order": [
@@ -185,5 +186,6 @@
       "unicode-bidi",
       "speak"
     ]
-  }
+  },
+  "ignoreFiles": ["**/*.tsx", "**/*.js", "**/*.ts"]
 }
