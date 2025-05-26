@@ -67,6 +67,10 @@ export class UserService {
     return user
   }
 
+  async delete(username: string): Promise<void> {
+    await this.prisma.user.delete({ where: { username } })
+  }
+
   async check(username: string) {
     const user = await this.find(username)
     if (user.status === Status.Inactive) {

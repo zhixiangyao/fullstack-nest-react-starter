@@ -3,7 +3,7 @@ import { $Enums, Status } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
-import { RegisterUserDto, UserPageDto, UserUpdateDto } from './dto/user.dto'
+import { RegisterUserDto, UserDeleteDto, UserPageDto, UserUpdateDto } from './dto/user.dto'
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdateUser } from './type'
 
 import { Role } from '~/common/decorators/role.decorator'
@@ -47,6 +47,25 @@ export class UserController {
     await this.userService.update(body.username, { status: body.status })
 
     return { message: '更新成功' }
+  }
+
+  @Role([$Enums.Role.ADMIN])
+  @Post('delete')
+  @Header('content-type', 'application/json')
+  async delete(@Body() body: UserDeleteDto, @Request() req: Request): Promise<ResponseUpdateUser> {
+    const user = req.user
+
+    if (user.username === body.username) {
+      throw new HttpException('不可删除自身', HttpStatus.BAD_REQUEST)
+    }
+
+    if (!(await this.userService.has(body.username))) {
+      throw new HttpException('未知的 username 值', HttpStatus.BAD_REQUEST)
+    }
+
+    await this.userService.delete(body.username)
+
+    return { message: '删除成功!' }
   }
 
   @Get()

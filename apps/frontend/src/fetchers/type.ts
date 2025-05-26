@@ -53,3 +53,7 @@ export interface GetUserListResponse {
 export type UpdateUserRequest = Pick<TUser, 'username' | 'status'>
 
 export interface UpdateUserResponse { message: string }
+
+export type DeleteUserRequest = Pick<TUser, 'username'>
+
+export interface DeleteUserResponse { message: string }

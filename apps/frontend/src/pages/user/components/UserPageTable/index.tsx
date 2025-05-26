@@ -6,6 +6,7 @@ import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 
+import { ButtonDelete } from './components/ButtonDelete'
 import { SwitchStatus } from './components/SwitchStatus'
 
 const columns: ColumnsType<TUser> = [
@@ -56,6 +57,18 @@ const columns: ColumnsType<TUser> = [
     width: 200,
     render(_, { lastLogin }) {
       return <span>{lastLogin ? formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+    },
+  },
+  {
+    title: '操作',
+    key: 'actions',
+    width: 100,
+    render(_, record) {
+      return (
+        <div>
+          <ButtonDelete record={record} />
+        </div>
+      )
     },
   },
 ]

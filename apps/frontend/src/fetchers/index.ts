@@ -1,4 +1,16 @@
-import type { GetCurrentUserInfoResponse, GetUserListRequest, GetUserListResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse, UpdateUserRequest, UpdateUserResponse } from './type'
+import type {
+  DeleteUserRequest,
+  DeleteUserResponse,
+  GetCurrentUserInfoResponse,
+  GetUserListRequest,
+  GetUserListResponse,
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  RegisterResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+} from './type'
 
 import { fetchGet, fetchPost } from '~/utils/fetch'
 
@@ -28,6 +40,12 @@ export async function getUserList(data: GetUserListRequest) {
 
 export async function updateUser(data: UpdateUserRequest) {
   const result = await fetchPost<UpdateUserResponse>('/api/user/update', JSON.stringify(data))
+
+  return result
+}
+
+export async function deleteUser(data: DeleteUserRequest) {
+  const result = await fetchPost<DeleteUserResponse>('/api/user/delete', JSON.stringify(data))
 
   return result
 }

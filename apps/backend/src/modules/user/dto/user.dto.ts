@@ -22,6 +22,12 @@ export class UserUpdateDto {
   readonly username: User['username']
 }
 
+export class UserDeleteDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly username: User['username']
+}
+
 export class UserPageDto {
   @IsNumber()
   @IsOptional()
