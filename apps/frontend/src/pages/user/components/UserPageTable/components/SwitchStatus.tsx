@@ -1,6 +1,6 @@
 import type { TUser } from '~/fetchers/type'
 import { useRequest } from 'ahooks'
-import { message, Switch } from 'antd'
+import { App as AntdApp, Switch } from 'antd'
 
 import React, { useCallback } from 'react'
 import { AuthWrapper } from '~/components/AuthWrapper'
@@ -11,7 +11,8 @@ interface Props {
   record: TUser
 }
 
-export const ActionActive: React.FC<Props> = ({ record }) => {
+export const SwitchStatus: React.FC<Props> = ({ record }) => {
+  const { message } = AntdApp.useApp()
   const { loading: loadingUp, runAsync } = useRequest(updateUser, {
     manual: true,
   })
@@ -31,7 +32,7 @@ export const ActionActive: React.FC<Props> = ({ record }) => {
         console.log(error)
       }
     },
-    [record.username, refreshAsync, runAsync],
+    [message, record.username, refreshAsync, runAsync],
   )
 
   return (

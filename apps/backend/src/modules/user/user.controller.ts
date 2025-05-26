@@ -16,12 +16,12 @@ export class UserController {
   @Public()
   @Post('register')
   @Header('content-type', 'application/json')
-  async register(@Body() registerUserDto: RegisterUserDto): Promise<ResponseRegisterUser> {
-    if (await this.userService.has(registerUserDto.username)) {
+  async register(@Body() body: RegisterUserDto): Promise<ResponseRegisterUser> {
+    if (await this.userService.has(body.username)) {
       throw new HttpException('此用户已被注册', HttpStatus.BAD_REQUEST)
     }
 
-    await this.userService.create(registerUserDto.username, registerUserDto.password)
+    await this.userService.create(body.username, body.password)
 
     return { message: '注册成功' }
   }
@@ -29,22 +29,22 @@ export class UserController {
   @Role([$Enums.Role.ADMIN])
   @Post('update')
   @Header('content-type', 'application/json')
-  async update(@Body() userUpdateDto: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdateUser> {
+  async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdateUser> {
     const user = req.user
 
-    if (user.username === userUpdateDto.username) {
+    if (user.username === body.username) {
       throw new HttpException('不可修改自身', HttpStatus.BAD_REQUEST)
     }
 
-    if (!(await this.userService.has(userUpdateDto.username))) {
+    if (!(await this.userService.has(body.username))) {
       throw new HttpException('未知的 username 值', HttpStatus.BAD_REQUEST)
     }
 
-    if (userUpdateDto.status !== Status.Active && userUpdateDto.status !== Status.Inactive) {
+    if (body.status !== Status.Active && body.status !== Status.Inactive) {
       throw new HttpException('未知的 status 值', HttpStatus.BAD_REQUEST)
     }
 
-    await this.userService.update(userUpdateDto.username, { status: userUpdateDto.status })
+    await this.userService.update(body.username, { status: body.status })
 
     return { message: '更新成功' }
   }
@@ -64,8 +64,8 @@ export class UserController {
   @Role([$Enums.Role.ADMIN])
   @Post('page')
   @Header('Content-Type', 'application/json')
-  async findAll(@Body() userPageDto: UserPageDto): Promise<ResponseFindAll> {
-    const data = await this.userService.findAll(userPageDto)
+  async findAll(@Body() body: UserPageDto): Promise<ResponseFindAll> {
+    const data = await this.userService.findAll(body)
 
     return { data }
   }

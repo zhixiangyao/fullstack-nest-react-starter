@@ -5,7 +5,8 @@ import React, { memo, useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
-import { ActionActive } from './components/ActionActive'
+
+import { SwitchStatus } from './components/SwitchStatus'
 
 const columns: ColumnsType<TUser> = [
   {
@@ -26,28 +27,36 @@ const columns: ColumnsType<TUser> = [
     dataIndex: 'role' satisfies keyof TUser,
     key: 'role',
     width: 100,
-    render: (_, { role }) => <TagRoleType value={role} />,
+    render(_, { role }) {
+      return <TagRoleType value={role} />
+    },
   },
   {
     title: '状态',
     dataIndex: 'status' satisfies keyof TUser,
     key: 'status',
     width: 100,
-    render: (_, record) => <ActionActive record={record} />,
+    render(_, record) {
+      return <SwitchStatus record={record} />
+    },
   },
   {
     title: '创建于',
     dataIndex: 'createdAt' satisfies keyof TUser,
     key: 'createdAt',
     width: 200,
-    render: (_, { createdAt }) => <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>,
+    render(_, { createdAt }) {
+      return <span>{createdAt ? formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+    },
   },
   {
     title: '上一次登录',
     dataIndex: 'lastLogin' satisfies keyof TUser,
     key: 'lastLogin',
     width: 200,
-    render: (_, { lastLogin }) => <span>{lastLogin ? formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>,
+    render(_, { lastLogin }) {
+      return <span>{lastLogin ? formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+    },
   },
 ]
 

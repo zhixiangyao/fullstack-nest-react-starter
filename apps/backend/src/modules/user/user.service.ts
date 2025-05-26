@@ -10,10 +10,7 @@ import { PrismaService } from '~/modules/prisma/prisma.service'
 
 @Injectable()
 export class UserService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly passwordService: PasswordService,
-  ) {}
+  constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
   async find(username: string): Promise<User> {
     const user = await this.prisma.user.findUnique({
@@ -23,8 +20,8 @@ export class UserService {
     return user
   }
 
-  async findAll(userPageDto: UserPageDto) {
-    const { pageNo = 1, pageSize = 10 } = userPageDto
+  async findAll(body: UserPageDto) {
+    const { pageNo = 1, pageSize = 10 } = body
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
