@@ -1,4 +1,4 @@
-import type { RegisterRequest } from '~/fetchers/type'
+import type { CreateRequest } from '~/fetchers'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons'
 import { Layout as AntdLayout, App, Button, Form, Input } from 'antd'
 import clsx from 'clsx'
@@ -9,7 +9,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 import { rules } from './Login'
 
-type FieldType = RegisterRequest
+type FieldType = CreateRequest
 
 interface Props {
   className?: string
@@ -17,7 +17,7 @@ interface Props {
 
 export const Register = memo<Props>(({ className }) => {
   const { handleSwitchLoginOrRegister } = useAppStore()
-  const { loading, handleRegister } = useUserStore()
+  const { loading, handleCreate } = useUserStore()
   const { message } = App.useApp()
 
   const handleFinish = useCallback(
@@ -26,14 +26,14 @@ export const Register = memo<Props>(({ className }) => {
         if (username === undefined || password === undefined)
           return
 
-        handleRegister({ username, password }, (e) => {
+        handleCreate({ username, password }, (e) => {
           handleSwitchLoginOrRegister()
           message.success(e.message)
         })
       }
       catch {}
     },
-    [handleRegister, handleSwitchLoginOrRegister, message],
+    [handleCreate, handleSwitchLoginOrRegister, message],
   )
 
   return (

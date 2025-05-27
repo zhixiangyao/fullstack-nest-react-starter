@@ -1,10 +1,10 @@
-import type { TUser } from '~/fetchers/type'
+import type { TUser } from '~/fetchers'
 import { useRequest } from 'ahooks'
 import { App as AntdApp, Button, Popconfirm } from 'antd'
 import React, { useCallback } from 'react'
 
-import { deleteUser, getUserList } from '~/fetchers'
-import { EnumRole } from '~/fetchers/type'
+import * as fetchers from '~/fetchers'
+import { EnumRole } from '~/fetchers'
 
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
@@ -14,8 +14,8 @@ interface Props {
 
 export const ButtonDelete: React.FC<Props> = ({ record }) => {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUp, runAsync } = useRequest(deleteUser, { manual: true })
-  const { refreshAsync, loading: loadingGet } = useRequest(getUserList, {
+  const { loading: loadingUp, runAsync } = useRequest(fetchers.remove, { manual: true })
+  const { refreshAsync, loading: loadingGet } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
     manual: true,
   })
@@ -39,7 +39,7 @@ export const ButtonDelete: React.FC<Props> = ({ record }) => {
       okText="确定"
       cancelText="取消"
     >
-      <Button danger disabled={loadingGet || loadingUp || record.roles.includes(EnumRole.ADMIN)} type="link">
+      <Button danger type="link" className="!px-0" disabled={loadingGet || loadingUp || record.roles.includes(EnumRole.ADMIN)}>
         删除
       </Button>
     </Popconfirm>

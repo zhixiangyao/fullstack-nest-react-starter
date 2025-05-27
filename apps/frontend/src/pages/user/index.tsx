@@ -1,4 +1,4 @@
-import type { TUser } from '~/fetchers/type'
+import type { TUser } from '~/fetchers'
 import { Table } from 'antd'
 import React from 'react'
 
@@ -24,7 +24,7 @@ export function UserPage() {
         scroll={userList.scroll}
       />
 
-      <DrawerUserEdit open={userList.open} setOpen={userList.setOpen} />
+      <DrawerUserEdit />
     </>
   )
 }

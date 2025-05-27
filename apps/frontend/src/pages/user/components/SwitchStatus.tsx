@@ -1,10 +1,10 @@
-import type { TUser } from '~/fetchers/type'
+import type { TUser } from '~/fetchers'
 import { useRequest } from 'ahooks'
 import { App as AntdApp, Switch } from 'antd'
 import React, { useCallback } from 'react'
 
-import { getUserList, updateUser } from '~/fetchers'
-import { EnumRole, EnumStatus } from '~/fetchers/type'
+import * as fetchers from '~/fetchers'
+import { EnumRole, EnumStatus } from '~/fetchers'
 
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
@@ -14,10 +14,10 @@ interface Props {
 
 export const SwitchStatus: React.FC<Props> = ({ record }) => {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUp, runAsync } = useRequest(updateUser, {
+  const { loading: loadingUp, runAsync } = useRequest(fetchers.update, {
     manual: true,
   })
-  const { refreshAsync, loading: loadingGet } = useRequest(getUserList, {
+  const { refreshAsync, loading: loadingGet } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
     manual: true,
   })

@@ -35,9 +35,9 @@ export interface LoginResponse {
   }
 }
 
-export interface RegisterRequest { username: string, password: string }
+export interface CreateRequest { username: string, password: string }
 
-export interface RegisterResponse { message: string }
+export interface CreateResponse { message: string }
 
 export interface GetCurrentUserInfoResponse {
   data: {
@@ -45,12 +45,12 @@ export interface GetCurrentUserInfoResponse {
   }
 }
 
-export interface GetUserListRequest {
+export interface FindAllRequest {
   pageNo?: number
   pageSize?: number
 }
 
-export interface GetUserListResponse {
+export interface FindAllResponse {
   data: {
     list: TUser[]
     total: number
@@ -59,10 +59,10 @@ export interface GetUserListResponse {
   }
 }
 
-export type UpdateUserRequest = Pick<TUser, 'username' | 'status'>
+export type UpdateRequest = Pick<TUser, 'username' | 'status'>
 
-export interface UpdateUserResponse { message: string }
+export interface UpdateResponse { message: string }
 
-export type DeleteUserRequest = Pick<TUser, 'username'>
+export type RemoveRequest = Pick<TUser, 'username'>
 
-export interface DeleteUserResponse { message: string }
+export interface RemoveResponse { message: string }

@@ -1,19 +1,20 @@
 import { Drawer } from 'antd'
-import React, { memo, useCallback } from 'react'
+import React, { memo } from 'react'
 
-interface Props {
-  open: boolean
-  setOpen: React.Dispatch<boolean>
-}
+import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 
-export const DrawerUserEdit = memo<Props>(({ open, setOpen }) => {
-  const handleClose = useCallback(() => {
-    setOpen(false)
-  }, [setOpen])
+export const DrawerUserEdit = memo(() => {
+  const drawerUserEdit = useDrawerUserEdit()
 
   return (
-    <Drawer width={700} title="编辑用户" placement="right" onClose={handleClose} open={open}>
-      TODO
+    <Drawer
+      width={700}
+      title="编辑用户"
+      placement="right"
+      onClose={drawerUserEdit.handleClose}
+      open={drawerUserEdit.open}
+    >
+      {drawerUserEdit.uuid}
     </Drawer>
   )
 })

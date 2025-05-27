@@ -6,7 +6,7 @@ export interface ResponseRegisterUser {
   message: string
 }
 
-export interface ResponseUpdateUser {
+export interface ResponseUpdate {
   message: string
 }
 

@@ -1,12 +1,12 @@
 import type { TablePaginationConfig } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import type { TUser } from '~/fetchers/type'
+import type { TUser } from '~/fetchers'
 import { useRequest, useSize } from 'ahooks'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
-import { getUserList } from '~/fetchers'
+import * as fetchers from '~/fetchers'
 
 import { ButtonDelete } from '../components/ButtonDelete'
 import { ButtonEdit } from '../components/ButtonEdit'
@@ -17,8 +17,9 @@ const columns: ColumnsType<TUser> = [
     title: '用户名',
     dataIndex: 'username' satisfies keyof TUser,
     key: 'username',
-    width: 200,
+    width: 150,
     ellipsis: true,
+    fixed: 'left',
   },
   {
     title: '角色',
@@ -84,9 +85,10 @@ const columns: ColumnsType<TUser> = [
     title: '操作',
     key: 'actions',
     width: 100,
+    fixed: 'right',
     render(_, record) {
       return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <ButtonDelete record={record} />
           <ButtonEdit record={record} />
         </div>
@@ -95,10 +97,10 @@ const columns: ColumnsType<TUser> = [
   },
 ]
 
-export const CACHE_KEY_GET_USER_LIST = 'cacheKey-share-getUserList'
+export const CACHE_KEY_GET_USER_LIST = 'cacheKey-share-findAll'
 
 export function useUserList() {
-  const { data, loading, runAsync } = useRequest(getUserList, {
+  const { data, loading, runAsync } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
     defaultParams: [
       {
@@ -119,7 +121,6 @@ export function useUserList() {
     }),
     [data?.data, runAsync],
   )
-  const [open, setOpen] = useState(false)
   const size = useSize(document.querySelector('html'))
   const scroll = useMemo(() => {
     const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
@@ -129,11 +130,9 @@ export function useUserList() {
   }, [size?.height])
 
   return {
-    open,
     loading,
     pagination,
     dataSource,
-    setOpen,
     scroll,
     columns,
   }

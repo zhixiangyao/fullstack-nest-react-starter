@@ -4,7 +4,7 @@ import type { Prisma, User } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { PasswordService } from './password.service'
-import { UserPageDto } from './dto/user.dto'
+import { UserFindAllDto } from './dto/user.dto'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
 
@@ -20,12 +20,12 @@ export class UserService {
     return user
   }
 
-  async findAll(body: UserPageDto) {
+  async findAll(body: UserFindAllDto) {
     const { pageNo = 1, pageSize = 10 } = body
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
-    const list = await this.prisma.user.findMany({ skip, take, orderBy: { lastLogin: 'asc' } })
+    const list = await this.prisma.user.findMany({ skip, take, orderBy: { username: 'asc' } })
 
     const total = await this.prisma.user.count()
 
@@ -67,7 +67,7 @@ export class UserService {
     return user
   }
 
-  async delete(username: string): Promise<void> {
+  async remove(username: string): Promise<void> {
     await this.prisma.user.delete({ where: { username } })
   }
 

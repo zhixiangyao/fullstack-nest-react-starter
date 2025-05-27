@@ -1,5 +1,5 @@
 import type { Rule } from 'antd/es/form'
-import type { LoginRequest } from '~/fetchers/type'
+import type { LoginRequest } from '~/fetchers'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons'
 import { Layout as AntdLayout, Button, Checkbox, Form, Input } from 'antd'
 import clsx from 'clsx'

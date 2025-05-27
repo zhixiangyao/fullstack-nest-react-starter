@@ -13,7 +13,7 @@ interface Store {
 
 export const useAppStore = create<Store>()((set, get) => ({
   width: 200,
-  collapsed: true,
+  collapsed: false,
   isLoginOrRegister: 'login',
   disable: false,
 

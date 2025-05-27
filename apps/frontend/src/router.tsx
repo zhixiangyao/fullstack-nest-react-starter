@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Spinning } from '~/components/Spinning'
-import { EnumRole } from '~/fetchers/type'
+import { EnumRole } from '~/fetchers'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props { children: React.ReactNode, roles?: EnumRole[] }

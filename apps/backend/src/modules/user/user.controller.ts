@@ -3,8 +3,8 @@ import { $Enums, Status } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
-import { RegisterUserDto, UserDeleteDto, UserPageDto, UserUpdateDto } from './dto/user.dto'
-import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdateUser } from './type'
+import { UserCreateDto, UserFindAllDto, UserRemoveDto, UserUpdateDto } from './dto/user.dto'
+import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
 
 import { Roles } from '~/common/decorators/roles.decorator'
 import { Public } from '~/common/decorators/public.decorator'
@@ -14,9 +14,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Public()
-  @Post('register')
+  @Post('create')
   @Header('content-type', 'application/json')
-  async register(@Body() body: RegisterUserDto): Promise<ResponseRegisterUser> {
+  async create(@Body() body: UserCreateDto): Promise<ResponseRegisterUser> {
     if (await this.userService.has(body.username)) {
       throw new HttpException('此用户已被注册', HttpStatus.BAD_REQUEST)
     }
@@ -29,7 +29,7 @@ export class UserController {
   @Roles([$Enums.Role.ADMIN])
   @Post('update')
   @Header('content-type', 'application/json')
-  async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdateUser> {
+  async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
     const user = req.user
 
     if (user.username === body.username) {
@@ -50,9 +50,9 @@ export class UserController {
   }
 
   @Roles([$Enums.Role.ADMIN])
-  @Post('delete')
+  @Post('remove')
   @Header('content-type', 'application/json')
-  async delete(@Body() body: UserDeleteDto, @Request() req: Request): Promise<ResponseUpdateUser> {
+  async remove(@Body() body: UserRemoveDto, @Request() req: Request): Promise<ResponseUpdate> {
     const user = req.user
 
     if (user.username === body.username) {
@@ -63,14 +63,14 @@ export class UserController {
       throw new HttpException('未知的 username 值', HttpStatus.BAD_REQUEST)
     }
 
-    await this.userService.delete(body.username)
+    await this.userService.remove(body.username)
 
     return { message: '删除成功!' }
   }
 
   @Get()
   @Header('content-type', 'application/json')
-  async getUser(@Request() req: Request): Promise<ResponseGetUser> {
+  async find(@Request() req: Request): Promise<ResponseGetUser> {
     await this.userService.check(req.user.username)
 
     const user = await this.userService.find(req.user.username)
@@ -81,9 +81,9 @@ export class UserController {
   }
 
   @Roles([$Enums.Role.ADMIN])
-  @Post('page')
+  @Post('find-all')
   @Header('Content-Type', 'application/json')
-  async findAll(@Body() body: UserPageDto): Promise<ResponseFindAll> {
+  async findAll(@Body() body: UserFindAllDto): Promise<ResponseFindAll> {
     const data = await this.userService.findAll(body)
 
     return { data }

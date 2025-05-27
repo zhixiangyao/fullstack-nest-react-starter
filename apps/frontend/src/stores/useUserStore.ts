@@ -1,9 +1,9 @@
-import type { LoginRequest, RegisterRequest, RegisterResponse, TUser } from '~/fetchers/type'
+import type { CreateRequest, CreateResponse, LoginRequest, TUser } from '~/fetchers'
 import { getStorageStateByKey } from 'utils'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { getCurrentUserInfo, login, register } from '~/fetchers'
+import * as fetchers from '~/fetchers'
 
 interface Store {
   remember: boolean
@@ -18,7 +18,7 @@ interface Store {
   handleClear: () => void
   handleLogin: (params: LoginRequest) => Promise<void>
   handleLogout: () => Promise<void>
-  handleRegister: (params: RegisterRequest, successfulCallback?: (response: RegisterResponse) => void) => Promise<void>
+  handleCreate: (params: CreateRequest, successfulCallback?: (response: CreateResponse) => void) => Promise<void>
   handleGetCurrentUserInfo: () => Promise<void>
 }
 
@@ -44,7 +44,7 @@ export const useUserStore = create<Store>()(
       handleLogin: async (params) => {
         try {
           set(() => ({ loading: true }))
-          const { data } = await login(params)
+          const { data } = await fetchers.login(params)
           set(() => ({ token: data.token }))
         }
         catch {
@@ -57,10 +57,10 @@ export const useUserStore = create<Store>()(
       handleLogout: async () => {
         get().handleClear()
       },
-      handleRegister: async (params, successfulCallback) => {
+      handleCreate: async (params, successfulCallback) => {
         try {
           set(() => ({ loading: true }))
-          const response = await register(params)
+          const response = await fetchers.create(params)
           successfulCallback?.(response)
         }
         finally {
@@ -72,7 +72,7 @@ export const useUserStore = create<Store>()(
           set(() => ({ loading: true }))
           if (get().token === null)
             return
-          const { data } = await getCurrentUserInfo()
+          const { data } = await fetchers.getCurrentUserInfo()
           set(() => ({ user: data.user, loaded: true }))
         }
         catch {

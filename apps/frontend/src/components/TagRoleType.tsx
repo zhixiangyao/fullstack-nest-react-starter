@@ -3,7 +3,7 @@ import { Tag } from 'antd'
 import React, { memo } from 'react'
 import { stringCapitalization } from 'utils'
 
-import { EnumRole } from '~/fetchers/type'
+import { EnumRole } from '~/fetchers'
 
 interface Props {
   value?: EnumRole
