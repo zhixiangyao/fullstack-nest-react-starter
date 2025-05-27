@@ -33,7 +33,7 @@ export class UserController {
     const userUpdateInput: Prisma.UserUpdateInput = {}
 
     if (body.status) {
-      if (req.user.username === body.username) {
+      if (req.user.username === body.username && body.status === $Enums.Status.Inactive) {
         throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
       }
 
