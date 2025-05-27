@@ -72,7 +72,7 @@ export const useUserStore = create<Store>()(
           set(() => ({ loading: true }))
           if (get().token === null)
             return
-          const { data } = await fetchers.getCurrentUserInfo()
+          const { data } = await fetchers.find()
           set(() => ({ user: data.user, loaded: true }))
         }
         catch {

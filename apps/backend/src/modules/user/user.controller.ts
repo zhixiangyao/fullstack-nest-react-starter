@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
-import { $Enums, Status } from '@prisma/client'
+import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
+import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
-import { UserCreateDto, UserFindAllDto, UserRemoveDto, UserUpdateDto } from './dto/user.dto'
+import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './dto/user.dto'
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
 
 import { Roles } from '~/common/decorators/roles.decorator'
@@ -30,21 +30,21 @@ export class UserController {
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
-    const user = req.user
+    const userUpdateInput: Prisma.UserUpdateInput = {}
 
-    if (user.username === body.username) {
-      throw new HttpException('不可修改自身', HttpStatus.BAD_REQUEST)
+    if (body.status) {
+      if (req.user.username === body.username) {
+        throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
+      }
+
+      userUpdateInput.status = body.status
     }
 
-    if (!(await this.userService.has(body.username))) {
-      throw new HttpException('未知的 username 值', HttpStatus.BAD_REQUEST)
+    if (body.email) {
+      userUpdateInput.email = body.email
     }
 
-    if (body.status !== Status.Active && body.status !== Status.Inactive) {
-      throw new HttpException('未知的 status 值', HttpStatus.BAD_REQUEST)
-    }
-
-    await this.userService.update(body.username, { status: body.status })
+    await this.userService.update(body.username, userUpdateInput)
 
     return { message: '更新成功' }
   }
@@ -53,9 +53,9 @@ export class UserController {
   @Post('remove')
   @Header('content-type', 'application/json')
   async remove(@Body() body: UserRemoveDto, @Request() req: Request): Promise<ResponseUpdate> {
-    const user = req.user
+    const username = req.user.username
 
-    if (user.username === body.username) {
+    if (username === body.username) {
       throw new HttpException('不可删除自身', HttpStatus.BAD_REQUEST)
     }
 
@@ -68,12 +68,12 @@ export class UserController {
     return { message: '删除成功!' }
   }
 
-  @Get()
+  @Post('find')
   @Header('content-type', 'application/json')
-  async find(@Request() req: Request): Promise<ResponseGetUser> {
-    await this.userService.check(req.user.username)
+  async find(@Body() body: UserFindDto, @Request() req: Request): Promise<ResponseGetUser> {
+    const username = body.username ?? req.user.username
 
-    const user = await this.userService.find(req.user.username)
+    const user = await this.userService.find(username)
 
     const userWithoutPassword = deleteProperty(user, 'password')
 

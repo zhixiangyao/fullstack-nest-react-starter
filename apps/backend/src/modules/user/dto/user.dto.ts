@@ -5,27 +5,37 @@ import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-valida
 export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
-  readonly username: string
+  readonly username: User['email']
 
   @IsString()
   @IsNotEmpty()
-  readonly password: string
+  readonly password: User['password']
 }
 
 export class UserUpdateDto {
-  @IsEnum($Enums.Status)
-  @IsNotEmpty()
-  readonly status: $Enums.Status
-
   @IsString()
   @IsNotEmpty()
   readonly username: User['username']
+
+  @IsEnum($Enums.Status)
+  @IsOptional()
+  readonly status?: User['status']
+
+  @IsString()
+  @IsOptional()
+  readonly email?: User['email']
 }
 
 export class UserRemoveDto {
   @IsString()
   @IsNotEmpty()
   readonly username: User['username']
+}
+
+export class UserFindDto {
+  @IsString()
+  @IsOptional()
+  readonly username?: User['username']
 }
 
 export class UserFindAllDto {

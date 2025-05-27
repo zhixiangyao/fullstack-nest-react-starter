@@ -3,7 +3,8 @@ import type {
   CreateResponse,
   FindAllRequest,
   FindAllResponse,
-  GetCurrentUserInfoResponse,
+  FindRequest,
+  FindResponse,
   LoginRequest,
   LoginResponse,
   RemoveRequest,
@@ -12,7 +13,7 @@ import type {
   UpdateResponse,
 } from './user.type'
 
-import { fetchGet, fetchPost } from '~/utils/fetch'
+import { fetchPost } from '~/utils/fetch'
 
 export async function login(data: LoginRequest) {
   const result = await fetchPost<LoginResponse>('/api/auth/login', JSON.stringify(data))
@@ -26,8 +27,8 @@ export async function create(data: CreateRequest) {
   return result
 }
 
-export async function getCurrentUserInfo() {
-  const result = await fetchGet<GetCurrentUserInfoResponse>('/api/user')
+export async function find(data?: FindRequest) {
+  const result = await fetchPost<FindResponse>('/api/user/find', JSON.stringify(data))
 
   return result
 }

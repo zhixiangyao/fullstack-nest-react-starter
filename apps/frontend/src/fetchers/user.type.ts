@@ -27,7 +27,10 @@ export interface TUser {
   age: number | null
 }
 
-export interface LoginRequest { username: string, password: string }
+export interface LoginRequest {
+  username: string
+  password: string
+}
 
 export interface LoginResponse {
   data: {
@@ -35,11 +38,20 @@ export interface LoginResponse {
   }
 }
 
-export interface CreateRequest { username: string, password: string }
+export interface CreateRequest {
+  username: string
+  password: string
+}
 
-export interface CreateResponse { message: string }
+export interface CreateResponse {
+  message: string
+}
 
-export interface GetCurrentUserInfoResponse {
+export interface FindRequest {
+  username?: string
+}
+
+export interface FindResponse {
   data: {
     user: TUser
   }
@@ -59,10 +71,14 @@ export interface FindAllResponse {
   }
 }
 
-export type UpdateRequest = Pick<TUser, 'username' | 'status'>
+export type UpdateRequest = Pick<TUser, 'username'> & Partial<Pick<TUser, 'status' | 'email'>>
 
-export interface UpdateResponse { message: string }
+export interface UpdateResponse {
+  message: string
+}
 
 export type RemoveRequest = Pick<TUser, 'username'>
 
-export interface RemoveResponse { message: string }
+export interface RemoveResponse {
+  message: string
+}
