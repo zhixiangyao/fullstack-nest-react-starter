@@ -1,6 +1,6 @@
 import { $Enums } from '@prisma/client'
 import type { User } from '@prisma/client'
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class UserCreateDto {
   @IsString()
@@ -39,11 +39,11 @@ export class UserFindDto {
 }
 
 export class UserFindAllDto {
-  @IsNumber()
+  @IsInt()
   @IsOptional()
-  readonly pageNo?: number
+  readonly pageNo = 1
 
-  @IsNumber()
+  @IsInt()
   @IsOptional()
-  readonly pageSize?: number
+  readonly pageSize = 20
 }
