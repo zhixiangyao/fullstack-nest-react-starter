@@ -102,12 +102,6 @@ export const CACHE_KEY_GET_USER_LIST = 'cacheKey-share-findAll'
 export function useUserList() {
   const { data, loading, runAsync } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
-    defaultParams: [
-      {
-        pageNo: 1,
-        pageSize: 20,
-      },
-    ],
   })
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
