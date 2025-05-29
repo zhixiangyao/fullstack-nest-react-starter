@@ -17,7 +17,7 @@ model User {
   roles     Role[]    @default([USER])
   status    Status    @default(Active)
   createdAt DateTime  @default(now()) @db.Timestamptz()
-  updatedAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @default(now()) @db.Timestamptz()
   lastLogin DateTime? @db.Timestamptz()
   email     String?
   sex       Sex?

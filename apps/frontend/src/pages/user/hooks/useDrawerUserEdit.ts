@@ -1,5 +1,6 @@
 import type { TUser } from '~/fetchers'
 import { create } from 'zustand'
+
 import * as fetchers from '~/fetchers'
 
 interface Store {

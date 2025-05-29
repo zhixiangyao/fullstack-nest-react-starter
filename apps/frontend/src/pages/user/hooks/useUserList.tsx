@@ -3,10 +3,11 @@ import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
 import type { FindAllRequest, TUser } from '~/fetchers'
 import { useRequest, useSize } from 'ahooks'
-import { Form } from 'antd'
+import { Form, Tag } from 'antd'
+import dayjs from 'dayjs'
 import React, { useMemo } from 'react'
+import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
-import { FormatOptions, formatTime } from 'utils'
 import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 
@@ -64,7 +65,14 @@ const columns: ColumnsType<TUser> = [
     key: 'createdAt',
     width: 200,
     render(_, { createdAt }) {
-      return <span>{createdAt ? formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+      return (
+        <div className="flex flex-col gap-1 items-start">
+          <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
+          <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
+            {timeAgo(dayjs(createdAt).valueOf())}
+          </Tag>
+        </div>
+      )
     },
   },
   {
@@ -73,7 +81,14 @@ const columns: ColumnsType<TUser> = [
     key: 'updatedAt',
     width: 200,
     render(_, { updatedAt }) {
-      return <span>{updatedAt ? formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+      return (
+        <div className="flex flex-col gap-1 items-start">
+          <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
+          <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
+            {timeAgo(dayjs(updatedAt).valueOf())}
+          </Tag>
+        </div>
+      )
     },
   },
   {
@@ -82,7 +97,17 @@ const columns: ColumnsType<TUser> = [
     key: 'lastLogin',
     width: 200,
     render(_, { lastLogin }) {
-      return <span>{lastLogin ? formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/'}</span>
+      if (!lastLogin)
+        return '-'
+
+      return (
+        <div className="flex flex-col gap-1 items-start">
+          <span>{formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
+          <Tag className="select-none" color={getColorByDate(dayjs(lastLogin).valueOf())}>
+            {timeAgo(dayjs(lastLogin).valueOf())}
+          </Tag>
+        </div>
+      )
     },
   },
   {

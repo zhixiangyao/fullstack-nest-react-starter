@@ -24,7 +24,7 @@ function UserPage() {
         handleReset={userList.handleReset}
       />
 
-      <Table
+      <Table<TUser>
         size="small"
         rowKey={'uuid' satisfies keyof TUser}
         columns={userList.columns}

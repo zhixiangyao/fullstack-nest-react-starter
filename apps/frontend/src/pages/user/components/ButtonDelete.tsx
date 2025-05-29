@@ -34,12 +34,23 @@ const ButtonDelete: React.FC<Props> = ({ record }) => {
   return (
     <Popconfirm
       title="删除用户"
-      description="您确定要删除此用户吗?"
+      description={(
+        <div>
+          您确定要删除
+          <b className="text-red-600 mx-1">{record.username}</b>
+          用户吗?
+        </div>
+      )}
       onConfirm={handleConfirm}
       okText="确定"
       cancelText="取消"
     >
-      <Button danger type="link" className="!px-0" disabled={loadingFindAll || loadingDelete || record.roles.includes(EnumRole.ADMIN)}>
+      <Button
+        danger
+        type="link"
+        className="!px-0"
+        disabled={loadingFindAll || loadingDelete || record.roles.includes(EnumRole.ADMIN)}
+      >
         删除
       </Button>
     </Popconfirm>
