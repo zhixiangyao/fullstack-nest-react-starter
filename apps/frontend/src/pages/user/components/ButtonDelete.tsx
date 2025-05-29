@@ -12,7 +12,7 @@ interface Props {
   record: TUser
 }
 
-export const ButtonDelete: React.FC<Props> = ({ record }) => {
+const ButtonDelete: React.FC<Props> = ({ record }) => {
   const { message } = AntdApp.useApp()
   const { loading: loadingUp, runAsync } = useRequest(fetchers.remove, { manual: true })
   const { refreshAsync, loading: loadingGet } = useRequest(fetchers.findAll, {
@@ -45,3 +45,5 @@ export const ButtonDelete: React.FC<Props> = ({ record }) => {
     </Popconfirm>
   )
 }
+
+export { ButtonDelete }

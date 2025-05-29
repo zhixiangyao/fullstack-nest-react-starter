@@ -12,7 +12,7 @@ import { Register } from '~/layout/components/Register'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
-export function Layout() {
+function Layout() {
   const location = useLocation()
   const { isLoginOrRegister } = useAppStore()
   const { token, loaded, handleGetCurrentUserInfo } = useUserStore()
@@ -55,3 +55,5 @@ export function Layout() {
     </AntdLayout>
   )
 }
+
+export { Layout }

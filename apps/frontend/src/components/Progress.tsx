@@ -1,9 +1,12 @@
 import { useNProgress } from '@tanem/react-nprogress'
 import clsx from 'clsx'
-
 import React from 'react'
 
-export const Progress: React.FC<{ isAnimating: boolean }> = ({ isAnimating }) => {
+interface ProgressProps {
+  isAnimating: boolean
+}
+
+function Progress({ isAnimating }: ProgressProps) {
   const { animationDuration, isFinished, progress } = useNProgress({
     isAnimating,
   })
@@ -28,3 +31,5 @@ export const Progress: React.FC<{ isAnimating: boolean }> = ({ isAnimating }) =>
     </div>
   )
 }
+
+export { Progress }

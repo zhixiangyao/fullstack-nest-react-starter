@@ -1,3 +1,5 @@
-export function HomePage() {
+function HomePage() {
   return 'Home'
 }
+
+export { HomePage }

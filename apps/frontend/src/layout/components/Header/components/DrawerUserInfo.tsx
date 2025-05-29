@@ -11,7 +11,7 @@ interface Props {
   setOpen: React.Dispatch<boolean>
 }
 
-export const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
+const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
   const { user } = useUserStore()
 
   const handleClose = useCallback(() => {
@@ -61,3 +61,5 @@ export const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
   )
 })
 DrawerUserInfo.displayName = 'DrawerUserInfo'
+
+export { DrawerUserInfo }

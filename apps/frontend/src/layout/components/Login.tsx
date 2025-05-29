@@ -10,7 +10,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 type FieldType = LoginRequest
 
-export const rules = {
+const rules = {
   username: [{ required: true, message: '请输入您的 username!' }] satisfies Rule[],
   password: [{ required: true, message: '请输入您的 password!' }] satisfies Rule[],
 }
@@ -19,7 +19,7 @@ interface Props {
   className?: string
 }
 
-export const Login = memo<Props>(({ className }) => {
+const Login = memo<Props>(({ className }) => {
   const { handleSwitchLoginOrRegister } = useAppStore()
   const { remember, loading, user, handleLogin, handleRemember } = useUserStore()
 
@@ -79,3 +79,5 @@ export const Login = memo<Props>(({ className }) => {
   )
 })
 Login.displayName = 'Login'
+
+export { Login, rules }

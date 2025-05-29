@@ -7,7 +7,7 @@ import * as fetchers from '~/fetchers'
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
-export type TFieldUser = Omit<TUser, 'status'> & { status: boolean }
+type TFieldUser = Omit<TUser, 'status'> & { status: boolean }
 
 const formItemLayout = {
   labelCol: {
@@ -20,7 +20,7 @@ const formItemLayout = {
   },
 }
 
-export const DrawerUserEdit = memo(() => {
+const DrawerUserEdit = memo(() => {
   const { message } = AntdApp.useApp()
   const drawerUserEdit = useDrawerUserEdit()
   const { loading, runAsync } = useRequest(fetchers.update, {
@@ -106,3 +106,6 @@ export const DrawerUserEdit = memo(() => {
   )
 })
 DrawerUserEdit.displayName = 'DrawerUserEdit'
+
+export { DrawerUserEdit }
+export type { TFieldUser }

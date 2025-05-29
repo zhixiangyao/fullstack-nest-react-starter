@@ -12,7 +12,7 @@ const watermarkConfig: WatermarkProps = {
 
 interface Props {}
 
-export const Main = memo<Props>(() => {
+const Main = memo<Props>(() => {
   return (
     <Watermark
       className="h-[calc(100vh_-_50px)] w-full overflow-y-auto overflow-x-hidden px-3 pt-2"
@@ -24,3 +24,5 @@ export const Main = memo<Props>(() => {
   )
 })
 Main.displayName = 'Main'
+
+export { Main }

@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 
 interface Props {}
 
-export const Header = memo<Props>(() => {
+const Header = memo<Props>(() => {
   return (
     <Space className="mb-2 w-full justify-between">
       <Space>TODO</Space>
@@ -11,3 +11,5 @@ export const Header = memo<Props>(() => {
   )
 })
 Header.displayName = 'Header'
+
+export { Header }

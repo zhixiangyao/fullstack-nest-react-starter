@@ -8,7 +8,7 @@ interface Props {
   record: TUser
 }
 
-export const ButtonEdit: React.FC<Props> = ({ record }) => {
+const ButtonEdit: React.FC<Props> = ({ record }) => {
   const drawerUserEdit = useDrawerUserEdit()
 
   return (
@@ -17,3 +17,5 @@ export const ButtonEdit: React.FC<Props> = ({ record }) => {
     </Button>
   )
 }
+
+export { ButtonEdit }

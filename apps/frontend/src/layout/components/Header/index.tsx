@@ -22,7 +22,7 @@ const items: MenuProps['items'] = [
 
 interface Props {}
 
-export const Header = memo<Props>(() => {
+const Header = memo<Props>(() => {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const { user, handleLogout } = useUserStore()
@@ -80,3 +80,5 @@ export const Header = memo<Props>(() => {
   )
 })
 Header.displayName = 'Header'
+
+export { Header }

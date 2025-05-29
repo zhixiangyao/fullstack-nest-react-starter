@@ -15,7 +15,7 @@ interface Props {
   className?: string
 }
 
-export const Register = memo<Props>(({ className }) => {
+const Register = memo<Props>(({ className }) => {
   const { handleSwitchLoginOrRegister } = useAppStore()
   const { loading, handleCreate } = useUserStore()
   const { message } = App.useApp()
@@ -67,3 +67,5 @@ export const Register = memo<Props>(({ className }) => {
   )
 })
 Register.displayName = 'Register'
+
+export { Register }

@@ -13,7 +13,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {}
 
-export const Nav = memo<Props>(() => {
+const Nav = memo<Props>(() => {
   const isTablet = useIsTablet()
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -75,3 +75,5 @@ export const Nav = memo<Props>(() => {
   )
 })
 Nav.displayName = 'Nav'
+
+export { Nav }

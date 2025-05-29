@@ -6,7 +6,7 @@ import { DrawerUserEdit } from './components/DrawerUserEdit'
 import { Header } from './components/Header'
 import { useUserList } from './hooks/useUserList'
 
-export function UserPage() {
+function UserPage() {
   const userList = useUserList()
 
   return (
@@ -28,3 +28,5 @@ export function UserPage() {
     </>
   )
 }
+
+export { UserPage }
