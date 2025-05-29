@@ -1,12 +1,10 @@
 import type { MenuProps } from 'antd'
 import { HeartTwoTone } from '@ant-design/icons'
-import { Layout as AntdLayout, Menu } from 'antd'
-import clsx from 'clsx'
-import React, { memo, useCallback, useEffect, useMemo } from 'react'
+import { Menu } from 'antd'
+import React, { memo, useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 
-import { useIsTablet } from '~/hooks/useIsTablet'
 import { routes } from '~/router'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
@@ -14,10 +12,9 @@ import { useUserStore } from '~/stores/useUserStore'
 interface Props {}
 
 const Nav = memo<Props>(() => {
-  const isTablet = useIsTablet()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { width, collapsed, handleCollapsed, handleDisable } = useAppStore()
+  const appStore = useAppStore()
   const { user } = useUserStore()
 
   const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
@@ -35,43 +32,26 @@ const Nav = memo<Props>(() => {
     [user?.roles],
   )
 
-  useEffect(() => {
-    handleDisable(isTablet)
-  }, [handleDisable, isTablet])
-
   return (
-    <AntdLayout.Sider
-      className="min-h-screen"
-      width={width}
-      collapsed={collapsed}
-      collapsible
-      onCollapse={isTablet ? undefined : handleCollapsed}
-    >
-      <div
-        className="sticky top-0 z-[1] flex h-[70px] w-full cursor-pointer select-none items-center justify-center"
-        onClick={isTablet ? undefined : handleCollapsed}
-      >
+    <nav className="min-h-screen">
+      <div className="sticky top-0 z-[1] flex h-[70px] w-full cursor-pointer select-none items-center justify-center">
         <HeartTwoTone className="text-xl" />
       </div>
 
-      <div
-        className={clsx(
-          collapsed ? 'text-[40px] leading-[40px]' : 'text-[100px] leading-[100px]',
-          'absolute bottom-20 w-full text-center text-white opacity-20 transition-all duration-[0.2s] ease-[ease]',
-        )}
-      >
+      <div className="absolute bottom-20 w-full text-center text-white opacity-20 transition-all duration-[0.2s] ease-[ease]">
         {stringCapitalization(import.meta.env.VITE_APP_NODE_ENV.slice(0, 3))}
       </div>
 
       <Menu
-        theme="dark"
         mode="inline"
+        className="!border-transparent"
+        items={menus}
         forceSubMenuRender={false}
         selectedKeys={[pathname]}
         onClick={handleMenuClick}
-        items={menus}
+        inlineCollapsed={appStore.sizes[0] === 80}
       />
-    </AntdLayout.Sider>
+    </nav>
   )
 })
 Nav.displayName = 'Nav'

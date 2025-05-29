@@ -1,27 +1,21 @@
 import { create } from 'zustand'
 
 interface Store {
-  width: number
-  collapsed: boolean
-  isLoginOrRegister: 'login' | 'register'
-  disable: boolean
+  sizes: number[]
+  state: 'login' | 'register'
 
-  handleCollapsed: () => void
-  handleSwitchLoginOrRegister: () => void
-  handleDisable: (disable: boolean) => void
+  handleSwitchSate: () => void
+  handleSizes: (sizes: number[]) => void
 }
 
-export const useAppStore = create<Store>()((set, get) => ({
-  width: 200,
-  collapsed: false,
-  isLoginOrRegister: 'login',
-  disable: false,
+const useAppStore = create<Store>()(set => ({
+  sizes: [80],
+  state: 'login',
 
-  handleCollapsed: () => get().disable === false && set(({ collapsed }) => ({ collapsed: !collapsed })),
-  handleSwitchLoginOrRegister: () => {
-    set(({ isLoginOrRegister }) => {
-      return { isLoginOrRegister: isLoginOrRegister === 'login' ? 'register' : 'login' }
-    })
+  handleSwitchSate: () => {
+    set(({ state }) => ({ state: state === 'login' ? 'register' : 'login' }))
   },
-  handleDisable: disable => set({ disable }),
+  handleSizes: (sizes: number[]) => set({ sizes }),
 }))
+
+export { useAppStore }

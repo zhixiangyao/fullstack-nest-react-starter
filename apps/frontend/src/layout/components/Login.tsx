@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Login = memo<Props>(({ className }) => {
-  const { handleSwitchLoginOrRegister } = useAppStore()
+  const appStore = useAppStore()
   const { remember, loading, user, handleLogin, handleRemember } = useUserStore()
 
   const handleFinish = useCallback(
@@ -64,7 +64,7 @@ const Login = memo<Props>(({ className }) => {
             </Checkbox>
           </Form.Item>
 
-          <a className="float-right select-none" onClick={handleSwitchLoginOrRegister}>
+          <a className="float-right select-none" onClick={appStore.handleSwitchSate}>
             注册
           </a>
         </Form.Item>

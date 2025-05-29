@@ -22,7 +22,7 @@ interface Store {
   handleGetCurrentUserInfo: () => Promise<void>
 }
 
-export const useUserStore = create<Store>()(
+const useUserStore = create<Store>()(
   persist(
     (set, get) => ({
       remember: true,
@@ -96,3 +96,5 @@ export const useUserStore = create<Store>()(
     },
   ),
 )
+
+export { useUserStore }

@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Register = memo<Props>(({ className }) => {
-  const { handleSwitchLoginOrRegister } = useAppStore()
+  const { handleSwitchSate } = useAppStore()
   const { loading, handleCreate } = useUserStore()
   const { message } = App.useApp()
 
@@ -27,13 +27,13 @@ const Register = memo<Props>(({ className }) => {
           return
 
         handleCreate({ username, password }, (e) => {
-          handleSwitchLoginOrRegister()
+          handleSwitchSate()
           message.success(e.message)
         })
       }
       catch {}
     },
-    [handleCreate, handleSwitchLoginOrRegister, message],
+    [handleCreate, handleSwitchSate, message],
   )
 
   return (
@@ -52,7 +52,7 @@ const Register = memo<Props>(({ className }) => {
         </Form.Item>
 
         <Form.Item>
-          <a className="float-right select-none" onClick={handleSwitchLoginOrRegister}>
+          <a className="float-right select-none" onClick={handleSwitchSate}>
             登录
           </a>
         </Form.Item>

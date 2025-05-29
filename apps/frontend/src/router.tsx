@@ -39,14 +39,14 @@ interface Route {
 const routes: Route[] = [
   {
     label: 'Home',
-    path: 'home',
+    path: '/home',
     icon: <HomeOutlined />,
     element: import('./pages/home').then(({ HomePage }) => HomePage),
     roles: [EnumRole.ADMIN, EnumRole.USER],
   },
   {
     label: 'User',
-    path: 'user',
+    path: '/user',
     icon: <UserOutlined />,
     element: import('./pages/user').then(({ UserPage }) => UserPage),
     roles: [EnumRole.ADMIN],

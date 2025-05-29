@@ -1,4 +1,4 @@
-import { Layout as AntdLayout } from 'antd'
+import { Splitter } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 function Layout() {
   const location = useLocation()
-  const { isLoginOrRegister } = useAppStore()
+  const appStore = useAppStore()
   const { token, loaded, handleGetCurrentUserInfo } = useUserStore()
   const [pathname, setPathname] = useState('/')
 
@@ -29,7 +29,7 @@ function Layout() {
   }, [handleGetCurrentUserInfo, token])
 
   if (!token) {
-    return <>{isLoginOrRegister === 'login' ? <Login /> : <Register />}</>
+    return <>{appStore.state === 'login' ? <Login /> : <Register />}</>
   }
 
   if (!loaded) {
@@ -41,18 +41,21 @@ function Layout() {
   }
 
   return (
-    <AntdLayout>
-
+    <>
       <Progress isAnimating={isAnimating} />
 
-      <Nav />
+      <Splitter onResize={appStore.handleSizes}>
+        <Splitter.Panel size={appStore.sizes[0]} min={80} max={400} className="!p-0" collapsible>
+          <Nav />
+        </Splitter.Panel>
 
-      <AntdLayout.Content>
-        <Header />
+        <Splitter.Panel size={appStore.sizes[1]}>
+          <Header />
 
-        <Main />
-      </AntdLayout.Content>
-    </AntdLayout>
+          <Main />
+        </Splitter.Panel>
+      </Splitter>
+    </>
   )
 }
 
