@@ -1,7 +1,8 @@
+import process from 'node:process'
 import { Module, RequestMethod } from '@nestjs/common'
+import { JwtModule } from '@nestjs/jwt'
 import type { MiddlewareConsumer, ModuleMetadata, NestModule } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
-import process from 'node:process'
 
 import { AuthModule } from '~/modules/auth/auth.module'
 import { UserModule } from '~/modules/user/user.module'
@@ -9,8 +10,19 @@ import { FrontendStaticModule } from '~/modules/frontend-static.module'
 import { AuthGuard } from '~/common/guards/auth.guard'
 import { RolesGuard } from '~/common/guards/roles.guard'
 import { loggerMiddleware } from '~/common/middleware/logger.middleware'
+import { PrismaModule } from '~/modules/prisma/prisma.module'
 
-const imports: ModuleMetadata['imports'] = [AuthModule, UserModule]
+const imports: ModuleMetadata['imports'] = [
+  AuthModule,
+  UserModule,
+  PrismaModule,
+  JwtModule.register({
+    global: true,
+    secret: process.env.AUTH_SECRET,
+    // https://github.com/vercel/ms
+    signOptions: { expiresIn: '3d' },
+  }),
+]
 
 // Directly use FrontendStaticModule to provide packaged static.
 if (process.env.NODE_ENV !== 'dev') {

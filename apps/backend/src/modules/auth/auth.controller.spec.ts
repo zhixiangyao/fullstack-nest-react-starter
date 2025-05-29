@@ -1,9 +1,9 @@
+import process from 'node:process'
 import { Test, TestingModule } from '@nestjs/testing'
 import { JwtModule } from '@nestjs/jwt'
 
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
-import { jwtConstants } from './constants'
 
 import { UserModule } from '~/modules/user/user.module'
 
@@ -16,7 +16,7 @@ describe('authController', () => {
         UserModule,
         JwtModule.register({
           global: true,
-          secret: jwtConstants.secret,
+          secret: process.env.AUTH_SECRET,
           // https://github.com/vercel/ms
           signOptions: { expiresIn: '7d' },
         }),

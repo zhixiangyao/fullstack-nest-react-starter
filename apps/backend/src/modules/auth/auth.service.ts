@@ -8,10 +8,7 @@ import { UserService } from '~/modules/user/user.service'
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
   async signIn(username: string, password: string) {
     if ((await this.userService.validate(username, password)) === false) {

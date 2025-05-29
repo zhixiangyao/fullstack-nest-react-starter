@@ -13,8 +13,8 @@ async function main() {
     await prisma.user.delete({ where: { uuid } })
   }
 
-  const hashedPassword0 = await argon2.hash('666888qifei')
-  const hashedPassword1 = await argon2.hash('yao')
+  const hashedPassword0 = await argon2.hash('root')
+  const hashedPassword1 = await argon2.hash('123456')
 
   await prisma.user.createMany({
     data: [
@@ -24,7 +24,7 @@ async function main() {
         roles: [$Enums.Role.ADMIN],
       },
       ...Array.from({ length: 100 }).map((_, i) => ({
-        username: `yao${i}`,
+        username: `user${i}`,
         password: hashedPassword1,
         roles: [$Enums.Role.USER],
       } satisfies Partial<User>)),

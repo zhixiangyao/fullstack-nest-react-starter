@@ -3,7 +3,7 @@ import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
-import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './dto/user.dto'
+import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
 
 import { Roles } from '~/common/decorators/roles.decorator'
