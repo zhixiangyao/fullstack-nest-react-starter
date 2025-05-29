@@ -23,7 +23,7 @@ const formItemLayout = {
 const DrawerUserEdit = memo(() => {
   const { message } = AntdApp.useApp()
   const drawerUserEdit = useDrawerUserEdit()
-  const { loading, runAsync } = useRequest(fetchers.update, {
+  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.update, {
     manual: true,
   })
   const { refreshAsync } = useRequest(fetchers.findAll, {
@@ -73,18 +73,18 @@ const DrawerUserEdit = memo(() => {
       open={drawerUserEdit.open}
       loading={drawerUserEdit.loading}
       footer={(
-        <Button type="primary" onClick={form.submit} loading={loading}>
+        <Button type="primary" onClick={form.submit} loading={loadingUpdate}>
           确定
         </Button>
       )}
     >
       <Form<TFieldUser>
         {...formItemLayout}
-        name="edit-user"
+        name="user-edit"
         autoComplete="off"
         onFinish={handleFinish}
         form={form}
-        disabled={loading}
+        disabled={loadingUpdate}
       >
         <Form.Item<TFieldUser> label="用户名" name="username">
           <Input disabled />

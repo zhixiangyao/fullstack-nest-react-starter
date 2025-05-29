@@ -63,7 +63,7 @@ const Header = memo<Props>(() => {
 
   return (
     <>
-      <header className="flex h-[50px] w-full items-center justify-between bg-gray-200 px-3">
+      <header className="flex h-10 w-full items-center justify-between bg-gray-200 px-3">
         <span className="font-700 text-[20px]">{title}</span>
 
         <div className="flex items-center">

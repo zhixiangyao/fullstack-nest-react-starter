@@ -21,13 +21,28 @@ export class UserService {
   }
 
   async findAll(body: UserFindAllDto) {
-    const { pageNo = 1, pageSize = 10 } = body
+    const { username, pageNo = 1, pageSize = 10 } = body
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
-    const list = await this.prisma.user.findMany({ skip, take, orderBy: { username: 'asc' } })
+    const list = await this.prisma.user.findMany({
+      skip,
+      take,
+      where: {
+        username: {
+          contains: username,
+        },
+      },
+      orderBy: { username: 'asc' },
+    })
 
-    const total = await this.prisma.user.count()
+    const total = await this.prisma.user.count({
+      where: {
+        username: {
+          contains: username,
+        },
+      },
+    })
 
     return {
       list: list.map(user => deleteProperty(user, 'password')),

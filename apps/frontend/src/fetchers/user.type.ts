@@ -58,6 +58,7 @@ export interface FindResponse {
 }
 
 export interface FindAllRequest {
+  username?: string
   pageNo?: number
   pageSize?: number
 }

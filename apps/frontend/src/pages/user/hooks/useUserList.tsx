@@ -1,16 +1,20 @@
 import type { TablePaginationConfig } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import type { TUser } from '~/fetchers'
+import type { TField } from '~/components/Filter'
+import type { FindAllRequest, TUser } from '~/fetchers'
 import { useRequest, useSize } from 'ahooks'
+import { Form } from 'antd'
 import React, { useMemo } from 'react'
-import { FormatOptions, formatTime } from 'utils'
 
+import { FormatOptions, formatTime } from 'utils'
 import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 
 import { ButtonDelete } from '../components/ButtonDelete'
 import { ButtonEdit } from '../components/ButtonEdit'
 import { SwitchStatus } from '../components/SwitchStatus'
+
+type TFieldFilter = FindAllRequest
 
 const columns: ColumnsType<TUser> = [
   {
@@ -97,37 +101,56 @@ const columns: ColumnsType<TUser> = [
   },
 ]
 
+const fields: TField<FindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
+
 export const CACHE_KEY_GET_USER_LIST = 'cacheKey-share-findAll'
 
-export function useUserList() {
+export function useUserList({ filterHeight }: { filterHeight: number }) {
   const { data, loading, runAsync } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
   })
+  const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
     () => ({
+      showTotal: total => `共 ${total} 个`,
       current: data?.data.pageNo,
       total: data?.data.total,
       pageSize: data?.data.pageSize,
-      onChange(page, pageSize) {
-        runAsync({ pageNo: page, pageSize })
+      onChange(pageNo, pageSize) {
+        const reset = form.getFieldsValue()
+        runAsync({ pageNo, pageSize, ...reset })
       },
     }),
-    [data?.data, runAsync],
+    [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
   )
   const size = useSize(document.querySelector('html'))
   const scroll = useMemo(() => {
     const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
-    const y = (size?.height ?? 0) - 50 - 8 - 30 - 39 - 56
+    const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
 
     return { x, y }
-  }, [size?.height])
+  }, [size?.height, filterHeight])
+
+  const handleFinish = (values: TFieldFilter) => {
+    runAsync(values)
+  }
+
+  const handleReset = () => {
+    form.resetFields()
+    runAsync({})
+  }
 
   return {
+    fields,
+    form,
     loading,
     pagination,
     dataSource,
     scroll,
     columns,
+
+    handleFinish,
+    handleReset,
   }
 }

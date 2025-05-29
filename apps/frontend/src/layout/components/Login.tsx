@@ -8,7 +8,7 @@ import React, { memo, useCallback } from 'react'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
-type FieldType = LoginRequest
+type TFieldType = LoginRequest
 
 const rules = {
   username: [{ required: true, message: '请输入您的 username!' }] satisfies Rule[],
@@ -24,7 +24,7 @@ const Login = memo<Props>(({ className }) => {
   const { remember, loading, user, handleLogin, handleRemember } = useUserStore()
 
   const handleFinish = useCallback(
-    async ({ username, password }: FieldType) => {
+    async ({ username, password }: TFieldType) => {
       try {
         if (username === undefined || password === undefined)
           return
@@ -42,18 +42,17 @@ const Login = memo<Props>(({ className }) => {
         <SafetyCertificateOutlined />
       </div>
 
-      <Form<FieldType>
+      <Form<TFieldType>
         name="login"
         className="w-72"
-        wrapperCol={{}}
         onFinish={handleFinish}
         initialValues={{ username: user?.username ?? '' }}
       >
-        <Form.Item<FieldType> name="username" rules={rules.username}>
+        <Form.Item<TFieldType> name="username" rules={rules.username}>
           <Input prefix={<UserOutlined />} placeholder="用户名" />
         </Form.Item>
 
-        <Form.Item<FieldType> name="password" rules={rules.password}>
+        <Form.Item<TFieldType> name="password" rules={rules.password}>
           <Input prefix={<LockOutlined />} type="password" placeholder="密码" />
         </Form.Item>
 

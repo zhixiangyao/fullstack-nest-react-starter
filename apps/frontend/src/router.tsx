@@ -85,4 +85,10 @@ function Router() {
   return <RouterProvider router={router} />
 }
 
-export { Router, routes }
+function genMenus(roles: EnumRole[]) {
+  return routes
+    .filter(route => route.roles.some(role => roles.includes(role)))
+    .map(({ path, label, icon }) => ({ key: path, label, icon }))
+}
+
+export { genMenus, Router, routes }

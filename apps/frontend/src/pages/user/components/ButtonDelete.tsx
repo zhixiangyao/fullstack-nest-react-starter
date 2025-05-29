@@ -14,8 +14,8 @@ interface Props {
 
 const ButtonDelete: React.FC<Props> = ({ record }) => {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUp, runAsync } = useRequest(fetchers.remove, { manual: true })
-  const { refreshAsync, loading: loadingGet } = useRequest(fetchers.findAll, {
+  const { loading: loadingDelete, runAsync } = useRequest(fetchers.remove, { manual: true })
+  const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.findAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
     manual: true,
   })
@@ -39,7 +39,7 @@ const ButtonDelete: React.FC<Props> = ({ record }) => {
       okText="确定"
       cancelText="取消"
     >
-      <Button danger type="link" className="!px-0" disabled={loadingGet || loadingUp || record.roles.includes(EnumRole.ADMIN)}>
+      <Button danger type="link" className="!px-0" disabled={loadingFindAll || loadingDelete || record.roles.includes(EnumRole.ADMIN)}>
         删除
       </Button>
     </Popconfirm>

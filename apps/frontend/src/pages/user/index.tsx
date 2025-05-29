@@ -1,20 +1,30 @@
 import type { TUser } from '~/fetchers'
+import { useSize } from 'ahooks'
 import { Table } from 'antd'
-import React from 'react'
+import React, { useRef } from 'react'
+
+import { Filter } from '~/components/Filter'
 
 import { DrawerUserEdit } from './components/DrawerUserEdit'
-import { Header } from './components/Header'
 import { useUserList } from './hooks/useUserList'
 
 function UserPage() {
-  const userList = useUserList()
+  const ref = useRef<HTMLDivElement>(null)
+  const size = useSize(ref)
+  const userList = useUserList({ filterHeight: size?.height ?? 0 })
 
   return (
     <>
-      <Header />
+      <Filter
+        customRef={ref}
+        loading={userList.loading}
+        form={userList.form}
+        fields={userList.fields}
+        handleFinish={userList.handleFinish}
+        handleReset={userList.handleReset}
+      />
 
       <Table
-        bordered
         size="small"
         rowKey={'uuid' satisfies keyof TUser}
         columns={userList.columns}

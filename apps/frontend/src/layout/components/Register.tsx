@@ -9,7 +9,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 import { rules } from './Login'
 
-type FieldType = CreateRequest
+type TFieldType = CreateRequest
 
 interface Props {
   className?: string
@@ -21,7 +21,7 @@ const Register = memo<Props>(({ className }) => {
   const { message } = App.useApp()
 
   const handleFinish = useCallback(
-    async ({ username, password }: FieldType) => {
+    async ({ username, password }: TFieldType) => {
       try {
         if (username === undefined || password === undefined)
           return
@@ -42,12 +42,12 @@ const Register = memo<Props>(({ className }) => {
         <SafetyCertificateOutlined />
       </div>
 
-      <Form<FieldType> name="login" className="w-72" wrapperCol={{}} onFinish={handleFinish}>
-        <Form.Item<FieldType> name="username" rules={rules.username}>
+      <Form<TFieldType> name="login" className="w-72" wrapperCol={{}} onFinish={handleFinish}>
+        <Form.Item<TFieldType> name="username" rules={rules.username}>
           <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
         </Form.Item>
 
-        <Form.Item<FieldType> name="password" rules={rules.password}>
+        <Form.Item<TFieldType> name="password" rules={rules.password}>
           <Input prefix={<LockOutlined />} type="password" placeholder="请输入密码" />
         </Form.Item>
 
