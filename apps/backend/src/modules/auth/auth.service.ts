@@ -1,8 +1,7 @@
+import type { Payload } from './type'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import dayjs from 'dayjs'
-
-import type { Payload } from './type'
 
 import { UserService } from '~/modules/user/user.service'
 

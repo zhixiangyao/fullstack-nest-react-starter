@@ -1,6 +1,6 @@
+import type { DynamicModule } from '@nestjs/common'
 import { join } from 'node:path'
-
-import { DynamicModule, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({})

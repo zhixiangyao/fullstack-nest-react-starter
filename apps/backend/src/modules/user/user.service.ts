@@ -1,6 +1,6 @@
+import type { Prisma, User } from '@prisma/client'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { $Enums, Status } from '@prisma/client'
-import type { Prisma, User } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { PasswordService } from './password.service'

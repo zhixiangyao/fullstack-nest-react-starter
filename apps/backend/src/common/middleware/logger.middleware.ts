@@ -1,5 +1,5 @@
-import dayjs from 'dayjs'
 import type { NextFunction, Request, Response } from 'express'
+import dayjs from 'dayjs'
 import { FormatOptions, formatTime } from 'utils'
 
 export function loggerMiddleware(req: Request, res: Response, next: NextFunction) {

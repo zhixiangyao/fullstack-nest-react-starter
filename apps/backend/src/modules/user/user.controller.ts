@@ -1,13 +1,14 @@
+import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
 import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { UserService } from './user.service'
 import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
-import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
 
 import { Roles } from '~/common/decorators/roles.decorator'
 import { Public } from '~/common/decorators/public.decorator'
+import { User } from '~/common/decorators/user.decorator'
 
 @Controller('/user')
 export class UserController {
@@ -52,8 +53,8 @@ export class UserController {
   @Roles([$Enums.Role.ADMIN])
   @Post('remove')
   @Header('content-type', 'application/json')
-  async remove(@Body() body: UserRemoveDto, @Request() req: Request): Promise<ResponseUpdate> {
-    const username = req.user.username
+  async remove(@Body() body: UserRemoveDto, @User() user: Request['user']): Promise<ResponseUpdate> {
+    const username = user.username
 
     if (username === body.username) {
       throw new HttpException('不可删除自身', HttpStatus.BAD_REQUEST)
@@ -70,12 +71,11 @@ export class UserController {
 
   @Post('find')
   @Header('content-type', 'application/json')
-  async find(@Body() body: UserFindDto, @Request() req: Request): Promise<ResponseGetUser> {
-    const username = body.username ?? req.user.username
+  async find(@Body() body: UserFindDto, @User() user: Request['user']): Promise<ResponseGetUser> {
+    const username = body.username ?? user.username
 
-    const user = await this.userService.find(username)
-
-    const userWithoutPassword = deleteProperty(user, 'password')
+    const item = await this.userService.find(username)
+    const userWithoutPassword = deleteProperty(item, 'password')
 
     return { data: { user: userWithoutPassword } }
   }
