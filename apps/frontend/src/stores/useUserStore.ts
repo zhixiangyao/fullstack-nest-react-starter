@@ -75,9 +75,6 @@ const useUserStore = create<Store>()(
           const { data } = await fetchers.find()
           set(() => ({ user: data.user, loaded: true }))
         }
-        catch {
-          get().handleClear()
-        }
         finally {
           set(() => ({ loading: false }))
         }
@@ -88,7 +85,7 @@ const useUserStore = create<Store>()(
       storage: createJSONStorage(() => {
         const remember = getStorageStateByKey<{ state?: Store }>('storage__user')?.state?.remember
 
-        return remember === false ? sessionStorage : localStorage
+        return remember ? localStorage : sessionStorage
       }),
       partialize: (state) => {
         return Object.fromEntries(Object.entries(state).filter(([key]) => !['loaded', 'loading'].includes(key)))

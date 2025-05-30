@@ -5,10 +5,8 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { Progress } from '~/components/Progress'
 import { Spinning } from '~/components/Spinning'
 import { Header } from '~/layout/components/Header'
-import { Login } from '~/layout/components/Login'
 import { Main } from '~/layout/components/Main'
 import { Nav } from '~/layout/components/Nav'
-import { Register } from '~/layout/components/Register'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
@@ -29,7 +27,7 @@ function Layout() {
   }, [handleGetCurrentUserInfo, token])
 
   if (!token) {
-    return <>{appStore.state === 'login' ? <Login /> : <Register />}</>
+    return <Navigate replace to="/auth" />
   }
 
   if (!loaded) {

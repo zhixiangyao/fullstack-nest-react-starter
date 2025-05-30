@@ -72,6 +72,10 @@ const router = createBrowserRouter([
     })),
   },
   {
+    path: '/auth',
+    lazy: () => import('./pages/auth').then(({ Auth }) => ({ Component: Auth })),
+  },
+  {
     path: '/404',
     lazy: () => import('./pages/404').then(({ NotFound }) => ({ Component: NotFound })),
   },
@@ -91,4 +95,4 @@ function genMenus(roles: EnumRole[]) {
     .map(({ path, label, icon }) => ({ key: path, label, icon }))
 }
 
-export { genMenus, Router, routes }
+export { genMenus, Router }
