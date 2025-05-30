@@ -3,12 +3,12 @@ import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } fr
 import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
-import { UserService } from './user.service'
-import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
-
-import { Roles } from '~/common/decorators/roles.decorator'
 import { Public } from '~/common/decorators/public.decorator'
+import { Roles } from '~/common/decorators/roles.decorator'
+
 import { User } from '~/common/decorators/user.decorator'
+import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
+import { UserService } from './user.service'
 
 @Controller('/user')
 export class UserController {

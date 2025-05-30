@@ -1,11 +1,11 @@
 import process from 'node:process'
-import { Test, TestingModule } from '@nestjs/testing'
 import { JwtModule } from '@nestjs/jwt'
-
-import { AuthController } from './auth.controller'
-import { AuthService } from './auth.service'
+import { Test, TestingModule } from '@nestjs/testing'
 
 import { UserModule } from '~/modules/user/user.module'
+import { AuthController } from './auth.controller'
+
+import { AuthService } from './auth.service'
 
 describe('authController', () => {
   let controller: AuthController

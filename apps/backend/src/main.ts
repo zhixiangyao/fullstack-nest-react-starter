@@ -1,12 +1,12 @@
 import type { ValidationPipeOptions } from '@nestjs/common'
 import process from 'node:process'
-import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
 import compression from 'compression'
-import 'dotenv/config'
+import { AppModule } from '~/app.module'
 
 import { frontendProxyMiddleware } from '~/common/middleware/proxy.middleware'
-import { AppModule } from '~/app.module'
+import 'dotenv/config'
 
 const validationPipeOptions: ValidationPipeOptions = {
   transform: true,

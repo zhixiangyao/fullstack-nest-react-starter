@@ -1,7 +1,6 @@
 import process from 'node:process'
-import * as argon2 from 'argon2'
-
 import { $Enums, PrismaClient, User } from '@prisma/client'
+import * as argon2 from 'argon2'
 
 // initialize Prisma Client
 const prisma = new PrismaClient()

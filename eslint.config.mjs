@@ -23,7 +23,6 @@ export default antfu(
   {
     files: ['apps/backend/**/*.ts', 'apps/backend/**/*.mjs', 'packages/**/*.js'],
     rules: {
-      'perfectionist/sort-imports': ['off'],
       'ts/consistent-type-imports': ['off'],
     },
   },

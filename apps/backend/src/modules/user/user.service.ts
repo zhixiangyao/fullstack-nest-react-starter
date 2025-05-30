@@ -3,10 +3,10 @@ import { ForbiddenException, Injectable } from '@nestjs/common'
 import { $Enums, Status } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
-import { PasswordService } from './password.service'
-import { UserFindAllDto } from './user.dto'
-
 import { PrismaService } from '~/modules/prisma/prisma.service'
+import { PasswordService } from './password.service'
+
+import { UserFindAllDto } from './user.dto'
 
 @Injectable()
 export class UserService {

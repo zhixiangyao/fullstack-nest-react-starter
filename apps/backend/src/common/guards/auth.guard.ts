@@ -2,8 +2,8 @@ import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import type { Request } from 'express'
 import process from 'node:process'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
 import { Reflector } from '@nestjs/core'
+import { JwtService } from '@nestjs/jwt'
 
 import { IS_PUBLIC_KEY, Public } from '~/common/decorators/public.decorator'
 

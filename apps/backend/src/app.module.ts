@@ -1,17 +1,17 @@
 import type { MiddlewareConsumer, ModuleMetadata, NestModule } from '@nestjs/common'
 import process from 'node:process'
 import { Module, RequestMethod } from '@nestjs/common'
-import { JwtModule } from '@nestjs/jwt'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
+import { JwtModule } from '@nestjs/jwt'
 
-import { AuthModule } from '~/modules/auth/auth.module'
-import { UserModule } from '~/modules/user/user.module'
-import { FrontendStaticModule } from '~/modules/frontend-static.module'
-import { PrismaModule } from '~/modules/prisma/prisma.module'
 import { AuthGuard } from '~/common/guards/auth.guard'
 import { RolesGuard } from '~/common/guards/roles.guard'
 import { LoggerDurationInterceptor } from '~/common/interceptors/logger-duration.interceptor'
 import { loggerMiddleware } from '~/common/middleware/logger.middleware'
+import { AuthModule } from '~/modules/auth/auth.module'
+import { FrontendStaticModule } from '~/modules/frontend-static.module'
+import { PrismaModule } from '~/modules/prisma/prisma.module'
+import { UserModule } from '~/modules/user/user.module'
 
 const imports: ModuleMetadata['imports'] = [
   AuthModule,
