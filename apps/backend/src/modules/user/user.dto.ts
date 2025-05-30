@@ -10,6 +10,10 @@ export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
   readonly password: User['password']
+
+  @IsString()
+  @IsOptional()
+  readonly email?: User['email']
 }
 
 export class UserUpdateDto {

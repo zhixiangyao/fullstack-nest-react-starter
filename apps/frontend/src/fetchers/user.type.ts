@@ -41,6 +41,7 @@ export interface LoginResponse {
 export interface CreateRequest {
   username: string
   password: string
+  email?: string
 }
 
 export interface CreateResponse {

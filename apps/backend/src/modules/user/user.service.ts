@@ -6,7 +6,7 @@ import { deleteProperty } from 'utils'
 import { PrismaService } from '~/modules/prisma/prisma.service'
 import { PasswordService } from './password.service'
 
-import { UserFindAllDto } from './user.dto'
+import { UserCreateDto, UserFindAllDto } from './user.dto'
 
 @Injectable()
 export class UserService {
@@ -52,14 +52,15 @@ export class UserService {
     }
   }
 
-  async create(username: string, password: string): Promise<User> {
-    const hashedPassword = await this.passwordService.hashPassword(password)
+  async create(body: UserCreateDto): Promise<User> {
+    const hashedPassword = await this.passwordService.hashPassword(body.password)
 
     const user = await this.prisma.user.create({
       data: {
-        username,
+        username: body.username,
         password: hashedPassword,
         roles: [$Enums.Role.USER],
+        email: body.email,
       },
     })
 

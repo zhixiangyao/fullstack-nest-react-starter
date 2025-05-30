@@ -22,7 +22,7 @@ export class UserController {
       throw new HttpException('此用户已被注册', HttpStatus.BAD_REQUEST)
     }
 
-    await this.userService.create(body.username, body.password)
+    await this.userService.create(body)
 
     return { message: '注册成功' }
   }

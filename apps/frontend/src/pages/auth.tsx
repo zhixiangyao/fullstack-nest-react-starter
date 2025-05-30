@@ -1,6 +1,6 @@
 import type { FormItemProps } from 'antd'
 import type { CreateRequest, LoginRequest } from '~/fetchers'
-import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { CloudOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import { App as AntdApp, Button, Checkbox, Form, Input, Segmented } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
 
@@ -13,8 +13,9 @@ type TFieldType = LoginRequest & CreateRequest
 type TAuthType = 'Login' | 'Register'
 
 const rules = {
-  username: [{ required: true, message: '请输入您的 username!' }],
-  password: [{ required: true, message: '请输入您的 password!' }],
+  username: [{ required: true, message: '请输入您的用户名!' }],
+  password: [{ required: true, message: '请输入您的密码!' }],
+  email: [],
 } satisfies Record<string, FormItemProps['rules']>
 
 function Auth() {
@@ -25,15 +26,15 @@ function Auth() {
   const background = authType === 'Login' ? '/image1.png' : '/image2.png'
 
   const handleFinish = useCallback(
-    async ({ username, password }: TFieldType) => {
+    async (values: TFieldType) => {
       try {
-        if (username === undefined || password === undefined)
+        if (values.username === undefined || values.password === undefined)
           return
 
         if (authType === 'Login')
-          await handleLogin({ username, password })
+          await handleLogin(values)
         if (authType === 'Register') {
-          await handleCreate({ username, password }, (e) => {
+          await handleCreate(values, (e) => {
             message.success(e.message)
           })
         }
@@ -66,17 +67,17 @@ function Auth() {
         onChange={setAuthType}
         className="select-none"
       />
-      <Form<TFieldType> name="auth" form={form} className="w-72" onFinish={handleFinish}>
+      <Form<TFieldType> name="auth" autoComplete="off" className="w-72" form={form} onFinish={handleFinish}>
         <Form.Item<TFieldType> name="username" rules={rules.username}>
-          <Input prefix={<UserOutlined />} placeholder="用户名" />
+          <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
         </Form.Item>
 
         <Form.Item<TFieldType> name="password" rules={rules.password}>
-          <Input prefix={<LockOutlined />} type="password" placeholder="密码" />
+          <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" />
         </Form.Item>
 
-        <Form.Item>
-          {authType === 'Login' && (
+        {authType === 'Login' && (
+          <Form.Item>
             <Form.Item valuePropName="checked" noStyle>
               <Checkbox
                 className="select-none !text-gray-200"
@@ -86,8 +87,14 @@ function Auth() {
                 记住我
               </Checkbox>
             </Form.Item>
-          )}
-        </Form.Item>
+          </Form.Item>
+        )}
+
+        {authType === 'Register' && (
+          <Form.Item<TFieldType> name="email" rules={rules.email}>
+            <Input prefix={<CloudOutlined />} placeholder="请输入邮箱" />
+          </Form.Item>
+        )}
 
         <Form.Item>
           <Button className="w-full select-none" type="primary" htmlType="submit" loading={loading}>
