@@ -23,13 +23,13 @@
     "zustand": "5.0.5"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.1.7",
-    "@types/node": "22.15.21",
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
+    "@tailwindcss/vite": "4.1.8",
+    "@types/node": "22.15.27",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
     "@vitejs/plugin-react": "4.5.0",
     "rollup": "4.41.1",
-    "tailwindcss": "4.1.7",
+    "tailwindcss": "4.1.8",
     "typescript": "5.8.3",
     "vite": "6.3.5",
     "vite-plugin-checker": "0.9.3",
