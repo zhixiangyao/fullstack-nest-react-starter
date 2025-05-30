@@ -1,4 +1,4 @@
-import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseUpdate } from './type'
+import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseRemove, ResponseUpdate } from './type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
 import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
@@ -53,9 +53,7 @@ export class UserController {
   @Roles([$Enums.Role.ADMIN])
   @Post('remove')
   @Header('content-type', 'application/json')
-  async remove(@Body() body: UserRemoveDto, @User() user: Request['user']): Promise<ResponseUpdate> {
-    const username = user.username
-
+  async remove(@Body() body: UserRemoveDto, @User('username') username: string): Promise<ResponseRemove> {
     if (username === body.username) {
       throw new HttpException('不可删除自身', HttpStatus.BAD_REQUEST)
     }
