@@ -1,7 +1,7 @@
-import { CanActivate, ForbiddenException, Injectable } from '@nestjs/common'
-import type { ExecutionContext } from '@nestjs/common'
-import { Reflector } from '@nestjs/core'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import type { Request } from 'express'
+import { ForbiddenException, Injectable } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
 
 import { IS_ROLES_KEY, Roles } from '~/common/decorators/roles.decorator'
 import { UserService } from '~/modules/user/user.service'
