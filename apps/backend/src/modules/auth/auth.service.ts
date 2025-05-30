@@ -1,4 +1,4 @@
-import type { Payload } from './type'
+import type { JwtSignPayload } from './type'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import dayjs from 'dayjs'
@@ -11,14 +11,17 @@ export class AuthService {
 
   async signIn(username: string, password: string) {
     if ((await this.userService.validate(username, password)) === false) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException('密码错误或者账号错误')
     }
 
     await this.userService.check(username)
 
-    const { uuid } = await this.userService.update(username, { lastLogin: dayjs().toDate() })
-
-    const payload: Payload = { uuid, username }
+    // Login should not change updatedAt.
+    // "User" changes will trigger prima to automatically update "updatedAt", so this needs to be done here.
+    const { updatedAt } = await this.userService.find(username)
+    const lastLogin = dayjs().toDate()
+    const { uuid } = await this.userService.update(username, { lastLogin, updatedAt })
+    const payload: JwtSignPayload = { uuid, username }
 
     return { token: await this.jwtService.signAsync(payload) }
   }

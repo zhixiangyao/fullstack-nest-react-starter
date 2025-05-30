@@ -88,6 +88,7 @@ export class UserService {
 
   async check(username: string) {
     const user = await this.find(username)
+
     if (user.status === Status.Inactive) {
       throw new ForbiddenException('您的账户已被禁用！')
     }
@@ -95,6 +96,7 @@ export class UserService {
 
   async has(username: string) {
     const user = await this.prisma.user.findUnique({ where: { username } })
+
     return !!user
   }
 }

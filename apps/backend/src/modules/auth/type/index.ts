@@ -6,4 +6,4 @@ export interface ResponseSignIn {
   }
 }
 
-export type Payload = Pick<User, 'uuid' | 'username'>
+export type JwtSignPayload = Pick<User, 'uuid' | 'username'>

@@ -1,23 +1,26 @@
-import type { Payload } from '~/modules/auth/type'
+import type { JwtSignPayload } from '~/modules/auth/type'
+
+type User = JwtSignPayload & { iat: number, exp: number }
 
 declare global {
   namespace NodeJS {
-    // from .env file
     interface ProcessEnv {
+      // from .env file
       DATABASE_URL: string
       AUTH_SECRET: string
-      NODE_ENV: string // from `cross-env NODE_ENV=xxx` in package.json
+      // from `cross-env NODE_ENV=xxx` in package.json
+      NODE_ENV: string
     }
   }
 
   interface Request {
-    user: Payload & { iat: number, exp: number }
+    user: User
   }
 }
 
 declare module 'express' {
   interface Request {
-    user: Payload & { iat: number, exp: number }
+    user: User
   }
 }
 

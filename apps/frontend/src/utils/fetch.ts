@@ -5,6 +5,7 @@ import { useUserStore } from '~/stores/useUserStore'
 async function handleResponseOK(response: Response) {
   if (!response.ok) {
     const json = await response.json()
+
     message.error(json?.message ?? response.statusText)
 
     switch (response.status) {
