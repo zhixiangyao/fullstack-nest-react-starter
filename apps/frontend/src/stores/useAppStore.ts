@@ -2,6 +2,7 @@ import type { ThemeConfig } from 'antd'
 import { theme } from 'antd'
 import { Map } from 'immutable'
 import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface Store {
   sizes: number[]
@@ -12,27 +13,38 @@ interface Store {
   handleSwitchDark: () => void
 }
 
-const useAppStore = create<Store>()(set => ({
-  sizes: [80],
-  theme: {
-    // 1. 单独使用暗色算法
-    algorithm: theme.darkAlgorithm,
-    token: {
-      // Seed Token，影响范围大
-      colorPrimary: '#00b96b',
-      borderRadius: 2,
-    },
-  },
+const useAppStore = create<Store>()(
+  persist(
+    set => ({
+      sizes: [80],
+      theme: {
+        algorithm: theme.darkAlgorithm,
+        token: {
+          colorPrimary: '#00b96b',
+          borderRadius: 2,
+        },
+      },
 
-  handleSizes: (sizes: number[]) => set({ sizes }),
-  handleSwitchLight: () =>
-    set(state => ({
-      theme: Map(state.theme).set('algorithm', theme.defaultAlgorithm).toObject(),
-    })),
-  handleSwitchDark: () =>
-    set(state => ({
-      theme: Map(state.theme).set('algorithm', theme.darkAlgorithm).toObject(),
-    })),
-}))
+      handleSizes: (sizes: number[]) => set({ sizes }),
+      handleSwitchLight: () =>
+        set(state => ({
+          theme: Map(state.theme).set('algorithm', theme.defaultAlgorithm).toObject(),
+        })),
+      handleSwitchDark: () =>
+        set(state => ({
+          theme: Map(state.theme).set('algorithm', theme.darkAlgorithm).toObject(),
+        })),
+    }),
+    {
+      name: 'storage__app',
+      storage: createJSONStorage(() => {
+        return sessionStorage
+      }),
+      partialize: (state) => {
+        return Object.fromEntries(Object.entries(state).filter(([key]) => !['loaded', 'loading'].includes(key)))
+      },
+    },
+  ),
+)
 
 export { useAppStore }
