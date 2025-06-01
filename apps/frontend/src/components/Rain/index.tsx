@@ -58,7 +58,7 @@ function Rain({ background }: Props) {
   useEffect(initRain, [initRain, status])
   useEffect(handleUpdateBackground, [handleUpdateBackground, background])
 
-  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full translate-x-0" style={{ zIndex: -1 }} />
+  return <canvas ref={canvasRef} className="fixed inset-0 w-screen h-screen translate-x-0" />
 }
 
 export { Rain }

@@ -58,16 +58,16 @@ function Auth() {
   }
 
   return (
-    <main className="flex h-full flex-col items-center pt-60 gap-6">
+    <main className="flex h-full w-full flex-col items-center pt-60 gap-6">
       <Rain background={background} />
 
       <Segmented<TAuthType>
         options={['Login', 'Register']}
         value={authType}
         onChange={setAuthType}
-        className="select-none"
+        className="select-none z-10"
       />
-      <Form<TFieldType> name="auth" autoComplete="off" className="w-72" form={form} onFinish={handleFinish}>
+      <Form<TFieldType> name="auth" autoComplete="off" className="w-72 z-10" form={form} onFinish={handleFinish}>
         <Form.Item<TFieldType> name="username" rules={rules.username}>
           <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
         </Form.Item>

@@ -1,28 +1,18 @@
-import type { AppProps, ConfigProviderProps } from 'antd'
-import { App as AntdApp, ConfigProvider } from 'antd'
 import React from 'react'
-
 import { Router } from '~/router'
+
+import { AntApp } from './components/AntApp'
+import { AntConfigProvider } from './components/AntConfigProvider'
 
 import '~/styles/global.css'
 
-const message: AppProps['message'] = { maxCount: 1 }
-const formConfig: ConfigProviderProps['form'] = {
-  validateMessages: {
-    required: '${label} 是必填项',
-  },
-}
-const getPopupContainerConfig: ConfigProviderProps['getPopupContainer'] = () => {
-  return document.body
-}
-
 function App() {
   return (
-    <ConfigProvider form={formConfig} getPopupContainer={getPopupContainerConfig}>
-      <AntdApp message={message}>
+    <AntConfigProvider>
+      <AntApp>
         <Router />
-      </AntdApp>
-    </ConfigProvider>
+      </AntApp>
+    </AntConfigProvider>
   )
 }
 
