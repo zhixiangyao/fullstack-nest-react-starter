@@ -25,7 +25,6 @@ async function main() {
       ...Array.from({ length: 100 }).map((_, i) => ({
         username: `user${i}`,
         passwordHash: passwordHash1,
-        roles: [$Enums.Role.USER],
       } satisfies Partial<User>)),
     ],
   })

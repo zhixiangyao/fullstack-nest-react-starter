@@ -98,7 +98,7 @@ const columns: ColumnsType<TUser> = [
     width: 200,
     render(_, { lastLogin }) {
       if (!lastLogin)
-        return '-'
+        return '/'
 
       return (
         <div className="flex flex-col gap-1 items-start">

@@ -1,6 +1,5 @@
 import type { Prisma, User } from '@prisma/client'
 import { ForbiddenException, Injectable } from '@nestjs/common'
-import { $Enums } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
@@ -59,7 +58,6 @@ export class UserService {
       data: {
         username: body.username,
         passwordHash,
-        roles: [$Enums.Role.USER],
         email: body.email,
       },
     })
