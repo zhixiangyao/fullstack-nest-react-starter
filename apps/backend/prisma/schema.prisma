@@ -11,31 +11,18 @@ generator client {
 }
 
 model User {
-  uuid      String    @id @default(uuid()) @db.Uuid
-  username  String    @unique
-  password  String
-  roles     Role[]    @default([USER])
-  status    Status    @default(Active)
-  createdAt DateTime  @default(now()) @db.Timestamptz()
-  updatedAt DateTime  @updatedAt @default(now()) @db.Timestamptz()
-  lastLogin DateTime? @db.Timestamptz()
-  email     String?
-  sex       Sex?
-  age       Int?
+  uuid         String    @id @default(uuid()) @db.Uuid
+  username     String    @unique
+  passwordHash String
+  roles        Role[]    @default([USER])
+  enable       Boolean   @default(true)
+  createdAt    DateTime  @default(now()) @db.Timestamptz()
+  updatedAt    DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  lastLogin    DateTime? @db.Timestamptz()
+  email        String?
 }
 
 enum Role {
   USER
   ADMIN
-}
-
-enum Status {
-  Active
-  Inactive
-}
-
-enum Sex {
-  Male
-  Female
-  Other
 }

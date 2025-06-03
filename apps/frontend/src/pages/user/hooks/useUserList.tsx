@@ -43,8 +43,8 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '状态',
-    dataIndex: 'status' satisfies keyof TUser,
-    key: 'status',
+    dataIndex: 'enable' satisfies keyof TUser,
+    key: 'enable',
     width: 100,
     render(_, record) {
       return <SwitchStatus record={record} />

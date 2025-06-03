@@ -1,6 +1,6 @@
 import type { Prisma, User } from '@prisma/client'
 import { ForbiddenException, Injectable } from '@nestjs/common'
-import { $Enums, Status } from '@prisma/client'
+import { $Enums } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
@@ -45,7 +45,7 @@ export class UserService {
     })
 
     return {
-      list: list.map(user => deleteProperty(user, 'password')),
+      list: list.map(user => deleteProperty(user, 'passwordHash')),
       total,
       pageNo,
       pageSize,
@@ -53,12 +53,12 @@ export class UserService {
   }
 
   async create(body: UserCreateDto): Promise<User> {
-    const hashedPassword = await this.passwordService.hashPassword(body.password)
+    const passwordHash = await this.passwordService.hashPassword(body.password)
 
     const user = await this.prisma.user.create({
       data: {
         username: body.username,
-        password: hashedPassword,
+        passwordHash,
         roles: [$Enums.Role.USER],
         email: body.email,
       },
@@ -70,8 +70,7 @@ export class UserService {
   async validate(username: string, password: string): Promise<boolean> {
     const user = await this.find(username)
 
-    const hashedPassword = user.password
-    return await this.passwordService.comparePassword(password, hashedPassword)
+    return await this.passwordService.comparePassword(password, user.passwordHash)
   }
 
   async update(username: string, data: Prisma.UserUpdateInput): Promise<User> {
@@ -90,7 +89,7 @@ export class UserService {
   async check(username: string) {
     const user = await this.find(username)
 
-    if (user.status === Status.Inactive) {
+    if (user.enable === false) {
       throw new ForbiddenException('您的账户已被禁用！')
     }
   }

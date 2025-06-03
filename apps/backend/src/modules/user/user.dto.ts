@@ -1,6 +1,5 @@
 import type { User } from '@prisma/client'
-import { $Enums } from '@prisma/client'
-import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class UserCreateDto {
   @IsString()
@@ -9,7 +8,7 @@ export class UserCreateDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly password: User['password']
+  readonly password: string
 
   @IsString()
   @IsOptional()
@@ -21,9 +20,9 @@ export class UserUpdateDto {
   @IsNotEmpty()
   readonly username: User['username']
 
-  @IsEnum($Enums.Status)
+  @IsBoolean()
   @IsOptional()
-  readonly status?: User['status']
+  readonly enable?: User['enable']
 
   @IsString()
   @IsOptional()

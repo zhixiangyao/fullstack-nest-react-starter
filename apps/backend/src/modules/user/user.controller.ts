@@ -33,12 +33,12 @@ export class UserController {
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
     const userUpdateInput: Prisma.UserUpdateInput = {}
 
-    if (body.status) {
-      if (req.user.username === body.username && body.status === $Enums.Status.Inactive) {
+    if (body.enable !== void 0) {
+      if (req.user.username === body.username && body.enable === false) {
         throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
       }
 
-      userUpdateInput.status = body.status
+      userUpdateInput.enable = body.enable
     }
 
     if (body.email) {
@@ -73,7 +73,7 @@ export class UserController {
     const username = body.username ?? user.username
 
     const item = await this.userService.find(username)
-    const userWithoutPassword = deleteProperty(item, 'password')
+    const userWithoutPassword = deleteProperty(item, 'passwordHash')
 
     return { data: { user: userWithoutPassword } }
   }

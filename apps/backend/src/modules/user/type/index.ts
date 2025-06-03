@@ -1,6 +1,6 @@
 import type { User } from '@prisma/client'
 
-type UserWithoutPassword = Omit<User, 'password'>
+type UserWithoutPassword = Omit<User, 'passwordHash'>
 
 export interface ResponseRegisterUser {
   message: string

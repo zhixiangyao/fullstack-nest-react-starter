@@ -5,32 +5,15 @@ export const Role = {
 
 export type RoleValue = (typeof Role)[keyof typeof Role]
 
-export const Status = {
-  Active: 'Active',
-  Inactive: 'Inactive',
-} as const
-
-type StatusValue = (typeof Status)[keyof typeof Status]
-
-export const Sex = {
-  Male: 'Male',
-  Female: 'Female',
-  Other: 'Other',
-} as const
-
-type SexValue = (typeof Sex)[keyof typeof Sex]
-
 export interface TUser {
   uuid: string
   username: string
   roles: RoleValue[]
-  status: StatusValue
+  enable: boolean
   createdAt: Date
   updatedAt: Date
   lastLogin: Date | null
   email: string | null
-  sex: SexValue | null
-  age: number | null
 }
 
 export interface LoginRequest {
@@ -79,7 +62,7 @@ export interface FindAllResponse {
   }
 }
 
-export type UpdateRequest = Pick<TUser, 'username'> & Partial<Pick<TUser, 'status' | 'email'>>
+export type UpdateRequest = Pick<TUser, 'username'> & Partial<Pick<TUser, 'enable' | 'email'>>
 
 export interface UpdateResponse {
   message: string

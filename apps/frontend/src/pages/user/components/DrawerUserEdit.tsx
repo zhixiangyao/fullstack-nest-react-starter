@@ -3,13 +3,13 @@ import { useRequest } from 'ahooks'
 import { App as AntdApp, Button, Drawer, Form, Input, Switch } from 'antd'
 import React, { memo, useCallback, useEffect } from 'react'
 
-import { Role, Status } from '~/fetchers'
+import { Role } from '~/fetchers'
 import * as fetchers from '~/fetchers'
 
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
-type TFieldUser = Omit<TUser, 'status'> & { status: boolean }
+type TFieldUser = TUser
 
 const formItemLayout = {
   labelCol: {
@@ -43,7 +43,7 @@ const DrawerUserEdit = memo(() => {
         await runAsync({
           username: drawerUserEdit.user?.username,
           email: values.email,
-          status: values.status ? Status.Active : Status.Inactive,
+          enable: values.enable,
         })
         refreshAsync()
         drawerUserEdit.handleClose()
@@ -61,7 +61,7 @@ const DrawerUserEdit = memo(() => {
       form.setFieldsValue({
         username: drawerUserEdit.user.username,
         email: drawerUserEdit.user.email,
-        status: drawerUserEdit.user.status === Status.Active,
+        enable: drawerUserEdit.user.enable,
       })
     }
   }, [drawerUserEdit.user, form])
@@ -96,7 +96,7 @@ const DrawerUserEdit = memo(() => {
           <Input />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="状态" name="status">
+        <Form.Item<TFieldUser> label="状态" name="enable">
           <Switch
             checkedChildren="启用"
             unCheckedChildren="禁用"

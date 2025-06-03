@@ -4,7 +4,7 @@ import { App as AntdApp, Switch } from 'antd'
 import React, { useCallback } from 'react'
 
 import * as fetchers from '~/fetchers'
-import { Role, Status } from '~/fetchers'
+import { Role } from '~/fetchers'
 
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
@@ -23,9 +23,9 @@ const SwitchStatus: React.FC<Props> = ({ record }) => {
   })
 
   const handleActive = useCallback(
-    async (e: boolean) => {
+    async (enable: boolean) => {
       try {
-        const data = await runAsync({ username: record.username, status: e ? Status.Active : Status.Inactive })
+        const data = await runAsync({ username: record.username, enable })
         message.success(data.message)
         refreshAsync()
       }
@@ -41,7 +41,7 @@ const SwitchStatus: React.FC<Props> = ({ record }) => {
       disabled={loadingGet || loadingUp || record.roles.includes(Role.ADMIN)}
       checkedChildren="启用"
       unCheckedChildren="禁用"
-      checked={record.status === Status.Active}
+      checked={record.enable}
       onChange={e => handleActive(e)}
     />
   )
