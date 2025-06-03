@@ -38,7 +38,7 @@ const SwitchStatus: React.FC<Props> = ({ record }) => {
 
   return (
     <Switch
-      disabled={loadingGet || loadingUp || record.roles.includes(Role.ADMIN)}
+      disabled={loadingGet || loadingUp || record.roles.map(role => role.name).includes(Role.ADMIN)}
       checkedChildren="启用"
       unCheckedChildren="禁用"
       checked={record.enable}

@@ -49,7 +49,7 @@ const ButtonDelete: React.FC<Props> = ({ record }) => {
         danger
         type="link"
         className="!px-0"
-        disabled={loadingFindAll || loadingDelete || record.roles.includes(Role.ADMIN)}
+        disabled={loadingFindAll || loadingDelete || record.roles.map(role => role.name).includes(Role.ADMIN)}
       >
         删除
       </Button>

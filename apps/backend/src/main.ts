@@ -3,8 +3,8 @@ import process from 'node:process'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import compression from 'compression'
-import { AppModule } from '~/app.module'
 
+import { AppModule } from '~/app.module'
 import { frontendProxyMiddleware } from '~/common/middleware/proxy.middleware'
 import 'dotenv/config'
 

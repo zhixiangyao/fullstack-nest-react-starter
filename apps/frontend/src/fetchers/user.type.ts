@@ -8,7 +8,7 @@ export type RoleValue = (typeof Role)[keyof typeof Role]
 export interface TUser {
   uuid: string
   username: string
-  roles: RoleValue[]
+  roles: { name: RoleValue, id: number }[]
   enable: boolean
   createdAt: Date
   updatedAt: Date

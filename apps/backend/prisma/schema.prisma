@@ -11,18 +11,29 @@ generator client {
 }
 
 model User {
-  uuid         String    @id @default(uuid()) @db.Uuid
-  username     String    @unique
+  uuid         String     @id @default(uuid()) @db.Uuid
+  username     String     @unique
   passwordHash String
-  roles        Role[]    @default([USER])
-  enable       Boolean   @default(true)
-  createdAt    DateTime  @default(now()) @db.Timestamptz()
-  updatedAt    DateTime  @default(now()) @updatedAt @db.Timestamptz()
-  lastLogin    DateTime? @db.Timestamptz()
+  roles        UserRole[] // Many-to-many relationship with Role
+  enable       Boolean    @default(true)
+  createdAt    DateTime   @default(now()) @db.Timestamptz()
+  updatedAt    DateTime   @default(now()) @updatedAt @db.Timestamptz()
+  lastLogin    DateTime?  @db.Timestamptz()
   email        String?
 }
 
-enum Role {
-  USER
-  ADMIN
+model Role {
+  id    Int        @id @default(autoincrement())
+  name  String     @unique
+  users UserRole[] // Many-to-many relationship with User
+}
+
+// Junction table for many-to-many relationship between User and Role
+model UserRole {
+  user     User   @relation(fields: [userUuid], references: [uuid])
+  userUuid String @db.Uuid
+  role     Role   @relation(fields: [roleId], references: [id])
+  roleId   Int
+
+  @@id([userUuid, roleId]) // Composite primary key
 }

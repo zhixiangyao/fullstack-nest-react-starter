@@ -1,26 +1,33 @@
-import type { Prisma, User } from '@prisma/client'
+import type { Role, User } from '@prisma/client'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
 import { PasswordService } from './password.service'
 
-import { UserCreateDto, UserFindAllDto } from './user.dto'
+import { UserCreateDto, UserFindAllDto, UserUpdateDto } from './user.dto'
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
-  async find(username: string): Promise<User> {
+  async find(username: string): Promise<User & { roles: Role[] }> {
     const user = await this.prisma.user.findUnique({
       where: { username },
+      include: {
+        roles: {
+          include: {
+            role: true,
+          },
+        },
+      },
     })
 
-    return user
+    return { ...user, roles: user.roles.map(userRole => userRole.role) }
   }
 
-  async findAll(body: UserFindAllDto) {
-    const { username, pageNo = 1, pageSize = 10 } = body
+  async findAll(data: UserFindAllDto) {
+    const { username, pageNo = 1, pageSize = 10 } = data
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
@@ -33,6 +40,13 @@ export class UserService {
         },
       },
       orderBy: { username: 'asc' },
+      include: {
+        roles: {
+          include: {
+            role: true, // 包含角色本身的详细信息
+          },
+        },
+      },
     })
 
     const total = await this.prisma.user.count({
@@ -44,21 +58,25 @@ export class UserService {
     })
 
     return {
-      list: list.map(user => deleteProperty(user, 'passwordHash')),
+      list: list.map<Omit<User, 'passwordHash'> & { roles: Role[] }>((user) => {
+        const userWithoutPasswordHash = deleteProperty(user, 'passwordHash')
+
+        return { ...userWithoutPasswordHash, roles: userWithoutPasswordHash.roles.map(userRole => userRole.role) }
+      }),
       total,
       pageNo,
       pageSize,
     }
   }
 
-  async create(body: UserCreateDto): Promise<User> {
-    const passwordHash = await this.passwordService.hashPassword(body.password)
+  async create(data: UserCreateDto): Promise<User> {
+    const passwordHash = await this.passwordService.hashPassword(data.password)
 
     const user = await this.prisma.user.create({
       data: {
-        username: body.username,
+        username: data.username,
         passwordHash,
-        email: body.email,
+        email: data.email,
       },
     })
 
@@ -71,10 +89,15 @@ export class UserService {
     return await this.passwordService.comparePassword(password, user.passwordHash)
   }
 
-  async update(username: string, data: Prisma.UserUpdateInput): Promise<User> {
+  async update(username: string, data: Omit<UserUpdateDto, 'username'>) {
     const user = await this.prisma.user.update({
       where: { username },
-      data,
+      data: {
+        enable: data.enable,
+        email: data.email,
+        lastLogin: data.lastLogin,
+        updatedAt: data.updatedAt,
+      },
     })
 
     return user
@@ -84,7 +107,7 @@ export class UserService {
     await this.prisma.user.delete({ where: { username } })
   }
 
-  async check(username: string) {
+  async check(username: string): Promise<void> {
     const user = await this.find(username)
 
     if (user.enable === false) {
@@ -92,7 +115,7 @@ export class UserService {
     }
   }
 
-  async has(username: string) {
+  async has(username: string): Promise<boolean> {
     const user = await this.prisma.user.findUnique({ where: { username } })
 
     return !!user

@@ -24,7 +24,7 @@ const TagRoleType: React.FC<Props> = memo((props) => {
       color = 'gold'
       break
 
-    case Role.USER:
+    default:
       color = 'green'
       break
   }

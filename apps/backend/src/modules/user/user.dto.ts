@@ -1,5 +1,5 @@
 import type { User } from '@prisma/client'
-import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsDate, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class UserCreateDto {
   @IsString()
@@ -27,6 +27,14 @@ export class UserUpdateDto {
   @IsString()
   @IsOptional()
   readonly email?: User['email']
+
+  @IsDate()
+  @IsOptional()
+  readonly lastLogin?: User['lastLogin']
+
+  @IsDate()
+  @IsOptional()
+  readonly updatedAt?: User['updatedAt']
 }
 
 export class UserRemoveDto {

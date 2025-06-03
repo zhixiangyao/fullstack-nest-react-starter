@@ -100,7 +100,7 @@ const DrawerUserEdit = memo(() => {
           <Switch
             checkedChildren="启用"
             unCheckedChildren="禁用"
-            disabled={drawerUserEdit.user?.roles.includes(Role.ADMIN)}
+            disabled={drawerUserEdit.user?.roles.map(role => role.name).includes(Role.ADMIN)}
           />
         </Form.Item>
       </Form>

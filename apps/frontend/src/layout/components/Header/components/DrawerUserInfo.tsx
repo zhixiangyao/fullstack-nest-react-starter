@@ -29,7 +29,7 @@ const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
       {
         key: '2',
         label: '角色',
-        children: <div className="flex gap-1 items-center">{user?.roles.map(role => <TagRoleType value={role} key={role} />)}</div>,
+        children: <div className="flex gap-1 items-center">{user?.roles.map(role => <TagRoleType value={role.name} key={role.id} />)}</div>,
         span: 1,
       },
       {

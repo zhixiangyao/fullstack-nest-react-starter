@@ -32,10 +32,13 @@ const columns: ColumnsType<TUser> = [
     key: 'roles',
     width: 100,
     render(_, record) {
+      if (record.roles.length === 0)
+        return '/'
+
       return (
         <div className="flex gap-1 items-center">
           {record.roles.map(role => (
-            <TagRoleType value={role} key={role} />
+            <TagRoleType value={role.name} key={role.id} />
           ))}
         </div>
       )

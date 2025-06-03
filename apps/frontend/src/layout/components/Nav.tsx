@@ -18,7 +18,7 @@ const Nav = memo<Props>(() => {
   const appStore = useAppStore()
   const { user } = useUserStore()
   const collapsed = appStore.sizes[0] === 80
-  const menus = useMemo(() => genMenus(user?.roles ?? []), [user?.roles])
+  const menus = useMemo(() => genMenus(user?.roles.map(role => role.name) ?? []), [user?.roles])
 
   const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
     ({ key }) => pathname !== key && navigate(key),

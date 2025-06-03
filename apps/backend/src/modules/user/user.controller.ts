@@ -1,6 +1,5 @@
 import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseRemove, ResponseUpdate } from './type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
-import { $Enums, Prisma } from '@prisma/client'
 import { deleteProperty } from 'utils'
 
 import { Public } from '~/common/decorators/public.decorator'
@@ -27,30 +26,22 @@ export class UserController {
     return { message: '注册成功' }
   }
 
-  @Roles([$Enums.Role.ADMIN])
+  @Roles(['ADMIN'])
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
-    const userUpdateInput: Prisma.UserUpdateInput = {}
-
     if (body.enable !== void 0) {
       if (req.user.username === body.username && body.enable === false) {
         throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
       }
-
-      userUpdateInput.enable = body.enable
     }
 
-    if (body.email) {
-      userUpdateInput.email = body.email
-    }
-
-    await this.userService.update(body.username, userUpdateInput)
+    await this.userService.update(body.username, body)
 
     return { message: '更新成功' }
   }
 
-  @Roles([$Enums.Role.ADMIN])
+  @Roles(['ADMIN'])
   @Post('remove')
   @Header('content-type', 'application/json')
   async remove(@Body() body: UserRemoveDto, @User('username') username: string): Promise<ResponseRemove> {
@@ -78,7 +69,7 @@ export class UserController {
     return { data: { user: userWithoutPassword } }
   }
 
-  @Roles([$Enums.Role.ADMIN])
+  @Roles(['ADMIN'])
   @Post('find-all')
   @Header('Content-Type', 'application/json')
   async findAll(@Body() body: UserFindAllDto): Promise<ResponseFindAll> {

@@ -15,7 +15,7 @@ interface Props {
 const RolesAuthRoute: React.FC<Props> = ({ children, roles }) => {
   const { user } = useUserStore()
 
-  if (user && roles && !roles.some(role => user?.roles.includes(role)))
+  if (user && roles && roles.length !== 0 && !roles.some(role => user?.roles.map(role => role.name).includes(role)))
     return <Navigate replace to="/" />
 
   return children
@@ -43,7 +43,7 @@ const routes: Route[] = [
     path: '/home',
     icon: <HomeOutlined />,
     element: import('./pages/home').then(({ HomePage }) => HomePage),
-    roles: [Role.ADMIN, Role.USER],
+    roles: [],
   },
   {
     label: 'User',
