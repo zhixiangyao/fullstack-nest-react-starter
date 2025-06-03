@@ -1,12 +1,13 @@
 import type { PresetColorKey } from 'antd/es/theme/interface'
+import type { RoleValue } from '~/fetchers'
 import { Tag } from 'antd'
 import React, { memo } from 'react'
-import { stringCapitalization } from 'utils'
 
-import { EnumRole } from '~/fetchers'
+import { stringCapitalization } from 'utils'
+import { Role } from '~/fetchers'
 
 interface Props {
-  value?: EnumRole
+  value?: RoleValue
 }
 
 const TagRoleType: React.FC<Props> = memo((props) => {
@@ -19,11 +20,11 @@ const TagRoleType: React.FC<Props> = memo((props) => {
   const text = stringCapitalization(value)
 
   switch (value) {
-    case EnumRole.ADMIN:
+    case Role.ADMIN:
       color = 'gold'
       break
 
-    case EnumRole.USER:
+    case Role.USER:
       color = 'green'
       break
   }

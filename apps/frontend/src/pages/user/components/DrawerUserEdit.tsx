@@ -3,7 +3,7 @@ import { useRequest } from 'ahooks'
 import { App as AntdApp, Button, Drawer, Form, Input, Switch } from 'antd'
 import React, { memo, useCallback, useEffect } from 'react'
 
-import { EnumRole, EnumStatus } from '~/fetchers'
+import { Role, Status } from '~/fetchers'
 import * as fetchers from '~/fetchers'
 
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
@@ -43,7 +43,7 @@ const DrawerUserEdit = memo(() => {
         await runAsync({
           username: drawerUserEdit.user?.username,
           email: values.email,
-          status: values.status ? EnumStatus.Active : EnumStatus.Inactive,
+          status: values.status ? Status.Active : Status.Inactive,
         })
         refreshAsync()
         drawerUserEdit.handleClose()
@@ -61,7 +61,7 @@ const DrawerUserEdit = memo(() => {
       form.setFieldsValue({
         username: drawerUserEdit.user.username,
         email: drawerUserEdit.user.email,
-        status: drawerUserEdit.user.status === EnumStatus.Active,
+        status: drawerUserEdit.user.status === Status.Active,
       })
     }
   }, [drawerUserEdit.user, form])
@@ -100,7 +100,7 @@ const DrawerUserEdit = memo(() => {
           <Switch
             checkedChildren="启用"
             unCheckedChildren="禁用"
-            disabled={drawerUserEdit.user?.roles.includes(EnumRole.ADMIN)}
+            disabled={drawerUserEdit.user?.roles.includes(Role.ADMIN)}
           />
         </Form.Item>
       </Form>

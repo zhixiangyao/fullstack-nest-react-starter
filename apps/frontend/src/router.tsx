@@ -1,14 +1,15 @@
+import type { RoleValue } from '~/fetchers'
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
 import React from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Spinning } from '~/components/Spinning'
-import { EnumRole } from '~/fetchers'
+import { Role } from '~/fetchers'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
   children: React.ReactNode
-  roles?: EnumRole[]
+  roles?: RoleValue[]
 }
 
 const RolesAuthRoute: React.FC<Props> = ({ children, roles }) => {
@@ -20,7 +21,7 @@ const RolesAuthRoute: React.FC<Props> = ({ children, roles }) => {
   return children
 }
 
-function withRolesAuthRoute(Component: React.FC, options?: { roles: EnumRole[] }) {
+function withRolesAuthRoute(Component: React.FC, options?: { roles: RoleValue[] }) {
   return () => (
     <RolesAuthRoute roles={options?.roles}>
       <Component />
@@ -33,7 +34,7 @@ interface Route {
   icon: React.ReactNode
   path: string
   element: Promise<React.FC>
-  roles: EnumRole[]
+  roles: RoleValue[]
 }
 
 const routes: Route[] = [
@@ -42,14 +43,14 @@ const routes: Route[] = [
     path: '/home',
     icon: <HomeOutlined />,
     element: import('./pages/home').then(({ HomePage }) => HomePage),
-    roles: [EnumRole.ADMIN, EnumRole.USER],
+    roles: [Role.ADMIN, Role.USER],
   },
   {
     label: 'User',
     path: '/user',
     icon: <UserOutlined />,
     element: import('./pages/user').then(({ UserPage }) => UserPage),
-    roles: [EnumRole.ADMIN],
+    roles: [Role.ADMIN],
   },
 ]
 
@@ -89,7 +90,7 @@ function Router() {
   return <RouterProvider router={router} />
 }
 
-function genMenus(roles: EnumRole[]) {
+function genMenus(roles: RoleValue[]) {
   return routes
     .filter(route => route.roles.some(role => roles.includes(role)))
     .map(({ path, label, icon }) => ({ key: path, label, icon }))

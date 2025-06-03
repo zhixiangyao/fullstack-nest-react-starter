@@ -10,32 +10,32 @@ import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 import { DrawerUserInfo } from './components/DrawerUserInfo'
 
-enum EnumMenuKey {
-  THEME_LIGHT = 'THEME_LIGHT',
-  THEME_DARK = 'THEME_DARK',
-  USER_INFO = 'USER_INFO',
-  LOGOUT = 'LOGOUT',
-}
+const MenuKey = {
+  THEME_LIGHT: 'THEME_LIGHT',
+  THEME_DARK: 'THEME_DARK',
+  USER_INFO: 'USER_INFO',
+  LOGOUT: 'LOGOUT',
+} as const
 
 const items: MenuProps['items'] = [
   {
     label: '默认主题',
-    key: EnumMenuKey.THEME_LIGHT,
+    key: MenuKey.THEME_LIGHT,
     icon: <SunOutlined />,
   },
   {
     label: '暗黑主题',
-    key: EnumMenuKey.THEME_DARK,
+    key: MenuKey.THEME_DARK,
     icon: <MoonOutlined />,
   },
   {
     label: '用户信息',
-    key: EnumMenuKey.USER_INFO,
+    key: MenuKey.USER_INFO,
     icon: <UserOutlined />,
   },
   {
     label: '退出',
-    key: EnumMenuKey.LOGOUT,
+    key: MenuKey.LOGOUT,
     icon: <LogoutOutlined />,
   },
 ]
@@ -44,7 +44,7 @@ interface Props {}
 
 const Header = memo<Props>(() => {
   const { token } = theme.useToken()
-  const appStore = useAppStore()
+  const { handleSwitchLight, handleSwitchDark } = useAppStore()
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const { user, handleLogout } = useUserStore()
@@ -53,25 +53,25 @@ const Header = memo<Props>(() => {
   const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
     (e) => {
       switch (e.key) {
-        case EnumMenuKey.THEME_LIGHT:
-          appStore.handleSwitchLight()
+        case MenuKey.THEME_LIGHT:
+          handleSwitchLight()
           break
 
-        case EnumMenuKey.THEME_DARK:
-          appStore.handleSwitchDark()
+        case MenuKey.THEME_DARK:
+          handleSwitchDark()
           break
 
-        case EnumMenuKey.USER_INFO:
+        case MenuKey.USER_INFO:
           setOpen(true)
           break
 
-        case EnumMenuKey.LOGOUT:
+        case MenuKey.LOGOUT:
           message.success('Logout.')
           handleLogout()
           break
       }
     },
-    [setOpen, handleLogout, message],
+    [handleSwitchLight, handleSwitchDark, message, handleLogout],
   )
 
   const title = useMemo(() => {
@@ -90,7 +90,10 @@ const Header = memo<Props>(() => {
 
   return (
     <>
-      <header className="flex h-10 w-full items-center justify-between px-3" style={{ backgroundColor: token.colorBgContainerDisabled }}>
+      <header
+        className="flex h-10 w-full items-center justify-between px-3"
+        style={{ backgroundColor: token.colorBgContainerDisabled }}
+      >
         <span className="font-700 text-[20px]">{title}</span>
 
         <div className="flex items-center">

@@ -1,29 +1,35 @@
-export enum EnumRole {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-}
+export const Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+} as const
 
-export enum EnumStatus {
-  Active = 'Active',
-  Inactive = 'Inactive',
-}
+export type RoleValue = (typeof Role)[keyof typeof Role]
 
-export enum EnumSex {
-  Male = 'Male',
-  Female = 'Female',
-  Other = 'Other',
-}
+export const Status = {
+  Active: 'Active',
+  Inactive: 'Inactive',
+} as const
+
+type StatusValue = (typeof Status)[keyof typeof Status]
+
+export const Sex = {
+  Male: 'Male',
+  Female: 'Female',
+  Other: 'Other',
+} as const
+
+type SexValue = (typeof Sex)[keyof typeof Sex]
 
 export interface TUser {
   uuid: string
   username: string
-  roles: EnumRole[]
-  status: EnumStatus
+  roles: RoleValue[]
+  status: StatusValue
   createdAt: Date
   updatedAt: Date
   lastLogin: Date | null
   email: string | null
-  sex: EnumSex | null
+  sex: SexValue | null
   age: number | null
 }
 

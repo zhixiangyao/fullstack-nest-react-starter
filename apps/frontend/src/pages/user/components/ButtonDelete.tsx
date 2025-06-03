@@ -4,7 +4,7 @@ import { App as AntdApp, Button, Popconfirm } from 'antd'
 import React, { useCallback } from 'react'
 
 import * as fetchers from '~/fetchers'
-import { EnumRole } from '~/fetchers'
+import { Role } from '~/fetchers'
 
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
@@ -49,7 +49,7 @@ const ButtonDelete: React.FC<Props> = ({ record }) => {
         danger
         type="link"
         className="!px-0"
-        disabled={loadingFindAll || loadingDelete || record.roles.includes(EnumRole.ADMIN)}
+        disabled={loadingFindAll || loadingDelete || record.roles.includes(Role.ADMIN)}
       >
         删除
       </Button>
