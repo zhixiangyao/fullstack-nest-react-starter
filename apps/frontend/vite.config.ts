@@ -7,7 +7,16 @@ import checker from 'vite-plugin-checker'
 import viteCompression from 'vite-plugin-compression'
 
 const baseConfig: UserConfig = {
-  plugins: [react(), checker({ typescript: true }), viteCompression({ verbose: false }), tailwindcss()],
+  plugins: [
+    react(),
+    checker({
+      typescript: {
+        tsconfigPath: 'tsconfig.app.json',
+      },
+    }),
+    viteCompression({ verbose: false }),
+    tailwindcss(),
+  ],
   resolve: {
     alias: [{ find: '~', replacement: resolve(__dirname, './src') }],
   },
