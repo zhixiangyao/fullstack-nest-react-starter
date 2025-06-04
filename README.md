@@ -26,6 +26,16 @@
 
 ## Start
 
+### Database
+
+> Only run once!
+
+```bash
+# Create a database using Docker
+cd fullstack-nest-react-starter
+docker compose up -d
+```
+
 ### Dev
 
 ```bash
