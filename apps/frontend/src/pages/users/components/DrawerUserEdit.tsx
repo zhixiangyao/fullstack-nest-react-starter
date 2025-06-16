@@ -22,7 +22,7 @@ const formItemLayout = {
   },
 }
 
-const DrawerUserEdit: React.FC = () => {
+function DrawerUserEdit() {
   const { message } = AntdApp.useApp()
   const drawerUserEdit = useDrawerUserEdit()
   const { loading: loadingUpdate, runAsync } = useRequest(fetchers.update, {

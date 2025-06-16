@@ -11,7 +11,7 @@ import type {
   RemoveResponse,
   UpdateRequest,
   UpdateResponse,
-} from './user.type'
+} from './users.type'
 
 import { fetchPost } from '~/utils/fetch'
 

@@ -12,7 +12,7 @@ interface Props {
   record: TUser
 }
 
-const ButtonDelete: React.FC<Props> = ({ record }) => {
+function ButtonDelete({ record }: Props) {
   const { message } = AntdApp.useApp()
   const { loading: loadingDelete, runAsync } = useRequest(fetchers.remove, { manual: true })
   const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.findAll, {

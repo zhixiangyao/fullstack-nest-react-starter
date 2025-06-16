@@ -12,7 +12,7 @@ interface Props {
   record: TUser
 }
 
-const SwitchStatus: React.FC<Props> = ({ record }) => {
+function SwitchStatus({ record }: Props) {
   const { message } = AntdApp.useApp()
   const { loading: loadingUp, runAsync } = useRequest(fetchers.update, {
     manual: true,

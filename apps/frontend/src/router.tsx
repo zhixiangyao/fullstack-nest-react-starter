@@ -42,14 +42,14 @@ const routes: Route[] = [
     label: 'Home',
     path: '/home',
     icon: <HomeOutlined />,
-    element: import('./pages/home').then(({ HomePage }) => HomePage),
+    element: import('./pages/home').then(({ Home }) => Home),
     roles: [],
   },
   {
-    label: 'User',
-    path: '/user',
+    label: 'Users',
+    path: '/users',
     icon: <UserOutlined />,
-    element: import('./pages/user').then(({ UserPage }) => UserPage),
+    element: import('./pages/users').then(({ Users }) => Users),
     roles: [Role.ADMIN],
   },
 ]
@@ -92,7 +92,7 @@ function Router() {
 
 function genMenus(roles: RoleValue[]) {
   return routes
-    .filter(route => route.roles.some(role => roles.includes(role)))
+    .filter(route => route.roles.length === 0 || route.roles.some(role => roles.includes(role)))
     .map(({ path, label, icon }) => ({ key: path, label, icon }))
 }
 

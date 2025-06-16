@@ -8,7 +8,7 @@ interface Props {
   record: TUser
 }
 
-const ButtonEdit: React.FC<Props> = ({ record }) => {
+function ButtonEdit({ record }: Props) {
   const drawerUserEdit = useDrawerUserEdit()
 
   return (

@@ -8,7 +8,7 @@ import { Filter } from '~/components/Filter'
 import { DrawerUserEdit } from './components/DrawerUserEdit'
 import { useUserList } from './hooks/useUserList'
 
-function UserPage() {
+function Users() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const userList = useUserList({ filterHeight: size?.height ?? 0 })
@@ -39,4 +39,4 @@ function UserPage() {
   )
 }
 
-export { UserPage }
+export { Users }

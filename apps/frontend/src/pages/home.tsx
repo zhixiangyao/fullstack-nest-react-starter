@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useUserStore } from '~/stores/useUserStore'
 
-function HomePage() {
+function Home() {
   const { user } = useUserStore()
 
   return (
@@ -12,4 +12,4 @@ function HomePage() {
   )
 }
 
-export { HomePage }
+export { Home }
