@@ -1,7 +1,7 @@
 import type { TUser } from '~/fetchers'
 import { useRequest } from 'ahooks'
 import { App as AntdApp, Button, Drawer, Form, Input, Switch } from 'antd'
-import React, { memo, useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import { Role } from '~/fetchers'
 import * as fetchers from '~/fetchers'
@@ -22,7 +22,7 @@ const formItemLayout = {
   },
 }
 
-const DrawerUserEdit = memo(() => {
+const DrawerUserEdit: React.FC = () => {
   const { message } = AntdApp.useApp()
   const drawerUserEdit = useDrawerUserEdit()
   const { loading: loadingUpdate, runAsync } = useRequest(fetchers.update, {
@@ -106,8 +106,7 @@ const DrawerUserEdit = memo(() => {
       </Form>
     </Drawer>
   )
-})
-DrawerUserEdit.displayName = 'DrawerUserEdit'
+}
 
 export { DrawerUserEdit }
 export type { TFieldUser }

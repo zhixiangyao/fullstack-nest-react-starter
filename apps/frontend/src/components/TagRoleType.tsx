@@ -1,7 +1,7 @@
 import type { PresetColorKey } from 'antd/es/theme/interface'
 import type { RoleValue } from '~/fetchers'
 import { Tag } from 'antd'
-import React, { memo } from 'react'
+import React from 'react'
 
 import { stringCapitalization } from 'utils'
 import { Role } from '~/fetchers'
@@ -10,7 +10,7 @@ interface Props {
   value?: RoleValue
 }
 
-const TagRoleType: React.FC<Props> = memo((props) => {
+const TagRoleType: React.FC<Props> = (props) => {
   const { value } = props
 
   if (!value)
@@ -34,7 +34,6 @@ const TagRoleType: React.FC<Props> = memo((props) => {
       {text}
     </Tag>
   )
-})
-TagRoleType.displayName = 'TagRoleType'
+}
 
 export { TagRoleType }

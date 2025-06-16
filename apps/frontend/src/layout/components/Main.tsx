@@ -1,13 +1,13 @@
 import type { WatermarkProps } from 'antd'
 import { Watermark } from 'antd'
-import React, { memo, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {}
 
-const Main = memo<Props>(() => {
+const Main: React.FC<Props> = () => {
   const { user } = useUserStore()
   const watermarkConfig = useMemo<WatermarkProps>(() => ({
     content: user?.username,
@@ -23,7 +23,6 @@ const Main = memo<Props>(() => {
       <Outlet />
     </Watermark>
   )
-})
-Main.displayName = 'Main'
+}
 
 export { Main }

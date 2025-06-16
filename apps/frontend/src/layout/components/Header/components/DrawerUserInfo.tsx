@@ -1,6 +1,6 @@
 import type { DescriptionsProps } from 'antd'
 import { Descriptions, Drawer } from 'antd'
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
@@ -11,7 +11,7 @@ interface Props {
   setOpen: React.Dispatch<boolean>
 }
 
-const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
+const DrawerUserInfo: React.FC<Props> = ({ open, setOpen }) => {
   const { user } = useUserStore()
 
   const handleClose = useCallback(() => {
@@ -29,7 +29,13 @@ const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
       {
         key: '2',
         label: '角色',
-        children: <div className="flex gap-1 items-center">{user?.roles.map(role => <TagRoleType value={role.name} key={role.id} />)}</div>,
+        children: (
+          <div className="flex gap-1 items-center">
+            {user?.roles.map(role => (
+              <TagRoleType value={role.name} key={role.id} />
+            ))}
+          </div>
+        ),
         span: 1,
       },
       {
@@ -59,7 +65,6 @@ const DrawerUserInfo = memo<Props>(({ open, setOpen }) => {
       <Descriptions bordered size="middle" items={items} />
     </Drawer>
   )
-})
-DrawerUserInfo.displayName = 'DrawerUserInfo'
+}
 
 export { DrawerUserInfo }

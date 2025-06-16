@@ -2,7 +2,7 @@ import type { MenuProps } from 'antd'
 import { HeartTwoTone } from '@ant-design/icons'
 import { Menu } from 'antd'
 import clsx from 'clsx'
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 
@@ -12,7 +12,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {}
 
-const Nav = memo<Props>(() => {
+const Nav: React.FC<Props> = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const appStore = useAppStore()
@@ -51,7 +51,6 @@ const Nav = memo<Props>(() => {
       />
     </nav>
   )
-})
-Nav.displayName = 'Nav'
+}
 
 export { Nav }

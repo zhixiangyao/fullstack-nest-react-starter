@@ -1,7 +1,7 @@
 import type { MenuProps } from 'antd'
 import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
-import React, { memo, useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 
@@ -42,7 +42,7 @@ const items: MenuProps['items'] = [
 
 interface Props {}
 
-const Header = memo<Props>(() => {
+const Header: React.FC<Props> = () => {
   const { token } = theme.useToken()
   const { handleSwitchLight, handleSwitchDark } = useAppStore()
   const { pathname } = useLocation()
@@ -108,7 +108,5 @@ const Header = memo<Props>(() => {
       <DrawerUserInfo open={open} setOpen={setOpen} />
     </>
   )
-})
-Header.displayName = 'Header'
-
+}
 export { Header }
