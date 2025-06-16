@@ -5,9 +5,7 @@ import { Outlet } from 'react-router-dom'
 
 import { useUserStore } from '~/stores/useUserStore'
 
-interface Props {}
-
-const Main: React.FC<Props> = () => {
+function Main() {
   const { user } = useUserStore()
   const watermarkConfig = useMemo<WatermarkProps>(() => ({
     content: user?.username,

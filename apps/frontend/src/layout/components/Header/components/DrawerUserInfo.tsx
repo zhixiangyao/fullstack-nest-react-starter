@@ -11,7 +11,7 @@ interface Props {
   setOpen: React.Dispatch<boolean>
 }
 
-const DrawerUserInfo: React.FC<Props> = ({ open, setOpen }) => {
+function DrawerUserInfo({ open, setOpen }: Props) {
   const { user } = useUserStore()
 
   const handleClose = useCallback(() => {

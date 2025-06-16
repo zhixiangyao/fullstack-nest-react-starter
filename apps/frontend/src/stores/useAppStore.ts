@@ -4,11 +4,16 @@ import { Map } from 'immutable'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
+const ROOT_WIDTH = document.querySelector('#root')?.getBoundingClientRect().width
+
 interface Store {
-  sizes: number[]
+  splitterSize: {
+    left: number
+    right: number | undefined
+  }
   theme: ThemeConfig
 
-  handleSizes: (sizes: number[]) => void
+  handleSizes: (splitterSize: Store['splitterSize']) => void
   handleSwitchLight: () => void
   handleSwitchDark: () => void
 }
@@ -16,7 +21,10 @@ interface Store {
 const useAppStore = create<Store>()(
   persist(
     set => ({
-      sizes: [80],
+      splitterSize: {
+        left: 80,
+        right: ROOT_WIDTH ? ROOT_WIDTH - 80 : void 0,
+      },
       theme: {
         algorithm: theme.darkAlgorithm,
         token: {
@@ -25,7 +33,7 @@ const useAppStore = create<Store>()(
         },
       },
 
-      handleSizes: (sizes: number[]) => set({ sizes }),
+      handleSizes: splitterSize => set({ splitterSize }),
       handleSwitchLight: () =>
         set(state => ({
           theme: Map(state.theme).set('algorithm', theme.defaultAlgorithm).toObject(),

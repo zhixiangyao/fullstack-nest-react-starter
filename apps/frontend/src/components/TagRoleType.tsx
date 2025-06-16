@@ -10,7 +10,7 @@ interface Props {
   value?: RoleValue
 }
 
-const TagRoleType: React.FC<Props> = (props) => {
+function TagRoleType(props: Props) {
   const { value } = props
 
   if (!value)

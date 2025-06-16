@@ -40,9 +40,7 @@ const items: MenuProps['items'] = [
   },
 ]
 
-interface Props {}
-
-const Header: React.FC<Props> = () => {
+function Header() {
   const { token } = theme.useToken()
   const { handleSwitchLight, handleSwitchDark } = useAppStore()
   const { pathname } = useLocation()
