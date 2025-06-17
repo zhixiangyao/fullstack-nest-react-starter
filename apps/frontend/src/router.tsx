@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { RoleValue } from '~/fetchers'
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
 import React from 'react'
@@ -8,11 +9,11 @@ import { Role } from '~/fetchers'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
   roles?: RoleValue[]
 }
 
-const RolesAuthRoute: React.FC<Props> = ({ children, roles }) => {
+function RolesAuthRoute({ children, roles }: Props) {
   const { user } = useUserStore()
 
   if (user && roles && roles.length !== 0 && !roles.some(role => user?.roles.map(role => role.name).includes(role)))
@@ -21,7 +22,7 @@ const RolesAuthRoute: React.FC<Props> = ({ children, roles }) => {
   return children
 }
 
-function withRolesAuthRoute(Component: React.FC, options?: { roles: RoleValue[] }) {
+function withRolesAuthRoute(Component: () => ReactNode, options?: { roles: RoleValue[] }) {
   return () => (
     <RolesAuthRoute roles={options?.roles}>
       <Component />
@@ -31,9 +32,9 @@ function withRolesAuthRoute(Component: React.FC, options?: { roles: RoleValue[] 
 
 interface Route {
   label: string
-  icon: React.ReactNode
+  icon: ReactNode
   path: string
-  element: Promise<React.FC>
+  element: Promise<() => ReactNode>
   roles: RoleValue[]
 }
 

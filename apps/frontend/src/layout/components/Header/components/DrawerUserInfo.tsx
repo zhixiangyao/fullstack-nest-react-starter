@@ -1,4 +1,5 @@
 import type { DescriptionsProps } from 'antd'
+import type { Dispatch } from 'react'
 import { Descriptions, Drawer } from 'antd'
 import React, { useCallback, useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
@@ -8,7 +9,7 @@ import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
   open: boolean
-  setOpen: React.Dispatch<boolean>
+  setOpen: Dispatch<boolean>
 }
 
 function DrawerUserInfo({ open, setOpen }: Props) {

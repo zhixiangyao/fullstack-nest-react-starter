@@ -1,5 +1,6 @@
+import { useSize } from 'ahooks'
 import { Splitter } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { Progress } from '~/components/Progress'
@@ -13,17 +14,24 @@ import { useUserStore } from '~/stores/useUserStore'
 function Layout() {
   const location = useLocation()
   const appStore = useAppStore()
+  const { leftWidth, rightWidth } = appStore
+  const { handleWindowSize, handleSplitterSizes } = appStore
   const { token, loaded, handleGetCurrentUserInfo } = useUserStore()
   const [pathname, setPathname] = useState('/')
-
+  const htmlRef = useRef(document.querySelector('html'))
+  const size = useSize(htmlRef)
   const isAnimating = location.pathname !== pathname
+
+  useEffect(() => {
+    size && handleWindowSize(size)
+  }, [handleWindowSize, size])
 
   useEffect(() => {
     setPathname(location.pathname)
   }, [location.pathname])
 
   useEffect(() => {
-    handleGetCurrentUserInfo()
+    token && handleGetCurrentUserInfo()
   }, [handleGetCurrentUserInfo, token])
 
   if (!token) {
@@ -42,12 +50,12 @@ function Layout() {
     <>
       <Progress isAnimating={isAnimating} />
 
-      <Splitter onResize={appStore.handleSizes}>
-        <Splitter.Panel size={appStore.leftWidth} min={80} max={400} className="!p-0" collapsible>
+      <Splitter onResize={handleSplitterSizes}>
+        <Splitter.Panel size={leftWidth} min={80} max={400} className="!p-0" collapsible>
           <Nav />
         </Splitter.Panel>
 
-        <Splitter.Panel size={appStore.rightWidth}>
+        <Splitter.Panel size={rightWidth}>
           <Header />
 
           <Main />

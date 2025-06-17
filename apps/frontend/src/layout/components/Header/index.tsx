@@ -42,7 +42,7 @@ const items: MenuProps['items'] = [
 
 function Header() {
   const { token } = theme.useToken()
-  const { handleSwitchLight, handleSwitchDark } = useAppStore()
+  const appStore = useAppStore()
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const { user, handleLogout } = useUserStore()
@@ -52,11 +52,11 @@ function Header() {
     (e) => {
       switch (e.key) {
         case MenuKey.THEME_LIGHT:
-          handleSwitchLight()
+          appStore.handleSwitchMode('light')
           break
 
         case MenuKey.THEME_DARK:
-          handleSwitchDark()
+          appStore.handleSwitchMode('dark')
           break
 
         case MenuKey.USER_INFO:
@@ -69,7 +69,7 @@ function Header() {
           break
       }
     },
-    [handleSwitchLight, handleSwitchDark, message, handleLogout],
+    [appStore, message, handleLogout],
   )
 
   const title = useMemo(() => {

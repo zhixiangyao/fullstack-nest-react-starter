@@ -1,7 +1,8 @@
 import type { ConfigProviderProps, ThemeConfig } from 'antd'
+import type { ReactNode } from 'react'
 import { ConfigProvider, theme } from 'antd'
-
 import React, { useMemo } from 'react'
+
 import { useAppStore } from '~/stores/useAppStore'
 
 const { darkAlgorithm, defaultAlgorithm } = theme
@@ -17,7 +18,7 @@ const getPopupContainerConfig: ConfigProviderProps['getPopupContainer'] = () => 
 }
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 function AntConfigProvider({ children }: Props) {

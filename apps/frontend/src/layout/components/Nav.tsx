@@ -10,9 +10,7 @@ import { genMenus } from '~/router'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
-interface Props {}
-
-const Nav: React.FC<Props> = () => {
+function Nav() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const appStore = useAppStore()
