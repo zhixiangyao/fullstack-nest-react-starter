@@ -17,7 +17,7 @@ const Nav: React.FC<Props> = () => {
   const navigate = useNavigate()
   const appStore = useAppStore()
   const { user } = useUserStore()
-  const collapsed = appStore.splitterSize.left === 80
+  const collapsed = appStore.leftWidth === 80
   const menus = useMemo(() => genMenus(user?.roles.map(role => role.name) ?? []), [user?.roles])
 
   const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(

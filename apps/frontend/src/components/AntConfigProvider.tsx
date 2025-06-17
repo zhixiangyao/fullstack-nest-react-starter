@@ -1,7 +1,10 @@
-import type { ConfigProviderProps } from 'antd'
-import { ConfigProvider } from 'antd'
-import React from 'react'
+import type { ConfigProviderProps, ThemeConfig } from 'antd'
+import { ConfigProvider, theme } from 'antd'
+
+import React, { useMemo } from 'react'
 import { useAppStore } from '~/stores/useAppStore'
+
+const { darkAlgorithm, defaultAlgorithm } = theme
 
 const formConfig: ConfigProviderProps['form'] = {
   validateMessages: {
@@ -19,9 +22,16 @@ interface Props {
 
 function AntConfigProvider({ children }: Props) {
   const appStore = useAppStore()
+  const theme = useMemo<ThemeConfig>(
+    () => ({
+      token: appStore.token,
+      algorithm: appStore.mode === 'dark' ? darkAlgorithm : defaultAlgorithm,
+    }),
+    [appStore.mode, appStore.token],
+  )
 
   return (
-    <ConfigProvider theme={appStore.theme} form={formConfig} getPopupContainer={getPopupContainerConfig}>
+    <ConfigProvider theme={theme} form={formConfig} getPopupContainer={getPopupContainerConfig}>
       {children}
     </ConfigProvider>
   )

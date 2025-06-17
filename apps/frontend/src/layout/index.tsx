@@ -42,12 +42,12 @@ function Layout() {
     <>
       <Progress isAnimating={isAnimating} />
 
-      <Splitter onResize={sizes => appStore.handleSizes({ left: sizes[0], right: sizes[1] })}>
-        <Splitter.Panel size={appStore.splitterSize.left} min={80} max={400} className="!p-0" collapsible>
+      <Splitter onResize={appStore.handleSizes}>
+        <Splitter.Panel size={appStore.leftWidth} min={80} max={400} className="!p-0" collapsible>
           <Nav />
         </Splitter.Panel>
 
-        <Splitter.Panel size={appStore.splitterSize.right}>
+        <Splitter.Panel size={appStore.rightWidth}>
           <Header />
 
           <Main />

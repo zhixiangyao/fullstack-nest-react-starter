@@ -1,19 +1,16 @@
 import type { ThemeConfig } from 'antd'
-import { theme } from 'antd'
-import { Map } from 'immutable'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-const ROOT_WIDTH = document.querySelector('#root')?.getBoundingClientRect().width
+const ROOT_WIDTH = document.querySelector('html')?.getBoundingClientRect().width
 
 interface Store {
-  splitterSize: {
-    left: number
-    right: number | undefined
-  }
-  theme: ThemeConfig
+  mode: 'dark' | 'light'
+  leftWidth: number
+  rightWidth: number | undefined
+  token: ThemeConfig['token']
 
-  handleSizes: (splitterSize: Store['splitterSize']) => void
+  handleSizes: (sizes: number[]) => void
   handleSwitchLight: () => void
   handleSwitchDark: () => void
 }
@@ -21,36 +18,23 @@ interface Store {
 const useAppStore = create<Store>()(
   persist(
     set => ({
-      splitterSize: {
-        left: 80,
-        right: ROOT_WIDTH ? ROOT_WIDTH - 80 : void 0,
-      },
-      theme: {
-        algorithm: theme.darkAlgorithm,
-        token: {
-          colorPrimary: '#00b96b',
-          borderRadius: 2,
-        },
+      mode: 'dark',
+      leftWidth: 80,
+      rightWidth: ROOT_WIDTH ? ROOT_WIDTH - 80 : void 0,
+      token: {
+        colorPrimary: '#00b96b',
+        borderRadius: 2,
       },
 
-      handleSizes: splitterSize => set({ splitterSize }),
-      handleSwitchLight: () =>
-        set(state => ({
-          theme: Map(state.theme).set('algorithm', theme.defaultAlgorithm).toObject(),
-        })),
-      handleSwitchDark: () =>
-        set(state => ({
-          theme: Map(state.theme).set('algorithm', theme.darkAlgorithm).toObject(),
-        })),
+      handleSizes: sizes => set({ leftWidth: sizes[0], rightWidth: sizes[1] }),
+      handleSwitchLight: () => set({ mode: 'light' }),
+      handleSwitchDark: () => set({ mode: 'dark' }),
     }),
     {
       name: 'storage__app',
       storage: createJSONStorage(() => {
         return sessionStorage
       }),
-      partialize: (state) => {
-        return Object.fromEntries(Object.entries(state).filter(([key]) => !['loaded', 'loading'].includes(key)))
-      },
     },
   ),
 )
