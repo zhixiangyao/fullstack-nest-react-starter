@@ -1,4 +1,10 @@
-import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseRemove, ResponseUpdate } from './user.type'
+import type {
+  ResponseFindAll,
+  ResponseGetUser,
+  ResponseRegisterUser,
+  ResponseRemove,
+  ResponseUpdate,
+} from './user.type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
@@ -9,7 +15,7 @@ import { User } from '~/common/decorators/user.decorator'
 import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
 import { UserService } from './user.service'
 
-@Controller('/user')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

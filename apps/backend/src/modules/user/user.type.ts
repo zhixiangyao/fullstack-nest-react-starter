@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { Role, User } from '@prisma/client'
 
 type UserWithoutPassword = Omit<User, 'passwordHash'>
 
@@ -22,6 +22,6 @@ export interface ResponseGetUser {
 
 export interface ResponseFindAll {
   data: {
-    list: UserWithoutPassword[]
+    list: (UserWithoutPassword & { roles: Role[] })[]
   }
 }
