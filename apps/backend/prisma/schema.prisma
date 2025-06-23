@@ -30,9 +30,9 @@ model Role {
 
 // Junction table for many-to-many relationship between User and Role
 model UserRole {
-  user     User   @relation(fields: [userUuid], references: [uuid])
+  user     User   @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   userUuid String @db.Uuid
-  role     Role   @relation(fields: [roleId], references: [id])
+  role     Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
   roleId   Int
 
   @@id([userUuid, roleId]) // Composite primary key
