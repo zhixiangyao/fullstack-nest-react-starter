@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { HomeOutlined, UserOutlined } from '@ant-design/icons'
+import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
 import React from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
@@ -43,6 +43,13 @@ const routes: Route[] = [
     icon: <HomeOutlined />,
     element: import('./pages/home').then(({ Home }) => Home),
     roles: [],
+  },
+  {
+    label: 'Roles',
+    path: '/roles',
+    icon: <TeamOutlined />,
+    element: import('./pages/roles').then(({ Roles }) => Roles),
+    roles: ['ADMIN'],
   },
   {
     label: 'Users',

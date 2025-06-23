@@ -1,7 +1,9 @@
+import type { Role } from './roles.type'
+
 export interface User {
   uuid: string
   username: string
-  roles: { name: string, id: number }[]
+  roles: Omit<Role, 'users'>[]
   enable: boolean
   createdAt: Date
   updatedAt: Date

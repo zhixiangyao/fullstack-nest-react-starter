@@ -12,17 +12,19 @@ import { AuthModule } from '~/modules/auth/auth.module'
 import { FrontendStaticModule } from '~/modules/frontend-static.module'
 import { PrismaModule } from '~/modules/prisma/prisma.module'
 import { UserModule } from '~/modules/user/user.module'
+import { RoleModule } from './modules/role/role.module'
 
 const imports: ModuleMetadata['imports'] = [
-  AuthModule,
-  UserModule,
-  PrismaModule,
   JwtModule.register({
     global: true,
     secret: process.env.AUTH_SECRET,
     // https://github.com/vercel/ms
     signOptions: { expiresIn: '3d' },
   }),
+  PrismaModule,
+  AuthModule,
+  UserModule,
+  RoleModule,
 ]
 
 // Directly use FrontendStaticModule to provide packaged static.
