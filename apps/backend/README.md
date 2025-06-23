@@ -24,10 +24,3 @@ pnpm run backend:start:dev
 # production mode
 pnpm run backend:start:prod
 ```
-
-## Test
-
-```bash
-# unit tests
-pnpm run test
-```
