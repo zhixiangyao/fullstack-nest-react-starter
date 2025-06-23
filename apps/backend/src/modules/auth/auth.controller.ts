@@ -1,4 +1,4 @@
-import type { ResponseSignIn } from './type'
+import type { ResponseSignIn } from './auth.type'
 import { Body, Controller, Header, Post } from '@nestjs/common'
 
 import { Public } from '~/common/decorators/public.decorator'

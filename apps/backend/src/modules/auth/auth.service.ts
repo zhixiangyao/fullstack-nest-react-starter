@@ -1,4 +1,4 @@
-import type { JwtSignPayload } from './type'
+import type { JwtSignPayload } from './auth.type'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import dayjs from 'dayjs'

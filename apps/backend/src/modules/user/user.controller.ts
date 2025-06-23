@@ -1,4 +1,4 @@
-import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseRemove, ResponseUpdate } from './type'
+import type { ResponseFindAll, ResponseGetUser, ResponseRegisterUser, ResponseRemove, ResponseUpdate } from './user.type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
