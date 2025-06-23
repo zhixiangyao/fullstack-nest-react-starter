@@ -1,7 +1,7 @@
 import type { TablePaginationConfig } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
-import type { FindAllRequest, TUser } from '~/fetchers'
+import type { User, UserFindAllRequest } from '~/fetchers'
 import { useRequest, useSize } from 'ahooks'
 import { Form, Tag } from 'antd'
 import dayjs from 'dayjs'
@@ -15,12 +15,12 @@ import { ButtonDelete } from '../components/ButtonDelete'
 import { ButtonEdit } from '../components/ButtonEdit'
 import { SwitchStatus } from '../components/SwitchStatus'
 
-type TFieldFilter = FindAllRequest
+type TFieldFilter = UserFindAllRequest
 
-const columns: ColumnsType<TUser> = [
+const columns: ColumnsType<User> = [
   {
     title: '用户名',
-    dataIndex: 'username' satisfies keyof TUser,
+    dataIndex: 'username' satisfies keyof User,
     key: 'username',
     width: 150,
     ellipsis: true,
@@ -28,7 +28,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '角色',
-    dataIndex: 'roles' satisfies keyof TUser,
+    dataIndex: 'roles' satisfies keyof User,
     key: 'roles',
     width: 100,
     render(_, record) {
@@ -46,7 +46,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '状态',
-    dataIndex: 'enable' satisfies keyof TUser,
+    dataIndex: 'enable' satisfies keyof User,
     key: 'enable',
     width: 100,
     render(_, record) {
@@ -55,7 +55,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '邮箱',
-    dataIndex: 'email' satisfies keyof TUser,
+    dataIndex: 'email' satisfies keyof User,
     key: 'email',
     width: 150,
     render(_, record) {
@@ -64,7 +64,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '创建于',
-    dataIndex: 'createdAt' satisfies keyof TUser,
+    dataIndex: 'createdAt' satisfies keyof User,
     key: 'createdAt',
     width: 200,
     render(_, { createdAt }) {
@@ -80,7 +80,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '更新于',
-    dataIndex: 'updatedAt' satisfies keyof TUser,
+    dataIndex: 'updatedAt' satisfies keyof User,
     key: 'updatedAt',
     width: 200,
     render(_, { updatedAt }) {
@@ -96,7 +96,7 @@ const columns: ColumnsType<TUser> = [
   },
   {
     title: '上一次登录',
-    dataIndex: 'lastLogin' satisfies keyof TUser,
+    dataIndex: 'lastLogin' satisfies keyof User,
     key: 'lastLogin',
     width: 200,
     render(_, { lastLogin }) {
@@ -129,12 +129,12 @@ const columns: ColumnsType<TUser> = [
   },
 ]
 
-const fields: TField<FindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
+const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
 
-export const CACHE_KEY_GET_USER_LIST = 'cacheKey-share-findAll'
+export const CACHE_KEY_GET_USER_LIST = 'cacheKey-user-find-all'
 
 export function useUserList({ filterHeight }: { filterHeight: number }) {
-  const { data, loading, runAsync } = useRequest(fetchers.findAll, {
+  const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
   })
   const [form] = Form.useForm<TFieldFilter>()

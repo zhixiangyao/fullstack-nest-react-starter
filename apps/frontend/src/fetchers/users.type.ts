@@ -1,14 +1,7 @@
-export const Role = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-} as const
-
-export type RoleValue = (typeof Role)[keyof typeof Role]
-
-export interface TUser {
+export interface User {
   uuid: string
   username: string
-  roles: { name: RoleValue, id: number }[]
+  roles: { name: string, id: number }[]
   enable: boolean
   createdAt: Date
   updatedAt: Date
@@ -16,60 +9,60 @@ export interface TUser {
   email: string | null
 }
 
-export interface LoginRequest {
+export interface UserLoginRequest {
   username: string
   password: string
 }
 
-export interface LoginResponse {
+export interface UserLoginResponse {
   data: {
     token: string
   }
 }
 
-export interface CreateRequest {
+export interface UserCreateRequest {
   username: string
   password: string
   email?: string
 }
 
-export interface CreateResponse {
+export interface UserCreateResponse {
   message: string
 }
 
-export interface FindRequest {
+export interface UserFindRequest {
   username?: string
 }
 
-export interface FindResponse {
+export interface UserFindResponse {
   data: {
-    user: TUser
+    user: User
   }
 }
 
-export interface FindAllRequest {
+export interface UserFindAllRequest {
   username?: string
   pageNo?: number
   pageSize?: number
 }
 
-export interface FindAllResponse {
+export interface UserFindAllResponse {
   data: {
-    list: TUser[]
+    list: User[]
     total: number
     pageNo: number
     pageSize: number
   }
 }
 
-export type UpdateRequest = Pick<TUser, 'username'> & Partial<Pick<TUser, 'enable' | 'email'>>
+export type UserUpdateRequest = Pick<User, 'username'> & Partial<Pick<User, 'enable' | 'email'>>
 
-export interface UpdateResponse {
+export interface UserUpdateResponse {
   message: string
 }
 
-export type RemoveRequest = Pick<TUser, 'username'>
+export type UserRemoveRequest = Pick<User, 'username'>
 
-export interface RemoveResponse {
+export interface UserRemoveResponse {
   message: string
 }

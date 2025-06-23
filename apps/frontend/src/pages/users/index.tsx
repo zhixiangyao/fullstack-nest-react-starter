@@ -1,4 +1,4 @@
-import type { TUser } from '~/fetchers'
+import type { User } from '~/fetchers'
 import { useSize } from 'ahooks'
 import { Table } from 'antd'
 import React, { useRef } from 'react'
@@ -24,9 +24,9 @@ function Users() {
         handleReset={userList.handleReset}
       />
 
-      <Table<TUser>
+      <Table<User>
         size="small"
-        rowKey={'uuid' satisfies keyof TUser}
+        rowKey={'uuid' satisfies keyof User}
         columns={userList.columns}
         dataSource={userList.dataSource}
         pagination={userList.pagination}

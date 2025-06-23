@@ -1,52 +1,52 @@
 import type {
-  CreateRequest,
-  CreateResponse,
-  FindAllRequest,
-  FindAllResponse,
-  FindRequest,
-  FindResponse,
-  LoginRequest,
-  LoginResponse,
-  RemoveRequest,
-  RemoveResponse,
-  UpdateRequest,
-  UpdateResponse,
+  UserCreateRequest,
+  UserCreateResponse,
+  UserFindAllRequest,
+  UserFindAllResponse,
+  UserFindRequest,
+  UserFindResponse,
+  UserLoginRequest,
+  UserLoginResponse,
+  UserRemoveRequest,
+  UserRemoveResponse,
+  UserUpdateRequest,
+  UserUpdateResponse,
 } from './users.type'
 
 import { fetchPost } from '~/utils/fetch'
 
-export async function login(data: LoginRequest) {
-  const result = await fetchPost<LoginResponse>('/api/auth/login', JSON.stringify(data))
+export async function userLogin(data: UserLoginRequest) {
+  const result = await fetchPost<UserLoginResponse>('/api/auth/login', JSON.stringify(data))
 
   return result
 }
 
-export async function create(data: CreateRequest) {
-  const result = await fetchPost<CreateResponse>('/api/user/create', JSON.stringify(data))
+export async function userCreate(data: UserCreateRequest) {
+  const result = await fetchPost<UserCreateResponse>('/api/user/create', JSON.stringify(data))
 
   return result
 }
 
-export async function find(data?: FindRequest) {
-  const result = await fetchPost<FindResponse>('/api/user/find', JSON.stringify(data))
+export async function userFind(data?: UserFindRequest) {
+  const result = await fetchPost<UserFindResponse>('/api/user/find', JSON.stringify(data))
 
   return result
 }
 
-export async function findAll(data: FindAllRequest) {
-  const result = await fetchPost<FindAllResponse>('/api/user/find-all', JSON.stringify(data))
+export async function userFindAll(data: UserFindAllRequest) {
+  const result = await fetchPost<UserFindAllResponse>('/api/user/find-all', JSON.stringify(data))
 
   return result
 }
 
-export async function update(data: UpdateRequest) {
-  const result = await fetchPost<UpdateResponse>('/api/user/update', JSON.stringify(data))
+export async function userUpdate(data: UserUpdateRequest) {
+  const result = await fetchPost<UserUpdateResponse>('/api/user/update', JSON.stringify(data))
 
   return result
 }
 
-export async function remove(data: RemoveRequest) {
-  const result = await fetchPost<RemoveResponse>('/api/user/remove', JSON.stringify(data))
+export async function userRemove(data: UserRemoveRequest) {
+  const result = await fetchPost<UserRemoveResponse>('/api/user/remove', JSON.stringify(data))
 
   return result
 }

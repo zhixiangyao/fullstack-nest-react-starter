@@ -1,10 +1,10 @@
-import type { TUser } from '~/fetchers'
+import type { User } from '~/fetchers'
 import { create } from 'zustand'
 
 import * as fetchers from '~/fetchers'
 
 interface Store {
-  user?: TUser
+  user?: User
   open: boolean
   loading: boolean
   handleOpen: (username: string) => void
@@ -20,7 +20,7 @@ export const useDrawerUserEdit = create<Store>()(set => ({
     try {
       set({ open: true, loading: true })
 
-      const user = await fetchers.find({ username })
+      const user = await fetchers.userFind({ username })
       set({ user: user.data.user })
     }
     finally {

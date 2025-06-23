@@ -1,16 +1,14 @@
 import type { ReactNode } from 'react'
-import type { RoleValue } from '~/fetchers'
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
 import React from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Spinning } from '~/components/Spinning'
-import { Role } from '~/fetchers'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
   children: ReactNode
-  roles?: RoleValue[]
+  roles?: string[]
 }
 
 function RolesAuthRoute({ children, roles }: Props) {
@@ -22,7 +20,7 @@ function RolesAuthRoute({ children, roles }: Props) {
   return children
 }
 
-function withRolesAuthRoute(Component: () => ReactNode, options?: { roles: RoleValue[] }) {
+function withRolesAuthRoute(Component: () => ReactNode, options?: { roles: string[] }) {
   return () => (
     <RolesAuthRoute roles={options?.roles}>
       <Component />
@@ -35,7 +33,7 @@ interface Route {
   icon: ReactNode
   path: string
   element: Promise<() => ReactNode>
-  roles: RoleValue[]
+  roles: string[]
 }
 
 const routes: Route[] = [
@@ -51,7 +49,7 @@ const routes: Route[] = [
     path: '/users',
     icon: <UserOutlined />,
     element: import('./pages/users').then(({ Users }) => Users),
-    roles: [Role.ADMIN],
+    roles: ['ADMIN'],
   },
 ]
 
@@ -91,7 +89,7 @@ function Router() {
   return <RouterProvider router={router} />
 }
 
-function genMenus(roles: RoleValue[]) {
+function genMenus(roles: string[]) {
   return routes
     .filter(route => route.roles.length === 0 || route.roles.some(role => roles.includes(role)))
     .map(({ path, label, icon }) => ({ key: path, label, icon }))

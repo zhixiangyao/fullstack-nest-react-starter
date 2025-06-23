@@ -1,4 +1,4 @@
-import type { CreateRequest, CreateResponse, LoginRequest, TUser } from '~/fetchers'
+import type { User, UserCreateRequest, UserCreateResponse, UserLoginRequest } from '~/fetchers'
 import { getStorageStateByKey } from 'utils'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -11,14 +11,14 @@ interface Store {
   loaded: boolean
 
   token: string | null
-  user: TUser | null
+  user: User | null
 
   handleRemember: (remember: boolean) => void
   handleToken: (token: string) => void
   handleClear: () => void
-  handleLogin: (params: LoginRequest) => Promise<void>
+  handleLogin: (params: UserLoginRequest) => Promise<void>
   handleLogout: () => Promise<void>
-  handleCreate: (params: CreateRequest, successfulCallback?: (response: CreateResponse) => void) => Promise<void>
+  handleCreate: (params: UserCreateRequest, successfulCallback?: (response: UserCreateResponse) => void) => Promise<void>
   handleGetCurrentUserInfo: () => Promise<void>
 }
 
@@ -44,7 +44,7 @@ const useUserStore = create<Store>()(
       handleLogin: async (params) => {
         try {
           set(() => ({ loading: true }))
-          const { data } = await fetchers.login(params)
+          const { data } = await fetchers.userLogin(params)
           set(() => ({ token: data.token }))
         }
         catch {
@@ -60,7 +60,7 @@ const useUserStore = create<Store>()(
       handleCreate: async (params, successfulCallback) => {
         try {
           set(() => ({ loading: true }))
-          const response = await fetchers.create(params)
+          const response = await fetchers.userCreate(params)
           successfulCallback?.(response)
         }
         finally {
@@ -72,7 +72,7 @@ const useUserStore = create<Store>()(
           set(() => ({ loading: true }))
           if (get().token === null)
             return
-          const { data } = await fetchers.find()
+          const { data } = await fetchers.userFind()
           set(() => ({ user: data.user, loaded: true }))
         }
         finally {

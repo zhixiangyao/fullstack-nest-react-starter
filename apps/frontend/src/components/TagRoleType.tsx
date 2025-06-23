@@ -1,13 +1,11 @@
 import type { PresetColorKey } from 'antd/es/theme/interface'
-import type { RoleValue } from '~/fetchers'
 import { Tag } from 'antd'
 import React from 'react'
 
 import { stringCapitalization } from 'utils'
-import { Role } from '~/fetchers'
 
 interface Props {
-  value?: RoleValue
+  value?: string
 }
 
 function TagRoleType(props: Props) {
@@ -20,7 +18,7 @@ function TagRoleType(props: Props) {
   const text = stringCapitalization(value)
 
   switch (value) {
-    case Role.ADMIN:
+    case 'ADMIN':
       color = 'gold'
       break
 

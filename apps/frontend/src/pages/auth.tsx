@@ -1,5 +1,5 @@
 import type { FormItemProps } from 'antd'
-import type { CreateRequest, LoginRequest } from '~/fetchers'
+import type { UserCreateRequest, UserLoginRequest } from '~/fetchers'
 import { CloudOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import { App as AntdApp, Button, Checkbox, Form, Input, Segmented } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom'
 import { Rain } from '~/components/Rain'
 import { useUserStore } from '~/stores/useUserStore'
 
-type TFieldType = LoginRequest & CreateRequest
+type TFieldType = UserLoginRequest & UserCreateRequest
 
 type TAuthType = 'Login' | 'Register'
 

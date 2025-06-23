@@ -1,15 +1,14 @@
-import type { TUser } from '~/fetchers'
+import type { User } from '~/fetchers'
 import { useRequest } from 'ahooks'
 import { App as AntdApp, Button, Drawer, Form, Input, Switch } from 'antd'
 import React, { useCallback, useEffect } from 'react'
 
-import { Role } from '~/fetchers'
 import * as fetchers from '~/fetchers'
 
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
 
-type TFieldUser = TUser
+type TFieldUser = User
 
 const formItemLayout = {
   labelCol: {
@@ -25,10 +24,10 @@ const formItemLayout = {
 function DrawerUserEdit() {
   const { message } = AntdApp.useApp()
   const drawerUserEdit = useDrawerUserEdit()
-  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.update, {
+  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
     manual: true,
   })
-  const { refreshAsync } = useRequest(fetchers.findAll, {
+  const { refreshAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
     manual: true,
   })
@@ -100,7 +99,7 @@ function DrawerUserEdit() {
           <Switch
             checkedChildren="启用"
             unCheckedChildren="禁用"
-            disabled={drawerUserEdit.user?.roles.map(role => role.name).includes(Role.ADMIN)}
+            disabled={drawerUserEdit.user?.roles.map(role => role.name).includes('ADMIN')}
           />
         </Form.Item>
       </Form>

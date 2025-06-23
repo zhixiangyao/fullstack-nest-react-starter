@@ -1,11 +1,11 @@
-import type { TUser } from '~/fetchers'
+import type { User } from '~/fetchers'
 import { Button } from 'antd'
 import React from 'react'
 
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 
 interface Props {
-  record: TUser
+  record: User
 }
 
 function ButtonEdit({ record }: Props) {
