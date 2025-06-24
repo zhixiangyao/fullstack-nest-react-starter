@@ -1,11 +1,7 @@
+import type { FormInstance } from 'antd'
 import type { User } from '~/fetchers'
-import { useRequest } from 'ahooks'
-import { App as AntdApp, Button, Drawer, Form, Input, Switch } from 'antd'
-import React, { useCallback, useEffect } from 'react'
-
-import * as fetchers from '~/fetchers'
-
-import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
+import { Button, Drawer, Form, Input, Switch } from 'antd'
+import React from 'react'
 
 export type TFieldUser = User
 
@@ -22,55 +18,17 @@ const formItemLayout = {
 
 interface Props {
   user?: User
+  form: FormInstance<User>
   open: boolean
   loading: boolean
+  loadingUpdate: boolean
   handleClose: () => void
+  handleFinish: (values: User) => Promise<void>
 }
 
 function DrawerEdit(props: Props) {
-  const { user, open, loading } = props
-  const { handleClose } = props
-  const { message } = AntdApp.useApp()
-  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
-    manual: true,
-  })
-  const { refreshAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
-    manual: true,
-  })
-  const [form] = Form.useForm<TFieldUser>()
-
-  const handleFinish = useCallback(
-    async (values: TFieldUser) => {
-      if (!user)
-        return
-
-      try {
-        await runAsync({
-          username: user?.username,
-          email: values.email,
-          isActive: values.isActive,
-        })
-        refreshAsync()
-        handleClose()
-        message.success('Edit successful!')
-      }
-      catch (error) {
-        console.log(error)
-      }
-    },
-    [handleClose, message, refreshAsync, runAsync, user],
-  )
-
-  useEffect(() => {
-    if (user) {
-      form.setFieldsValue({
-        username: user.username,
-        email: user.email,
-        isActive: user.isActive,
-      })
-    }
-  }, [user, form])
+  const { user, form, open, loading, loadingUpdate } = props
+  const { handleClose, handleFinish } = props
 
   return (
     <Drawer
@@ -105,7 +63,7 @@ function DrawerEdit(props: Props) {
         <Form.Item<TFieldUser> label="Active" name="isActive">
           <Switch
             checkedChildren="Active"
-            unCheckedChildren="Unactive"
+            unCheckedChildren="Inactive"
             disabled={user?.roles.map(role => role.name).includes('ADMIN')}
           />
         </Form.Item>

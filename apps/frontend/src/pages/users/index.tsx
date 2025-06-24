@@ -40,9 +40,12 @@ function Users() {
 
       <DrawerEdit
         user={drawerEdit.user}
+        form={drawerEdit.form}
         open={drawerEdit.open}
         loading={drawerEdit.loading}
+        loadingUpdate={drawerEdit.loadingUpdate}
         handleClose={drawerEdit.handleClose}
+        handleFinish={drawerEdit.handleFinish}
       />
     </>
   )
