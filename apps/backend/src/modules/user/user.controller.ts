@@ -69,8 +69,8 @@ export class UserController {
   async find(@Body() body: UserFindDto, @User() user: Request['user']): Promise<ResponseFind> {
     const username = body.username ?? user.username
 
-    const item = await this.userService.find(username)
-    const userWithoutPassword = deleteProperty(item, 'hashedPassword')
+    const _user = await this.userService.find(username)
+    const userWithoutPassword = deleteProperty(_user, 'hashedPassword')
 
     return { data: { user: userWithoutPassword } }
   }

@@ -1,4 +1,4 @@
-import type { JwtSignPayload } from '~/modules/auth/type'
+import type { JwtSignPayload } from '~/modules/auth/auth.type'
 
 type User = JwtSignPayload & { iat: number, exp: number }
 
