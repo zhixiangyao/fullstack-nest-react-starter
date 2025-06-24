@@ -5,10 +5,9 @@ import React, { useCallback, useEffect } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
 import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
 
-type TFieldUser = User
+export type TFieldUser = User
 
 const formItemLayout = {
   labelCol: {
@@ -21,9 +20,17 @@ const formItemLayout = {
   },
 }
 
-function DrawerUserEdit() {
+interface Props {
+  user?: User
+  open: boolean
+  loading: boolean
+  handleClose: () => void
+}
+
+function DrawerEdit(props: Props) {
+  const { user, open, loading } = props
+  const { handleClose } = props
   const { message } = AntdApp.useApp()
-  const drawerUserEdit = useDrawerUserEdit()
   const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
     manual: true,
   })
@@ -35,44 +42,44 @@ function DrawerUserEdit() {
 
   const handleFinish = useCallback(
     async (values: TFieldUser) => {
-      if (!drawerUserEdit.user)
+      if (!user)
         return
 
       try {
         await runAsync({
-          username: drawerUserEdit.user?.username,
+          username: user?.username,
           email: values.email,
           isActive: values.isActive,
         })
         refreshAsync()
-        drawerUserEdit.handleClose()
+        handleClose()
         message.success('Edit successful!')
       }
       catch (error) {
         console.log(error)
       }
     },
-    [drawerUserEdit, message, refreshAsync, runAsync],
+    [handleClose, message, refreshAsync, runAsync, user],
   )
 
   useEffect(() => {
-    if (drawerUserEdit.user) {
+    if (user) {
       form.setFieldsValue({
-        username: drawerUserEdit.user.username,
-        email: drawerUserEdit.user.email,
-        isActive: drawerUserEdit.user.isActive,
+        username: user.username,
+        email: user.email,
+        isActive: user.isActive,
       })
     }
-  }, [drawerUserEdit.user, form])
+  }, [user, form])
 
   return (
     <Drawer
       width={700}
       title="Edit User"
       placement="right"
-      onClose={drawerUserEdit.handleClose}
-      open={drawerUserEdit.open}
-      loading={drawerUserEdit.loading}
+      onClose={handleClose}
+      open={open}
+      loading={loading}
       footer={(
         <Button type="primary" onClick={form.submit} loading={loadingUpdate}>
           Confirm
@@ -99,7 +106,7 @@ function DrawerUserEdit() {
           <Switch
             checkedChildren="Active"
             unCheckedChildren="Unactive"
-            disabled={drawerUserEdit.user?.roles.map(role => role.name).includes('ADMIN')}
+            disabled={user?.roles.map(role => role.name).includes('ADMIN')}
           />
         </Form.Item>
       </Form>
@@ -107,5 +114,4 @@ function DrawerUserEdit() {
   )
 }
 
-export { DrawerUserEdit }
-export type { TFieldUser }
+export { DrawerEdit }

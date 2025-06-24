@@ -2,17 +2,14 @@ import type { User } from '~/fetchers'
 import { Button } from 'antd'
 import React from 'react'
 
-import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
-
 interface Props {
   record: User
+  handleOpen: (username: User['username']) => void
 }
 
-function ButtonEdit({ record }: Props) {
-  const drawerUserEdit = useDrawerUserEdit()
-
+function ButtonEdit({ record, handleOpen }: Props) {
   return (
-    <Button type="link" className="!px-0" onClick={() => drawerUserEdit.handleOpen(record.username)}>
+    <Button type="link" className="!px-0" onClick={() => handleOpen(record.username)}>
       Edit
     </Button>
   )

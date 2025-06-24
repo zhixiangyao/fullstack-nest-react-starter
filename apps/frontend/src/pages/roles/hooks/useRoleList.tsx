@@ -12,10 +12,10 @@ import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = UserFindAllRequest
 
-const columns: ColumnsType<Role> = [
+const columns = [
   {
     title: 'ID',
-    dataIndex: 'id' satisfies keyof Role,
+    dataIndex: 'id',
     key: 'id',
     width: 100,
     ellipsis: true,
@@ -23,7 +23,7 @@ const columns: ColumnsType<Role> = [
   },
   {
     title: 'Name',
-    dataIndex: 'name' satisfies keyof Role,
+    dataIndex: 'name',
     key: 'name',
     width: 100,
     render(_, record) {
@@ -32,7 +32,7 @@ const columns: ColumnsType<Role> = [
   },
   {
     title: 'Users',
-    dataIndex: 'users' satisfies keyof Role,
+    dataIndex: 'users',
     key: 'users',
     width: 300,
     render(_, record) {
@@ -50,7 +50,7 @@ const columns: ColumnsType<Role> = [
       )
     },
   },
-]
+] satisfies (ColumnsType<Role>[number] & { dataIndex?: keyof Role, key: keyof Role })[]
 
 const fields: TField<UserFindAllRequest>[] = []
 

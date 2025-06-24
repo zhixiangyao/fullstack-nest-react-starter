@@ -15,7 +15,7 @@ import { SwitchPublished } from '../components/SwitchPublished'
 
 type TFieldFilter = BlogFindAllRequest
 
-const columns: ColumnsType<Blog> = [
+const columns = [
   {
     title: 'ID',
     dataIndex: 'id' satisfies keyof Blog,
@@ -93,7 +93,7 @@ const columns: ColumnsType<Blog> = [
       )
     },
   },
-]
+] satisfies (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyof Blog })[]
 
 const fields: TField<BlogFindAllRequest>[] = []
 

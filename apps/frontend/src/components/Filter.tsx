@@ -1,6 +1,6 @@
 import type { FormInstance, FormItemProps, RowProps } from 'antd'
 import type { Ref } from 'react'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, SearchOutlined, UndoOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { Button, Col, Form, Input, Row } from 'antd'
 import React, { useMemo, useState } from 'react'
@@ -72,11 +72,11 @@ function Filter<T>(props: Props<T>) {
           <Col span={24}>
             <Form.Item<T>>
               <div className="flex gap-2">
-                <Button className="min-w-24" type="primary" htmlType="submit">
+                <Button className="min-w-24" type="primary" htmlType="submit" icon={<SearchOutlined />}>
                   Query
                 </Button>
 
-                <Button className="min-w-24" onClick={handleReset}>
+                <Button className="min-w-24" onClick={handleReset} icon={<UndoOutlined />}>
                   Reset
                 </Button>
 

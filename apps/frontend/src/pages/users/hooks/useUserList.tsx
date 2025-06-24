@@ -12,16 +12,12 @@ import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
-import { ButtonDelete } from '../components/ButtonDelete'
-import { ButtonEdit } from '../components/ButtonEdit'
-import { SwitchStatus } from '../components/SwitchStatus'
-
 type TFieldFilter = UserFindAllRequest
 
-const columns: ColumnsType<User> = [
+const columns = [
   {
     title: 'Username',
-    dataIndex: 'username' satisfies keyof User,
+    dataIndex: 'username',
     key: 'username',
     width: 120,
     ellipsis: true,
@@ -29,7 +25,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: 'Roles',
-    dataIndex: 'roles' satisfies keyof User,
+    dataIndex: 'roles',
     key: 'roles',
     width: 80,
     render(_, record) {
@@ -47,22 +43,19 @@ const columns: ColumnsType<User> = [
   },
   {
     title: 'Blogs Total',
-    dataIndex: 'blogsTotal' satisfies keyof User,
+    dataIndex: 'blogsTotal',
     key: 'blogsTotal',
     width: 120,
   },
   {
     title: 'is Active?',
-    dataIndex: 'isActive' satisfies keyof User,
+    dataIndex: 'isActive',
     key: 'isActive',
     width: 100,
-    render(_, record) {
-      return <SwitchStatus record={record} />
-    },
   },
   {
     title: 'Email',
-    dataIndex: 'email' satisfies keyof User,
+    dataIndex: 'email',
     key: 'email',
     width: 150,
     render(_, record) {
@@ -71,7 +64,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: 'Created At',
-    dataIndex: 'createdAt' satisfies keyof User,
+    dataIndex: 'createdAt',
     key: 'createdAt',
     width: 300,
     render(_, { createdAt }) {
@@ -87,7 +80,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: 'Updated At',
-    dataIndex: 'updatedAt' satisfies keyof User,
+    dataIndex: 'updatedAt',
     key: 'updatedAt',
     width: 300,
     render(_, { updatedAt }) {
@@ -103,7 +96,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: 'Last Login',
-    dataIndex: 'lastLogin' satisfies keyof User,
+    dataIndex: 'lastLogin',
     key: 'lastLogin',
     width: 300,
     render(_, { lastLogin }) {
@@ -125,22 +118,18 @@ const columns: ColumnsType<User> = [
     key: 'actions',
     width: 100,
     fixed: 'right',
-    render(_, record) {
-      return (
-        <div className="flex items-center gap-2">
-          <ButtonDelete record={record} />
-          <ButtonEdit record={record} />
-        </div>
-      )
-    },
   },
-]
+] satisfies (ColumnsType<User>[number] & { dataIndex?: keyof User, key: keyof User | 'actions' })[]
 
 const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username0', name: 'username', label: 'Username' }]
 
 export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
 
-export function useUserList({ filterHeight }: { filterHeight: number }) {
+interface Prams {
+  filterHeight: number
+}
+
+export function useUserList({ filterHeight }: Prams) {
   const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_USER_FIND_ALL,
   })
