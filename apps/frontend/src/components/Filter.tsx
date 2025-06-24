@@ -77,9 +77,11 @@ function Filter<T>(props: Props<T>) {
                   Query
                 </Button>
 
-                <Button className="min-w-24" onClick={handleReset} icon={<UndoOutlined />}>
-                  Reset
-                </Button>
+                {fields && fields.length > 0 && (
+                  <Button className="min-w-24" onClick={handleReset} icon={<UndoOutlined />}>
+                    Reset
+                  </Button>
+                )}
 
                 {extra}
 
@@ -93,7 +95,6 @@ function Filter<T>(props: Props<T>) {
                     Collapse
                   </Button>
                 )}
-
               </div>
             </Form.Item>
           </Col>
