@@ -5,7 +5,7 @@ import React, { useCallback } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
+import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
 
 interface Props {
   record: User
@@ -15,7 +15,7 @@ function ButtonDelete({ record }: Props) {
   const { message } = AntdApp.useApp()
   const { loading: loadingDelete, runAsync } = useRequest(fetchers.userRemove, { manual: true })
   const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_GET_USER_LIST,
+    cacheKey: CACHE_KEY_USER_FIND_ALL,
     manual: true,
   })
 

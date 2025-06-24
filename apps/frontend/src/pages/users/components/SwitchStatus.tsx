@@ -5,7 +5,7 @@ import React, { useCallback } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
+import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
 
 interface Props {
   record: User
@@ -13,11 +13,11 @@ interface Props {
 
 function SwitchStatus({ record }: Props) {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUp, runAsync } = useRequest(fetchers.userUpdate, {
+  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
     manual: true,
   })
-  const { refreshAsync, loading: loadingGet } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_GET_USER_LIST,
+  const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.userFindAll, {
+    cacheKey: CACHE_KEY_USER_FIND_ALL,
     manual: true,
   })
 
@@ -37,7 +37,7 @@ function SwitchStatus({ record }: Props) {
 
   return (
     <Switch
-      disabled={loadingGet || loadingUp || record.roles.map(role => role.name).includes('ADMIN')}
+      disabled={loadingFindAll || loadingUpdate || record.roles.map(role => role.name).includes('ADMIN')}
       checkedChildren="启用"
       unCheckedChildren="禁用"
       checked={record.isActive}

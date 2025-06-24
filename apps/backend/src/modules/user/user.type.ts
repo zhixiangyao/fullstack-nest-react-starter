@@ -22,6 +22,9 @@ export interface ResponseFind {
 
 export interface ResponseFindAll {
   data: {
-    list: (UserWithoutPassword & { roles: Role[] })[]
+    list: ResponseFind['data']['user'][]
+    total: number
+    pageNo: number
+    pageSize: number
   }
 }

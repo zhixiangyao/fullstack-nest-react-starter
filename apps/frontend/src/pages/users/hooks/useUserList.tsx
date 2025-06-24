@@ -23,7 +23,7 @@ const columns: ColumnsType<User> = [
     title: '用户名',
     dataIndex: 'username' satisfies keyof User,
     key: 'username',
-    width: 150,
+    width: 120,
     ellipsis: true,
     fixed: 'left',
   },
@@ -31,7 +31,7 @@ const columns: ColumnsType<User> = [
     title: '角色',
     dataIndex: 'roles' satisfies keyof User,
     key: 'roles',
-    width: 100,
+    width: 80,
     render(_, record) {
       if (record.roles.length === 0)
         return '/'
@@ -67,10 +67,10 @@ const columns: ColumnsType<User> = [
     title: '创建于',
     dataIndex: 'createdAt' satisfies keyof User,
     key: 'createdAt',
-    width: 200,
+    width: 260,
     render(_, { createdAt }) {
       return (
-        <div className="flex flex-col gap-1 items-start">
+        <div className="flex gap-1 items-center">
           <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
             {timeAgo(dayjs(createdAt).valueOf())}
@@ -83,10 +83,10 @@ const columns: ColumnsType<User> = [
     title: '更新于',
     dataIndex: 'updatedAt' satisfies keyof User,
     key: 'updatedAt',
-    width: 200,
+    width: 260,
     render(_, { updatedAt }) {
       return (
-        <div className="flex flex-col gap-1 items-start">
+        <div className="flex gap-1 items-center">
           <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
             {timeAgo(dayjs(updatedAt).valueOf())}
@@ -99,13 +99,13 @@ const columns: ColumnsType<User> = [
     title: '上一次登录',
     dataIndex: 'lastLogin' satisfies keyof User,
     key: 'lastLogin',
-    width: 200,
+    width: 260,
     render(_, { lastLogin }) {
       if (!lastLogin)
         return '/'
 
       return (
-        <div className="flex flex-col gap-1 items-start">
+        <div className="flex gap-1 items-center">
           <span>{formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(lastLogin).valueOf())}>
             {timeAgo(dayjs(lastLogin).valueOf())}
@@ -132,11 +132,11 @@ const columns: ColumnsType<User> = [
 
 const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
 
-export const CACHE_KEY_GET_USER_LIST = 'cacheKey-user-find-all'
+export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
 
 export function useUserList({ filterHeight }: { filterHeight: number }) {
   const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_GET_USER_LIST,
+    cacheKey: CACHE_KEY_USER_FIND_ALL,
   })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()

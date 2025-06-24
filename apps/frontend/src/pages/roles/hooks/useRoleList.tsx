@@ -52,11 +52,11 @@ const columns: ColumnsType<Role> = [
 
 const fields: TField<UserFindAllRequest>[] = []
 
-export const CACHE_KEY_GET_USER_LIST = 'cacheKey-role-find-all'
+export const CACHE_KEY_ROLE_FIND_ALL = 'cacheKey-role-find-all'
 
 export function useRoleList({ filterHeight }: { filterHeight: number }) {
   const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, {
-    cacheKey: CACHE_KEY_GET_USER_LIST,
+    cacheKey: CACHE_KEY_ROLE_FIND_ALL,
   })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()

@@ -6,7 +6,7 @@ import React, { useCallback, useEffect } from 'react'
 import * as fetchers from '~/fetchers'
 
 import { useDrawerUserEdit } from '../hooks/useDrawerUserEdit'
-import { CACHE_KEY_GET_USER_LIST } from '../hooks/useUserList'
+import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
 
 type TFieldUser = User
 
@@ -28,7 +28,7 @@ function DrawerUserEdit() {
     manual: true,
   })
   const { refreshAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_GET_USER_LIST,
+    cacheKey: CACHE_KEY_USER_FIND_ALL,
     manual: true,
   })
   const [form] = Form.useForm<TFieldUser>()

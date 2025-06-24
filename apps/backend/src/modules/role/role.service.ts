@@ -10,7 +10,7 @@ import { RoleFindAllDto } from './role.dto'
 export class RoleService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(data: RoleFindAllDto) {
+  async findAll(data: RoleFindAllDto): Promise<ResponseFindAll['data']> {
     const { pageNo = 1, pageSize = 10 } = data
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
