@@ -2,7 +2,7 @@ import type { ThemeConfig } from 'antd'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-const ROOT_WIDTH = document.querySelector('html')?.getBoundingClientRect().width
+const ROOT_WIDTH = document.querySelector('#root')?.getBoundingClientRect().width
 
 interface Size {
   width: number

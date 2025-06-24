@@ -2,7 +2,7 @@ import type { TablePaginationConfig } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
 import type { User, UserFindAllRequest } from '~/fetchers'
-import { useRequest, useSize } from 'ahooks'
+import { useRequest } from 'ahooks'
 import { Form, Tag } from 'antd'
 import dayjs from 'dayjs'
 import React, { useMemo } from 'react'
@@ -10,6 +10,7 @@ import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
+import { useAppStore } from '~/stores/useAppStore'
 
 import { ButtonDelete } from '../components/ButtonDelete'
 import { ButtonEdit } from '../components/ButtonEdit'
@@ -137,6 +138,7 @@ export function useUserList({ filterHeight }: { filterHeight: number }) {
   const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_GET_USER_LIST,
   })
+  const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
@@ -152,7 +154,6 @@ export function useUserList({ filterHeight }: { filterHeight: number }) {
     }),
     [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
   )
-  const size = useSize(document.querySelector('html'))
   const scroll = useMemo(() => {
     const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
     const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56

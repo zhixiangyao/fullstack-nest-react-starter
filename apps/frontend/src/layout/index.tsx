@@ -1,6 +1,6 @@
 import { useSize } from 'ahooks'
 import { Splitter } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { Progress } from '~/components/Progress'
@@ -18,8 +18,7 @@ function Layout() {
   const { handleWindowSize, handleSplitterSizes } = appStore
   const { token, loaded, handleGetCurrentUserInfo } = useUserStore()
   const [pathname, setPathname] = useState('/')
-  const htmlRef = useRef(document.querySelector('html'))
-  const size = useSize(htmlRef)
+  const size = useSize(document.querySelector('#root'))
   const isAnimating = location.pathname !== pathname
 
   useEffect(() => {
