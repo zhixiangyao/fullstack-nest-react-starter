@@ -24,12 +24,12 @@ export class UserController {
   @Header('content-type', 'application/json')
   async create(@Body() body: UserCreateDto): Promise<ResponseRegisterUser> {
     if (await this.userService.has(body.username)) {
-      throw new HttpException('此用户已被注册', HttpStatus.BAD_REQUEST)
+      throw new HttpException('This user has been registered!', HttpStatus.BAD_REQUEST)
     }
 
     await this.userService.create(body)
 
-    return { message: '注册成功' }
+    return { message: 'Registration successful!' }
   }
 
   @Roles(['ADMIN'])
@@ -38,13 +38,13 @@ export class UserController {
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
     if (body.isActive !== void 0) {
       if (req.user.username === body.username && body.isActive === false) {
-        throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
+        throw new HttpException('Administrators cannot modify the status!', HttpStatus.BAD_REQUEST)
       }
     }
 
     await this.userService.update(body.username, body)
 
-    return { message: '更新成功' }
+    return { message: 'Update successful!' }
   }
 
   @Roles(['ADMIN'])
@@ -52,16 +52,16 @@ export class UserController {
   @Header('content-type', 'application/json')
   async remove(@Body() body: UserRemoveDto, @User('username') username: string): Promise<ResponseRemove> {
     if (username === body.username) {
-      throw new HttpException('不可删除自身', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Cannot delete itself!', HttpStatus.BAD_REQUEST)
     }
 
     if (!(await this.userService.has(body.username))) {
-      throw new HttpException('未知的 username 值', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Unknown username value!', HttpStatus.BAD_REQUEST)
     }
 
     await this.userService.remove(body.username)
 
-    return { message: '删除成功!' }
+    return { message: 'Deletion successful!' }
   }
 
   @Post('find')

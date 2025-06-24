@@ -9,7 +9,7 @@ const { darkAlgorithm, defaultAlgorithm } = theme
 
 const formConfig: ConfigProviderProps['form'] = {
   validateMessages: {
-    required: '${label} 是必填项',
+    required: '${label} is a required field!',
   },
 }
 

@@ -46,7 +46,7 @@ function DrawerUserEdit() {
         })
         refreshAsync()
         drawerUserEdit.handleClose()
-        message.success('编辑成功')
+        message.success('Edit successful!')
       }
       catch (error) {
         console.log(error)
@@ -68,14 +68,14 @@ function DrawerUserEdit() {
   return (
     <Drawer
       width={700}
-      title="编辑用户"
+      title="Edit User"
       placement="right"
       onClose={drawerUserEdit.handleClose}
       open={drawerUserEdit.open}
       loading={drawerUserEdit.loading}
       footer={(
         <Button type="primary" onClick={form.submit} loading={loadingUpdate}>
-          确定
+          Confirm
         </Button>
       )}
     >
@@ -87,18 +87,18 @@ function DrawerUserEdit() {
         form={form}
         disabled={loadingUpdate}
       >
-        <Form.Item<TFieldUser> label="用户名" name="username">
+        <Form.Item<TFieldUser> label="Username" name="username">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="邮箱" name="email">
+        <Form.Item<TFieldUser> label="Email" name="email">
           <Input />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="状态" name="isActive">
+        <Form.Item<TFieldUser> label="Active" name="isActive">
           <Switch
-            checkedChildren="启用"
-            unCheckedChildren="禁用"
+            checkedChildren="Active"
+            unCheckedChildren="Unactive"
             disabled={drawerUserEdit.user?.roles.map(role => role.name).includes('ADMIN')}
           />
         </Form.Item>

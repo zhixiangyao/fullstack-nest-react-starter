@@ -35,7 +35,7 @@ function Filter<T>(props: Props<T>) {
             case 'input': {
               return (
                 <Form.Item<T> name={field.name as NamePath<T>} label={field.label} key={field.name.toString()}>
-                  <Input type="text" placeholder={`请输入${field.label}`} />
+                  <Input type="text" placeholder={`Please enter ${field.label}`} />
                 </Form.Item>
               )
             }
@@ -49,10 +49,10 @@ function Filter<T>(props: Props<T>) {
         <Form.Item<T>>
           <div className="flex gap-2">
             <Button type="primary" htmlType="submit">
-              查询
+              Query
             </Button>
 
-            <Button onClick={props.handleReset}>重置</Button>
+            <Button onClick={props.handleReset}>Reset</Button>
           </div>
         </Form.Item>
       </Form>

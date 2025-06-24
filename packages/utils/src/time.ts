@@ -25,32 +25,32 @@ export function getYesterday() {
 }
 
 const units = [
-  { duration: 60 * 60 * 24 * 365, name: '年' },
-  { duration: 60 * 60 * 24 * 30, name: '月' },
-  { duration: 60 * 60 * 24, name: '天' },
-  { duration: 60 * 60, name: '小时' },
-  { duration: 60, name: '分钟' },
+  { duration: 60 * 60 * 24 * 365, name: 'Years' },
+  { duration: 60 * 60 * 24 * 30, name: 'Months' },
+  { duration: 60 * 60 * 24, name: 'Days' },
+  { duration: 60 * 60, name: 'Hours' },
+  { duration: 60, name: 'Minutes' },
 ]
 
-type TTimeAgo = '刚刚' | '未来' | '未知' | `${string}前` | `${string}秒前`
+type TTimeAgo = 'Just Now' | 'Future' | 'Unknown' | `${string} Ago` | `${string} Seconds Ago`
 
 export function timeAgo(timestamp: number): TTimeAgo {
   const now = Date.now()
   const seconds = Math.floor((now - timestamp) / 1000)
 
   if (seconds < 0)
-    return '未来'
+    return 'Future'
   if (Number.isNaN(seconds))
-    return '未知'
+    return 'Unknown'
 
   for (const unit of units) {
     const interval = seconds / unit.duration
 
     if (interval >= 1)
-      return `${Math.floor(interval)}${unit.name}前`
+      return `${Math.floor(interval)} ${unit.name} Ago`
   }
 
-  return seconds >= 30 ? `${seconds}秒前` : '刚刚'
+  return seconds >= 30 ? `${seconds} Seconds Ago` : 'Just Now'
 }
 
 export function getColorByDate(timestamp: number) {

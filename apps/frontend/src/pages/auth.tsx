@@ -13,8 +13,8 @@ type TFieldType = UserLoginRequest & UserCreateRequest
 type TAuthType = 'Login' | 'Register'
 
 const rules = {
-  username: [{ required: true, message: '请输入您的用户名!' }],
-  password: [{ required: true, message: '请输入您的密码!' }],
+  username: [{ required: true, message: 'Please enter your username!' }],
+  password: [{ required: true, message: 'Please enter your password!' }],
   email: [],
 } satisfies Record<string, FormItemProps['rules']>
 
@@ -69,11 +69,11 @@ function Auth() {
       />
       <Form<TFieldType> name="auth" autoComplete="off" className="w-72 z-10" form={form} onFinish={handleFinish}>
         <Form.Item<TFieldType> name="username" rules={rules.username}>
-          <Input prefix={<UserOutlined />} placeholder="请输入用户名" />
+          <Input prefix={<UserOutlined />} placeholder="Please enter the username." />
         </Form.Item>
 
         <Form.Item<TFieldType> name="password" rules={rules.password}>
-          <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" />
+          <Input.Password prefix={<LockOutlined />} placeholder="Please enter the password." />
         </Form.Item>
 
         {authType === 'Login' && (
@@ -84,7 +84,7 @@ function Auth() {
                 checked={remember}
                 onChange={e => handleRemember(e.target.checked)}
               >
-                记住我
+                Remember me
               </Checkbox>
             </Form.Item>
           </Form.Item>
@@ -92,14 +92,13 @@ function Auth() {
 
         {authType === 'Register' && (
           <Form.Item<TFieldType> name="email" rules={rules.email}>
-            <Input prefix={<CloudOutlined />} placeholder="请输入邮箱" />
+            <Input prefix={<CloudOutlined />} placeholder="Please enter your email address." />
           </Form.Item>
         )}
 
         <Form.Item>
           <Button className="w-full select-none" type="primary" htmlType="submit" loading={loading}>
-            {authType === 'Login' && '登录'}
-            {authType === 'Register' && '注册'}
+            {authType}
           </Button>
         </Form.Item>
       </Form>

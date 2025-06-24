@@ -19,22 +19,22 @@ const MenuKey = {
 
 const items: MenuProps['items'] = [
   {
-    label: '默认主题',
+    label: 'Light Theme',
     key: MenuKey.THEME_LIGHT,
     icon: <SunOutlined />,
   },
   {
-    label: '暗黑主题',
+    label: 'Dark Theme',
     key: MenuKey.THEME_DARK,
     icon: <MoonOutlined />,
   },
   {
-    label: '用户信息',
+    label: 'User Info',
     key: MenuKey.USER_INFO,
     icon: <UserOutlined />,
   },
   {
-    label: '退出',
+    label: 'Logout',
     key: MenuKey.LOGOUT,
     icon: <LogoutOutlined />,
   },

@@ -11,7 +11,7 @@ export class AuthService {
 
   async signIn(username: string, password: string) {
     if ((await this.userService.validate(username, password)) === false) {
-      throw new UnauthorizedException('密码错误或者账号错误')
+      throw new UnauthorizedException('Password error or account error!')
     }
 
     await this.userService.check(username)

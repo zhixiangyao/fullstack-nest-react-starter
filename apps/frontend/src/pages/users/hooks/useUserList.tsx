@@ -20,7 +20,7 @@ type TFieldFilter = UserFindAllRequest
 
 const columns: ColumnsType<User> = [
   {
-    title: '用户名',
+    title: 'Username',
     dataIndex: 'username' satisfies keyof User,
     key: 'username',
     width: 120,
@@ -28,7 +28,7 @@ const columns: ColumnsType<User> = [
     fixed: 'left',
   },
   {
-    title: '角色',
+    title: 'Roles',
     dataIndex: 'roles' satisfies keyof User,
     key: 'roles',
     width: 80,
@@ -46,13 +46,13 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '博客总数',
+    title: 'Blogs Total',
     dataIndex: 'blogsTotal' satisfies keyof User,
     key: 'blogsTotal',
-    width: 80,
+    width: 120,
   },
   {
-    title: '状态',
+    title: 'is Active?',
     dataIndex: 'isActive' satisfies keyof User,
     key: 'isActive',
     width: 100,
@@ -61,7 +61,7 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '邮箱',
+    title: 'Email',
     dataIndex: 'email' satisfies keyof User,
     key: 'email',
     width: 150,
@@ -70,13 +70,13 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '创建于',
+    title: 'Created At',
     dataIndex: 'createdAt' satisfies keyof User,
     key: 'createdAt',
-    width: 260,
+    width: 300,
     render(_, { createdAt }) {
       return (
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
             {timeAgo(dayjs(createdAt).valueOf())}
@@ -86,13 +86,13 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '更新于',
+    title: 'Updated At',
     dataIndex: 'updatedAt' satisfies keyof User,
     key: 'updatedAt',
-    width: 260,
+    width: 300,
     render(_, { updatedAt }) {
       return (
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
             {timeAgo(dayjs(updatedAt).valueOf())}
@@ -102,16 +102,16 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '上一次登录',
+    title: 'Last Login',
     dataIndex: 'lastLogin' satisfies keyof User,
     key: 'lastLogin',
-    width: 260,
+    width: 300,
     render(_, { lastLogin }) {
       if (!lastLogin)
         return '/'
 
       return (
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <span>{formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(lastLogin).valueOf())}>
             {timeAgo(dayjs(lastLogin).valueOf())}
@@ -121,7 +121,7 @@ const columns: ColumnsType<User> = [
     },
   },
   {
-    title: '操作',
+    title: 'Actions',
     key: 'actions',
     width: 100,
     fixed: 'right',
@@ -136,7 +136,7 @@ const columns: ColumnsType<User> = [
   },
 ]
 
-const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
+const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: 'Username' }]
 
 export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
 
@@ -149,7 +149,7 @@ export function useUserList({ filterHeight }: { filterHeight: number }) {
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
     () => ({
-      showTotal: total => `共 ${total} 个`,
+      showTotal: total => `A total of ${total} items`,
       current: data?.data.pageNo,
       total: data?.data.total,
       pageSize: data?.data.pageSize,

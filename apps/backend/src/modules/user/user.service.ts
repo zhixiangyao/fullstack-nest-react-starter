@@ -51,7 +51,7 @@ export class UserService {
       include: {
         roles: {
           include: {
-            role: true, // 包含角色本身的详细信息
+            role: true,
           },
         },
         blogs: true,
@@ -124,7 +124,7 @@ export class UserService {
     const user = await this.find(username)
 
     if (user.isActive === false) {
-      throw new ForbiddenException('您的账户已被禁用！')
+      throw new ForbiddenException('Your account has been marked as inactive!')
     }
   }
 

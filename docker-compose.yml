@@ -7,7 +7,7 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=123456
     volumes:
-      # 此处可修自定义
+      # Customizable here
       - $HOME/Documents/databases/fullstack-nest-react-starter-postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432

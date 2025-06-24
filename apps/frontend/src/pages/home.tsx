@@ -7,7 +7,9 @@ function Home() {
 
   return (
     <div>
-      <span>{`您好 ${user?.username}`}</span>
+      <span>Hello</span>
+      &nbsp;
+      <b>{user?.username}</b>
     </div>
   )
 }

@@ -17,21 +17,21 @@ type TFieldFilter = BlogFindAllRequest
 
 const columns: ColumnsType<Blog> = [
   {
-    title: '博客ID',
+    title: 'ID',
     dataIndex: 'id' satisfies keyof Blog,
     key: 'id',
     width: 100,
     fixed: 'left',
   },
   {
-    title: '标题',
+    title: 'Title',
     dataIndex: 'title' satisfies keyof Blog,
     key: 'title',
     width: 150,
     ellipsis: true,
   },
   {
-    title: '是否已发布',
+    title: 'Published?',
     dataIndex: 'published' satisfies keyof Blog,
     key: 'published',
     width: 100,
@@ -40,13 +40,13 @@ const columns: ColumnsType<Blog> = [
     },
   },
   {
-    title: '阅读量',
+    title: 'Views',
     dataIndex: 'views' satisfies keyof Blog,
     key: 'views',
     width: 100,
   },
   {
-    title: '标签',
+    title: 'Tags',
     dataIndex: 'tags' satisfies keyof Blog,
     key: 'tags',
     width: 300,
@@ -62,13 +62,13 @@ const columns: ColumnsType<Blog> = [
     },
   },
   {
-    title: '创建于',
+    title: 'Created At',
     dataIndex: 'createdAt' satisfies keyof Blog,
     key: 'createdAt',
     width: 260,
     render(_, { createdAt }) {
       return (
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
             {timeAgo(dayjs(createdAt).valueOf())}
@@ -78,13 +78,13 @@ const columns: ColumnsType<Blog> = [
     },
   },
   {
-    title: '更新于',
+    title: 'Updated At',
     dataIndex: 'updatedAt' satisfies keyof Blog,
     key: 'updatedAt',
     width: 260,
     render(_, { updatedAt }) {
       return (
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
           <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
             {timeAgo(dayjs(updatedAt).valueOf())}
@@ -108,7 +108,7 @@ export function useBlogList({ filterHeight }: { filterHeight: number }) {
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
     () => ({
-      showTotal: total => `共 ${total} 个`,
+      showTotal: total => `A total of ${total} items`,
       current: data?.data.pageNo,
       total: data?.data.total,
       pageSize: data?.data.pageSize,

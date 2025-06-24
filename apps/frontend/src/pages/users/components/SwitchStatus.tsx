@@ -38,8 +38,8 @@ function SwitchStatus({ record }: Props) {
   return (
     <Switch
       disabled={loadingFindAll || loadingUpdate || record.roles.map(role => role.name).includes('ADMIN')}
-      checkedChildren="启用"
-      unCheckedChildren="禁用"
+      checkedChildren="Active"
+      unCheckedChildren="Inactive"
       checked={record.isActive}
       onChange={e => handleActive(e)}
     />

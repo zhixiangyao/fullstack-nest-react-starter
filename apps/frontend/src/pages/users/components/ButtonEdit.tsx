@@ -13,7 +13,7 @@ function ButtonEdit({ record }: Props) {
 
   return (
     <Button type="link" className="!px-0" onClick={() => drawerUserEdit.handleOpen(record.username)}>
-      编辑
+      Edit
     </Button>
   )
 }

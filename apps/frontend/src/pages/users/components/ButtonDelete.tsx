@@ -32,17 +32,17 @@ function ButtonDelete({ record }: Props) {
 
   return (
     <Popconfirm
-      title="删除用户"
+      title="Delete user"
       description={(
         <div>
-          您确定要删除
+          Are you sure you want to delete
           <b className="text-red-600 mx-1">{record.username}</b>
-          用户吗?
+          user?
         </div>
       )}
       onConfirm={handleConfirm}
-      okText="确定"
-      cancelText="取消"
+      okText="Confirm"
+      cancelText="Cancel"
     >
       <Button
         danger
@@ -50,7 +50,7 @@ function ButtonDelete({ record }: Props) {
         className="!px-0"
         disabled={loadingFindAll || loadingDelete || record.roles.map(role => role.name).includes('ADMIN')}
       >
-        删除
+        Delete
       </Button>
     </Popconfirm>
   )

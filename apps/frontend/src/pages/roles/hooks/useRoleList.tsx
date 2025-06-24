@@ -14,7 +14,7 @@ type TFieldFilter = UserFindAllRequest
 
 const columns: ColumnsType<Role> = [
   {
-    title: '角色ID',
+    title: 'ID',
     dataIndex: 'id' satisfies keyof Role,
     key: 'id',
     width: 100,
@@ -22,7 +22,7 @@ const columns: ColumnsType<Role> = [
     fixed: 'left',
   },
   {
-    title: '角色名',
+    title: 'Name',
     dataIndex: 'name' satisfies keyof Role,
     key: 'name',
     width: 100,
@@ -31,7 +31,7 @@ const columns: ColumnsType<Role> = [
     },
   },
   {
-    title: '用户',
+    title: 'Users',
     dataIndex: 'users' satisfies keyof Role,
     key: 'users',
     width: 300,
@@ -65,7 +65,7 @@ export function useRoleList({ filterHeight }: { filterHeight: number }) {
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
   const pagination = useMemo<TablePaginationConfig>(
     () => ({
-      showTotal: total => `共 ${total} 个`,
+      showTotal: total => `A total of ${total} items`,
       current: data?.data.pageNo,
       total: data?.data.total,
       pageSize: data?.data.pageSize,

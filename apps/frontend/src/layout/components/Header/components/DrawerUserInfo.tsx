@@ -23,13 +23,13 @@ function DrawerUserInfo({ open, setOpen }: Props) {
     () => [
       {
         key: '1',
-        label: '用户名',
+        label: 'Username',
         children: user?.username,
         span: 2,
       },
       {
         key: '2',
-        label: '角色',
+        label: 'Role',
         children: (
           <div className="flex gap-1 items-center">
             {user?.roles.map(role => (
@@ -41,19 +41,19 @@ function DrawerUserInfo({ open, setOpen }: Props) {
       },
       {
         key: '3',
-        label: '创建于',
+        label: 'Created At',
         children: user ? formatTime(user.createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
       {
         key: '3',
-        label: '更新于',
+        label: 'Update At',
         children: user ? formatTime(user.updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
       {
         key: '4',
-        label: '上一次登录',
+        label: 'Last Login',
         children: user && user.lastLogin ? formatTime(user.lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss) : '/',
         span: 3,
       },
@@ -62,7 +62,7 @@ function DrawerUserInfo({ open, setOpen }: Props) {
   )
 
   return (
-    <Drawer width={600} title="用户信息" placement="right" onClose={handleClose} open={open}>
+    <Drawer width={600} title="User Info" placement="right" onClose={handleClose} open={open}>
       <Descriptions bordered size="middle" items={items} />
     </Drawer>
   )

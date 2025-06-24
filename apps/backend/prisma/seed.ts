@@ -55,14 +55,14 @@ async function main() {
   const [admin] = await Promise.all(promiseList)
   await prisma.blog.create({
     data: {
-      title: '我的第一篇博客',
-      content: '这是我的第一篇博客文章的内容。',
+      title: 'My first blog post',
+      content: 'This is the content of my first blog post.',
       slug: 'my-first-blog-post',
       authorUuid: admin.uuid,
       published: true,
       imageUrl: 'https://example.com/blog-image.jpg',
       tags: ['NestJS', 'Prisma', 'TypeScript'],
-      category: '开发',
+      category: 'Development',
     },
   })
 

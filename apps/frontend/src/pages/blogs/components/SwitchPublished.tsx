@@ -7,7 +7,7 @@ interface Props {
 }
 
 function SwitchPublished({ record }: Props) {
-  return <Switch disabled checkedChildren="已发布" unCheckedChildren="未发布" checked={record.published} />
+  return <Switch disabled checkedChildren="Published" unCheckedChildren="Unpublished" checked={record.published} />
 }
 
 export { SwitchPublished }

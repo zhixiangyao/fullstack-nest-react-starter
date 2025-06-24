@@ -25,7 +25,7 @@ export class RolesGuard implements CanActivate {
       const user = await this.userService.find(payload.username)
 
       if (!roles.some(role => user.roles.map(role => role.name).includes(role))) {
-        throw new ForbiddenException('您没有权限！')
+        throw new ForbiddenException('You don\'t have permission!')
       }
     }
 
