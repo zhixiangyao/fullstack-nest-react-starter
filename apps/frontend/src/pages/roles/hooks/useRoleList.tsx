@@ -1,62 +1,25 @@
 import type { TablePaginationConfig } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
-import type { Role, UserFindAllRequest } from '~/fetchers'
+import type { UserFindAllRequest } from '~/fetchers'
 import { useRequest } from 'ahooks'
-import { Form, Tag, Typography } from 'antd'
-import React, { useMemo } from 'react'
+import { Form } from 'antd'
+import { useMemo } from 'react'
 
-import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = UserFindAllRequest
 
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    width: 100,
-    ellipsis: true,
-    fixed: 'left',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    render(_, record) {
-      return <TagRoleType value={record.name} />
-    },
-  },
-  {
-    title: 'Users',
-    dataIndex: 'users',
-    key: 'users',
-    width: 300,
-    render(_, record) {
-      if (record.users.length === 0)
-        return '/'
-
-      return (
-        <Typography.Paragraph ellipsis={{ tooltip: `a total of ${record.users.length}` }} className="!mb-0">
-          {record.users.map(user => (
-            <Tag key={user.uuid} className="select-none">
-              {user.username}
-            </Tag>
-          ))}
-        </Typography.Paragraph>
-      )
-    },
-  },
-] satisfies (ColumnsType<Role>[number] & { dataIndex?: keyof Role, key: keyof Role })[]
-
 const fields: TField<UserFindAllRequest>[] = []
 
 export const CACHE_KEY_ROLE_FIND_ALL = 'cacheKey-role-find-all'
 
-export function useRoleList({ filterHeight }: { filterHeight: number }) {
+interface Prams {
+  filterHeight: number
+  columnsWidth: number
+}
+
+export function useRoleList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, {
     cacheKey: CACHE_KEY_ROLE_FIND_ALL,
   })
@@ -77,11 +40,11 @@ export function useRoleList({ filterHeight }: { filterHeight: number }) {
     [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
   )
   const scroll = useMemo(() => {
-    const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
+    const x = columnsWidth
     const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
 
     return { x, y }
-  }, [size?.height, filterHeight])
+  }, [columnsWidth, filterHeight, size?.height])
 
   const handleFinish = (values: TFieldFilter) => {
     runAsync(values)
@@ -99,7 +62,6 @@ export function useRoleList({ filterHeight }: { filterHeight: number }) {
     pagination,
     dataSource,
     scroll,
-    columns,
 
     handleFinish,
     handleReset,

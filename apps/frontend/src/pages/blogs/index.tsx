@@ -6,11 +6,13 @@ import React, { useRef } from 'react'
 import { Filter } from '~/components/Filter'
 
 import { useBlogList } from './hooks/useBlogList'
+import { useBlogListColumns } from './hooks/useBlogListColumns'
 
 function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
-  const blogList = useBlogList({ filterHeight: size?.height ?? 0 })
+  const { columns, columnsWidth } = useBlogListColumns()
+  const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })
 
   return (
     <>
@@ -26,7 +28,7 @@ function Blogs() {
       <Table<Blog>
         size="small"
         rowKey={'id' satisfies keyof Blog}
-        columns={blogList.columns}
+        columns={columns}
         dataSource={blogList.dataSource}
         pagination={blogList.pagination}
         loading={blogList.loading}

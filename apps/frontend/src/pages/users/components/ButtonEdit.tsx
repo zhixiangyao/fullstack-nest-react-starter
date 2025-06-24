@@ -4,7 +4,7 @@ import React from 'react'
 
 interface Props {
   record: User
-  handleOpen: (username: User['username']) => void
+  handleOpen: (username: User['username']) => Promise<void>
 }
 
 function ButtonEdit({ record, handleOpen }: Props) {

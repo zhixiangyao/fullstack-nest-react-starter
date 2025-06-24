@@ -1,125 +1,14 @@
 import type { TablePaginationConfig } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
-import type { User, UserFindAllRequest } from '~/fetchers'
+import type { UserFindAllRequest } from '~/fetchers'
 import { useRequest } from 'ahooks'
-import { Form, Tag } from 'antd'
-import dayjs from 'dayjs'
-import React, { useMemo } from 'react'
-import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
+import { Form } from 'antd'
+import { useMemo } from 'react'
 
-import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = UserFindAllRequest
-
-const columns = [
-  {
-    title: 'Username',
-    dataIndex: 'username',
-    key: 'username',
-    width: 120,
-    ellipsis: true,
-    fixed: 'left',
-  },
-  {
-    title: 'Roles',
-    dataIndex: 'roles',
-    key: 'roles',
-    width: 80,
-    render(_, record) {
-      if (record.roles.length === 0)
-        return '/'
-
-      return (
-        <div className="flex gap-1 items-center">
-          {record.roles.map(role => (
-            <TagRoleType value={role.name} key={role.id} />
-          ))}
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Blogs Total',
-    dataIndex: 'blogsTotal',
-    key: 'blogsTotal',
-    width: 120,
-  },
-  {
-    title: 'is Active?',
-    dataIndex: 'isActive',
-    key: 'isActive',
-    width: 100,
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-    width: 150,
-    render(_, record) {
-      return <span>{record.email ?? '/'}</span>
-    },
-  },
-  {
-    title: 'Created At',
-    dataIndex: 'createdAt',
-    key: 'createdAt',
-    width: 300,
-    render(_, { createdAt }) {
-      return (
-        <div className="flex gap-2 items-center">
-          <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
-            {timeAgo(dayjs(createdAt).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Updated At',
-    dataIndex: 'updatedAt',
-    key: 'updatedAt',
-    width: 300,
-    render(_, { updatedAt }) {
-      return (
-        <div className="flex gap-2 items-center">
-          <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
-            {timeAgo(dayjs(updatedAt).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Last Login',
-    dataIndex: 'lastLogin',
-    key: 'lastLogin',
-    width: 300,
-    render(_, { lastLogin }) {
-      if (!lastLogin)
-        return '/'
-
-      return (
-        <div className="flex gap-2 items-center">
-          <span>{formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(lastLogin).valueOf())}>
-            {timeAgo(dayjs(lastLogin).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Actions',
-    key: 'actions',
-    width: 100,
-    fixed: 'right',
-  },
-] satisfies (ColumnsType<User>[number] & { dataIndex?: keyof User, key: keyof User | 'actions' })[]
 
 const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username0', name: 'username', label: 'Username' }]
 
@@ -127,9 +16,10 @@ export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
 
 interface Prams {
   filterHeight: number
+  columnsWidth: number
 }
 
-export function useUserList({ filterHeight }: Prams) {
+export function useUserList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_USER_FIND_ALL,
   })
@@ -150,11 +40,11 @@ export function useUserList({ filterHeight }: Prams) {
     [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
   )
   const scroll = useMemo(() => {
-    const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
+    const x = columnsWidth
     const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
 
     return { x, y }
-  }, [size?.height, filterHeight])
+  }, [columnsWidth, filterHeight, size?.height])
 
   const handleFinish = (values: TFieldFilter) => {
     runAsync(values)
@@ -172,7 +62,6 @@ export function useUserList({ filterHeight }: Prams) {
     pagination,
     dataSource,
     scroll,
-    columns,
 
     handleFinish,
     handleReset,

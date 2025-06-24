@@ -50,6 +50,7 @@ function Filter<T>(props: Props<T>) {
       }, []) ?? [],
     [expand, expandCount, fields],
   )
+
   const handleCollapse = useMemoizedFn(() => setExpand(!expand))
 
   return (

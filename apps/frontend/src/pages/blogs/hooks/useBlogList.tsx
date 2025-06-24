@@ -1,105 +1,25 @@
 import type { TablePaginationConfig } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
-import type { Blog, BlogFindAllRequest } from '~/fetchers'
+import type { BlogFindAllRequest } from '~/fetchers'
 import { useRequest } from 'ahooks'
-import { Form, Tag } from 'antd'
-import dayjs from 'dayjs'
-import React, { useMemo } from 'react'
-import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
+import { Form } from 'antd'
+import { useMemo } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
-import { SwitchPublished } from '../components/SwitchPublished'
-
 type TFieldFilter = BlogFindAllRequest
-
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id' satisfies keyof Blog,
-    key: 'id',
-    width: 100,
-    fixed: 'left',
-  },
-  {
-    title: 'Title',
-    dataIndex: 'title' satisfies keyof Blog,
-    key: 'title',
-    width: 150,
-    ellipsis: true,
-  },
-  {
-    title: 'Published?',
-    dataIndex: 'published' satisfies keyof Blog,
-    key: 'published',
-    width: 100,
-    render(_, record) {
-      return <SwitchPublished record={record} />
-    },
-  },
-  {
-    title: 'Views',
-    dataIndex: 'views' satisfies keyof Blog,
-    key: 'views',
-    width: 100,
-  },
-  {
-    title: 'Tags',
-    dataIndex: 'tags' satisfies keyof Blog,
-    key: 'tags',
-    width: 300,
-    render(_, record) {
-      if (record.tags.length === 0)
-        return '/'
-
-      return record.tags.map(tag => (
-        <Tag key={tag} className="select-none">
-          {tag}
-        </Tag>
-      ))
-    },
-  },
-  {
-    title: 'Created At',
-    dataIndex: 'createdAt' satisfies keyof Blog,
-    key: 'createdAt',
-    width: 260,
-    render(_, { createdAt }) {
-      return (
-        <div className="flex gap-2 items-center">
-          <span>{formatTime(createdAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(createdAt).valueOf())}>
-            {timeAgo(dayjs(createdAt).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-  {
-    title: 'Updated At',
-    dataIndex: 'updatedAt' satisfies keyof Blog,
-    key: 'updatedAt',
-    width: 260,
-    render(_, { updatedAt }) {
-      return (
-        <div className="flex gap-2 items-center">
-          <span>{formatTime(updatedAt, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(updatedAt).valueOf())}>
-            {timeAgo(dayjs(updatedAt).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-] satisfies (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyof Blog })[]
 
 const fields: TField<BlogFindAllRequest>[] = []
 
 export const CACHE_KEY_BLOG_FIND_ALL = 'cacheKey-blog-find-all'
 
-export function useBlogList({ filterHeight }: { filterHeight: number }) {
+interface Prams {
+  filterHeight: number
+  columnsWidth: number
+}
+
+export function useBlogList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync } = useRequest(fetchers.blogFindAll, {
     cacheKey: CACHE_KEY_BLOG_FIND_ALL,
   })
@@ -120,11 +40,11 @@ export function useBlogList({ filterHeight }: { filterHeight: number }) {
     [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
   )
   const scroll = useMemo(() => {
-    const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
+    const x = columnsWidth
     const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
 
     return { x, y }
-  }, [size?.height, filterHeight])
+  }, [columnsWidth, filterHeight, size?.height])
 
   const handleFinish = (values: TFieldFilter) => {
     runAsync(values)
@@ -142,7 +62,6 @@ export function useBlogList({ filterHeight }: { filterHeight: number }) {
     pagination,
     dataSource,
     scroll,
-    columns,
 
     handleFinish,
     handleReset,
