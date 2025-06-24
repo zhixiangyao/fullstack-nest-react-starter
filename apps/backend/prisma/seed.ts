@@ -52,7 +52,19 @@ async function main() {
     )
   })
 
-  await Promise.all(promiseList)
+  const [admin] = await Promise.all(promiseList)
+  await prisma.blog.create({
+    data: {
+      title: '我的第一篇博客',
+      content: '这是我的第一篇博客文章的内容。',
+      slug: 'my-first-blog-post',
+      authorUuid: admin.uuid,
+      published: true,
+      imageUrl: 'https://example.com/blog-image.jpg',
+      tags: ['NestJS', 'Prisma', 'TypeScript'],
+      category: '开发',
+    },
+  })
 
   console.log({ users: await prisma.user.findMany() })
 }

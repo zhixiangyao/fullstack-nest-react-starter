@@ -9,6 +9,7 @@ export interface User {
   updatedAt: Date
   lastLogin: Date | null
   email: string | null
+  blogsTotal: number
 }
 
 export interface UserLoginRequest {

@@ -20,6 +20,7 @@ model User {
   updatedAt      DateTime   @default(now()) @updatedAt @db.Timestamptz()
   lastLogin      DateTime?  @db.Timestamptz()
   email          String?
+  blogs          Blog[]
 }
 
 model Role {
@@ -36,4 +37,20 @@ model UserRole {
   roleId   Int
 
   @@id([userUuid, roleId]) // Composite primary key
+}
+
+model Blog {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  slug       String   @unique
+  published  Boolean  @default(false)
+  views      Int      @default(0)
+  createdAt  DateTime @default(now()) @db.Timestamptz()
+  updatedAt  DateTime @default(now()) @updatedAt @db.Timestamptz()
+  author     User     @relation(fields: [authorUuid], references: [uuid], onDelete: Cascade)
+  authorUuid String   @db.Uuid
+  imageUrl   String?
+  tags       String[]
+  category   String?
 }

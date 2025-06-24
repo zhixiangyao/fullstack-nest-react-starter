@@ -1,4 +1,4 @@
-import type { Role, User } from '@prisma/client'
+import type { User } from '@prisma/client'
 import type { ResponseFind, ResponseFindAll } from './user.type'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { deleteProperty } from 'utils'
@@ -12,7 +12,7 @@ import { UserCreateDto, UserFindAllDto, UserUpdateDto } from './user.dto'
 export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
-  async find(username: string): Promise<User & { roles: Role[] }> {
+  async find(username: string): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'>> {
     const user = await this.prisma.user.findUnique({
       where: { username },
       include: {
@@ -21,13 +21,20 @@ export class UserService {
             role: true,
           },
         },
+        blogs: true,
       },
     })
 
-    return { ...user, roles: user.roles.map(userRole => userRole.role) } satisfies ResponseFind['data']['user']
+    const userWithoutBlogs = deleteProperty(user, 'blogs')
+
+    return {
+      ...userWithoutBlogs,
+      roles: user.roles.map(userRole => userRole.role),
+      blogsTotal: user.blogs.length,
+    }
   }
 
-  async findAll(data: UserFindAllDto) {
+  async findAll(data: UserFindAllDto): Promise<ResponseFindAll['data']> {
     const { username, pageNo = 1, pageSize = 10 } = data
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
@@ -47,6 +54,7 @@ export class UserService {
             role: true, // 包含角色本身的详细信息
           },
         },
+        blogs: true,
       },
     })
 
@@ -60,11 +68,12 @@ export class UserService {
 
     return {
       list: list.map((user) => {
-        const userWithoutPasswordHash = deleteProperty(user, 'hashedPassword')
+        const userWithoutPasswordHashAndBlogs = deleteProperty(deleteProperty(user, 'hashedPassword'), 'blogs')
 
         return {
-          ...userWithoutPasswordHash,
-          roles: userWithoutPasswordHash.roles.map(userRole => userRole.role),
+          ...userWithoutPasswordHashAndBlogs,
+          roles: userWithoutPasswordHashAndBlogs.roles.map(userRole => userRole.role),
+          blogsTotal: user.blogs.length,
         } satisfies ResponseFindAll['data']['list'][number]
       }),
       total,

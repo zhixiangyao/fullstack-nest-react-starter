@@ -42,7 +42,9 @@ const columns: ColumnsType<Role> = [
       return (
         <Typography.Paragraph ellipsis={{ tooltip: `a total of ${record.users.length}` }} className="!mb-0">
           {record.users.map(user => (
-            <Tag key={user.uuid}>{user.username}</Tag>
+            <Tag key={user.uuid} className="select-none">
+              {user.username}
+            </Tag>
           ))}
         </Typography.Paragraph>
       )

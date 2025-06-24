@@ -12,6 +12,7 @@ import { AuthModule } from '~/modules/auth/auth.module'
 import { FrontendStaticModule } from '~/modules/frontend-static.module'
 import { PrismaModule } from '~/modules/prisma/prisma.module'
 import { UserModule } from '~/modules/user/user.module'
+import { BlogModule } from './modules/blog/blog.module'
 import { RoleModule } from './modules/role/role.module'
 
 const imports: ModuleMetadata['imports'] = [
@@ -25,6 +26,7 @@ const imports: ModuleMetadata['imports'] = [
   AuthModule,
   UserModule,
   RoleModule,
+  BlogModule,
 ]
 
 // Directly use FrontendStaticModule to provide packaged static.

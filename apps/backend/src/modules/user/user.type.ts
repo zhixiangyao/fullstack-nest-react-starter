@@ -16,7 +16,7 @@ export interface ResponseRemove {
 
 export interface ResponseFind {
   data: {
-    user: UserWithoutPassword & { roles: Role[] }
+    user: UserWithoutPassword & { roles: Role[], blogsTotal: number }
   }
 }
 

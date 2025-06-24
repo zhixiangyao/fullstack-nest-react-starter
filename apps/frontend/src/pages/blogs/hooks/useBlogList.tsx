@@ -1,77 +1,69 @@
 import type { TablePaginationConfig } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
-import type { User, UserFindAllRequest } from '~/fetchers'
+import type { Blog, BlogFindAllRequest } from '~/fetchers'
 import { useRequest } from 'ahooks'
 import { Form, Tag } from 'antd'
 import dayjs from 'dayjs'
 import React, { useMemo } from 'react'
 import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
-import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
-import { ButtonDelete } from '../components/ButtonDelete'
-import { ButtonEdit } from '../components/ButtonEdit'
-import { SwitchStatus } from '../components/SwitchStatus'
+import { SwitchPublished } from '../components/SwitchPublished'
 
-type TFieldFilter = UserFindAllRequest
+type TFieldFilter = BlogFindAllRequest
 
-const columns: ColumnsType<User> = [
+const columns: ColumnsType<Blog> = [
   {
-    title: '用户名',
-    dataIndex: 'username' satisfies keyof User,
-    key: 'username',
-    width: 120,
-    ellipsis: true,
+    title: '博客ID',
+    dataIndex: 'id' satisfies keyof Blog,
+    key: 'id',
+    width: 100,
     fixed: 'left',
   },
   {
-    title: '角色',
-    dataIndex: 'roles' satisfies keyof User,
-    key: 'roles',
-    width: 80,
-    render(_, record) {
-      if (record.roles.length === 0)
-        return '/'
-
-      return (
-        <div className="flex gap-1 items-center">
-          {record.roles.map(role => (
-            <TagRoleType value={role.name} key={role.id} />
-          ))}
-        </div>
-      )
-    },
+    title: '标题',
+    dataIndex: 'title' satisfies keyof Blog,
+    key: 'title',
+    width: 150,
+    ellipsis: true,
   },
   {
-    title: '博客总数',
-    dataIndex: 'blogsTotal' satisfies keyof User,
-    key: 'blogsTotal',
-    width: 80,
-  },
-  {
-    title: '状态',
-    dataIndex: 'isActive' satisfies keyof User,
-    key: 'isActive',
+    title: '是否已发布',
+    dataIndex: 'published' satisfies keyof Blog,
+    key: 'published',
     width: 100,
     render(_, record) {
-      return <SwitchStatus record={record} />
+      return <SwitchPublished record={record} />
     },
   },
   {
-    title: '邮箱',
-    dataIndex: 'email' satisfies keyof User,
-    key: 'email',
-    width: 150,
+    title: '阅读量',
+    dataIndex: 'views' satisfies keyof Blog,
+    key: 'views',
+    width: 100,
+  },
+  {
+    title: '标签',
+    dataIndex: 'tags' satisfies keyof Blog,
+    key: 'tags',
+    width: 300,
     render(_, record) {
-      return <span>{record.email ?? '/'}</span>
+      if (record.tags.length === 0)
+        return '/'
+
+      return record.tags.map(tag => (
+        <Tag key={tag} className="select-none">
+          {tag}
+        </Tag>
+      ))
     },
   },
   {
     title: '创建于',
-    dataIndex: 'createdAt' satisfies keyof User,
+    dataIndex: 'createdAt' satisfies keyof Blog,
     key: 'createdAt',
     width: 260,
     render(_, { createdAt }) {
@@ -87,7 +79,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: '更新于',
-    dataIndex: 'updatedAt' satisfies keyof User,
+    dataIndex: 'updatedAt' satisfies keyof Blog,
     key: 'updatedAt',
     width: 260,
     render(_, { updatedAt }) {
@@ -101,48 +93,15 @@ const columns: ColumnsType<User> = [
       )
     },
   },
-  {
-    title: '上一次登录',
-    dataIndex: 'lastLogin' satisfies keyof User,
-    key: 'lastLogin',
-    width: 260,
-    render(_, { lastLogin }) {
-      if (!lastLogin)
-        return '/'
-
-      return (
-        <div className="flex gap-1 items-center">
-          <span>{formatTime(lastLogin, FormatOptions.YYYY_MM_DD_HH_mm_ss)}</span>
-          <Tag className="select-none" color={getColorByDate(dayjs(lastLogin).valueOf())}>
-            {timeAgo(dayjs(lastLogin).valueOf())}
-          </Tag>
-        </div>
-      )
-    },
-  },
-  {
-    title: '操作',
-    key: 'actions',
-    width: 100,
-    fixed: 'right',
-    render(_, record) {
-      return (
-        <div className="flex items-center gap-2">
-          <ButtonDelete record={record} />
-          <ButtonEdit record={record} />
-        </div>
-      )
-    },
-  },
 ]
 
-const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: '用户名' }]
+const fields: TField<BlogFindAllRequest>[] = []
 
-export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
+export const CACHE_KEY_BLOG_FIND_ALL = 'cacheKey-blog-find-all'
 
-export function useUserList({ filterHeight }: { filterHeight: number }) {
-  const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
+export function useBlogList({ filterHeight }: { filterHeight: number }) {
+  const { data, loading, runAsync } = useRequest(fetchers.blogFindAll, {
+    cacheKey: CACHE_KEY_BLOG_FIND_ALL,
   })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
