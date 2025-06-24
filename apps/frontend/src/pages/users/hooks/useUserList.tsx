@@ -136,7 +136,7 @@ const columns: ColumnsType<User> = [
   },
 ]
 
-const fields: TField<UserFindAllRequest>[] = [{ type: 'input', name: 'username', label: 'Username' }]
+const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username0', name: 'username', label: 'Username' }]
 
 export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
 
