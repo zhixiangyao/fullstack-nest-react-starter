@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.11.0",
+  "description": "fullstack nestjs + react + tailwindcss + typescript + prisma starter",
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
   "engines": {
     "node": ">=22",

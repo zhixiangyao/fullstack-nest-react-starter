@@ -19,7 +19,7 @@
 **Development ENV:**
 
 - git => 2.40.0
-- node => 20
+- node => 22
 - pnpm => 10
 - pm2 => 5
 - docker & docker compose plugin => 24.0.0
@@ -52,6 +52,9 @@ pnpm db:init
 # 🍃 First time creating user data
 pnpm db:seed
 
+# ⚠️ reset database
+pnpm db:reset
+
 # start project
 pnpm dev
 
@@ -74,6 +77,9 @@ pnpm db:init
 
 # 🍃 First time creating user data
 pnpm db:seed
+
+# ⚠️ reset database
+pnpm db:reset
 
 pnpm build
 
