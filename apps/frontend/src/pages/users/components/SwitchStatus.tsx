@@ -22,9 +22,9 @@ function SwitchStatus({ record }: Props) {
   })
 
   const handleActive = useCallback(
-    async (enable: boolean) => {
+    async (isActive: boolean) => {
       try {
-        const data = await runAsync({ username: record.username, enable })
+        const data = await runAsync({ username: record.username, isActive })
         message.success(data.message)
         refreshAsync()
       }
@@ -40,7 +40,7 @@ function SwitchStatus({ record }: Props) {
       disabled={loadingGet || loadingUp || record.roles.map(role => role.name).includes('ADMIN')}
       checkedChildren="启用"
       unCheckedChildren="禁用"
-      checked={record.enable}
+      checked={record.isActive}
       onChange={e => handleActive(e)}
     />
   )

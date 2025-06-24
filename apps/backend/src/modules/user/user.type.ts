@@ -1,6 +1,6 @@
 import type { Role, User } from '@prisma/client'
 
-type UserWithoutPassword = Omit<User, 'passwordHash'>
+type UserWithoutPassword = Omit<User, 'hashedPassword'>
 
 export interface ResponseRegisterUser {
   message: string
@@ -14,9 +14,9 @@ export interface ResponseRemove {
   message: string
 }
 
-export interface ResponseGetUser {
+export interface ResponseFind {
   data: {
-    user: UserWithoutPassword
+    user: UserWithoutPassword & { roles: Role[] }
   }
 }
 

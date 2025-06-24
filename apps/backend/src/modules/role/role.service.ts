@@ -1,9 +1,9 @@
+import type { ResponseFindAll } from './role.type'
 import { Injectable } from '@nestjs/common'
-import { Role, User } from '@prisma/client'
+
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
-
 import { RoleFindAllDto } from './role.dto'
 
 @Injectable()
@@ -31,8 +31,11 @@ export class RoleService {
     const total = await this.prisma.role.count()
 
     return {
-      list: list.map<Role & { users: Omit<User, 'passwordHash'>[] }>((role) => {
-        return { ...role, users: role.users.map(user => deleteProperty(user.user, 'passwordHash')) }
+      list: list.map((role) => {
+        return {
+          ...role,
+          users: role.users.map(user => deleteProperty(user.user, 'hashedPassword')),
+        } satisfies ResponseFindAll['data']['list'][number]
       }),
       total,
       pageNo,

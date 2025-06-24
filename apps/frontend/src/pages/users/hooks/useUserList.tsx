@@ -47,8 +47,8 @@ const columns: ColumnsType<User> = [
   },
   {
     title: '状态',
-    dataIndex: 'enable' satisfies keyof User,
-    key: 'enable',
+    dataIndex: 'isActive' satisfies keyof User,
+    key: 'isActive',
     width: 100,
     render(_, record) {
       return <SwitchStatus record={record} />

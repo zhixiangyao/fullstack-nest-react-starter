@@ -2,8 +2,8 @@
 CREATE TABLE "User" (
     "uuid" UUID NOT NULL,
     "username" TEXT NOT NULL,
-    "passwordHash" TEXT NOT NULL,
-    "enable" BOOLEAN NOT NULL DEFAULT true,
+    "hashedPassword" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "lastLogin" TIMESTAMPTZ,

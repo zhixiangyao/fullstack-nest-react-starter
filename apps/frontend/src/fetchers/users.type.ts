@@ -4,7 +4,7 @@ export interface User {
   uuid: string
   username: string
   roles: Omit<Role, 'users'>[]
-  enable: boolean
+  isActive: boolean
   createdAt: Date
   updatedAt: Date
   lastLogin: Date | null
@@ -57,7 +57,7 @@ export interface UserFindAllResponse {
   }
 }
 
-export type UserUpdateRequest = Pick<User, 'username'> & Partial<Pick<User, 'enable' | 'email'>>
+export type UserUpdateRequest = Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email'>>
 
 export interface UserUpdateResponse {
   message: string

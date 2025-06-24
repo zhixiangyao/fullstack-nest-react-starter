@@ -22,7 +22,7 @@ export class UserUpdateDto {
 
   @IsBoolean()
   @IsOptional()
-  readonly enable?: User['enable']
+  readonly isActive?: User['isActive']
 
   @IsString()
   @IsOptional()

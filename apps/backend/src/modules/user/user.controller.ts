@@ -1,6 +1,6 @@
 import type {
+  ResponseFind,
   ResponseFindAll,
-  ResponseGetUser,
   ResponseRegisterUser,
   ResponseRemove,
   ResponseUpdate,
@@ -36,8 +36,8 @@ export class UserController {
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
-    if (body.enable !== void 0) {
-      if (req.user.username === body.username && body.enable === false) {
+    if (body.isActive !== void 0) {
+      if (req.user.username === body.username && body.isActive === false) {
         throw new HttpException('管理员不可修改状态', HttpStatus.BAD_REQUEST)
       }
     }
@@ -66,11 +66,11 @@ export class UserController {
 
   @Post('find')
   @Header('content-type', 'application/json')
-  async find(@Body() body: UserFindDto, @User() user: Request['user']): Promise<ResponseGetUser> {
+  async find(@Body() body: UserFindDto, @User() user: Request['user']): Promise<ResponseFind> {
     const username = body.username ?? user.username
 
     const item = await this.userService.find(username)
-    const userWithoutPassword = deleteProperty(item, 'passwordHash')
+    const userWithoutPassword = deleteProperty(item, 'hashedPassword')
 
     return { data: { user: userWithoutPassword } }
   }

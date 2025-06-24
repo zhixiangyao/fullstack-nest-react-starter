@@ -42,7 +42,7 @@ function DrawerUserEdit() {
         await runAsync({
           username: drawerUserEdit.user?.username,
           email: values.email,
-          enable: values.enable,
+          isActive: values.isActive,
         })
         refreshAsync()
         drawerUserEdit.handleClose()
@@ -60,7 +60,7 @@ function DrawerUserEdit() {
       form.setFieldsValue({
         username: drawerUserEdit.user.username,
         email: drawerUserEdit.user.email,
-        enable: drawerUserEdit.user.enable,
+        isActive: drawerUserEdit.user.isActive,
       })
     }
   }, [drawerUserEdit.user, form])
@@ -95,7 +95,7 @@ function DrawerUserEdit() {
           <Input />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="状态" name="enable">
+        <Form.Item<TFieldUser> label="状态" name="isActive">
           <Switch
             checkedChildren="启用"
             unCheckedChildren="禁用"

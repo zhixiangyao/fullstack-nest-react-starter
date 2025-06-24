@@ -23,14 +23,14 @@ async function main() {
     },
   })
 
-  const passwordHash0 = await argon2.hash('root')
-  const passwordHash1 = await argon2.hash('123456')
+  const hashedPassword0 = await argon2.hash('root')
+  const hashedPassword1 = await argon2.hash('123456')
 
   const promiseList = [
     prisma.user.create({
       data: {
         username: 'root',
-        passwordHash: passwordHash0,
+        hashedPassword: hashedPassword0,
         roles: {
           create: [{ roleId: adminRole.id }],
         },
@@ -43,7 +43,7 @@ async function main() {
       prisma.user.create({
         data: {
           username: `user${i}`,
-          passwordHash: passwordHash1,
+          hashedPassword: hashedPassword1,
           roles: {
             create: [{ roleId: userRole.id }],
           },
