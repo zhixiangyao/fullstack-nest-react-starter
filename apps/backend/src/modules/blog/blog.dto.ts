@@ -32,6 +32,18 @@ export class BlogCreateDto {
   readonly category?: Blog['category']
 }
 
+export class UserUpdateDto extends BlogCreateDto {
+  @IsInt()
+  @IsOptional()
+  readonly id: Blog['id']
+}
+
+export class BlogFindDto {
+  @IsInt()
+  @IsOptional()
+  readonly id: Blog['id']
+}
+
 export class BlogFindAllDto {
   @IsInt()
   @IsOptional()

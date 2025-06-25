@@ -16,7 +16,7 @@ function SwitchStatus({ record }: Props) {
   const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
     manual: true,
   })
-  const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.userFindAll, {
+  const { loading: loadingFindAll, refreshAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_USER_FIND_ALL,
     manual: true,
   })

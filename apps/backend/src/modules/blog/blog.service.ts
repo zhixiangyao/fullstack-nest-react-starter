@@ -1,5 +1,5 @@
 import type { Blog, User } from '@prisma/client'
-import type { ResponseFindAll } from './blog.type'
+import type { ResponseFind, ResponseFindAll } from './blog.type'
 import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
@@ -7,6 +7,8 @@ import { PrismaService } from '~/modules/prisma/prisma.service'
 type CreateParams = Pick<Blog, 'title' | 'content' | 'slug' | 'published' | 'tags'>
   & Partial<Pick<Blog, 'imageUrl' | 'category'>>
   & Pick<User, 'uuid'>
+
+type UpdateParams = Omit<CreateParams, 'uuid'> & Pick<Blog, 'id'> & Pick<User, 'username'>
 
 type FindAllParams = {
   pageNo?: number
@@ -28,6 +30,41 @@ export class BlogService {
         tags: params.tags,
         imageUrl: params.imageUrl,
         category: params.category,
+      },
+    })
+
+    return blog
+  }
+
+  async update(params: UpdateParams): Promise<Blog> {
+    const blog = await this.prisma.blog.update({
+      where: {
+        author: {
+          username: params.username,
+        },
+        id: params.id,
+      },
+      data: {
+        title: params.title,
+        content: params.content,
+        slug: params.slug,
+        published: params.published,
+        tags: params.tags,
+        imageUrl: params.imageUrl,
+        category: params.category,
+      },
+    })
+
+    return blog
+  }
+
+  async find(params: Pick<Blog, 'id'> & Pick<User, 'username'>): Promise<ResponseFind['data']['blog']> {
+    const blog = await this.prisma.blog.findUnique({
+      where: {
+        author: {
+          username: params.username,
+        },
+        id: params.id,
       },
     })
 

@@ -33,6 +33,22 @@ export interface UserCreateResponse {
   message: string
 }
 
+export interface UserUpdateRequest {
+  username: User['username']
+  isActive: User['isActive']
+  email?: User['email']
+}
+
+export interface UserUpdateResponse {
+  message: string
+}
+
+export type UserRemoveRequest = Pick<User, 'username'>
+
+export interface UserRemoveResponse {
+  message: string
+}
+
 export interface UserFindRequest {
   username?: string
 }
@@ -56,20 +72,4 @@ export interface UserFindAllResponse {
     pageNo: number
     pageSize: number
   }
-}
-
-export interface UserUpdateRequest {
-  username: User['username']
-  isActive: User['isActive']
-  email?: User['email']
-}
-
-export interface UserUpdateResponse {
-  message: string
-}
-
-export type UserRemoveRequest = Pick<User, 'username'>
-
-export interface UserRemoveResponse {
-  message: string
 }

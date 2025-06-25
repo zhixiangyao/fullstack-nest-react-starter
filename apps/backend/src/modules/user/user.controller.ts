@@ -1,11 +1,5 @@
-import type {
-  ResponseCreate,
-  ResponseFind,
-  ResponseFindAll,
-  ResponseRemove,
-  ResponseUpdate,
-} from './user.type'
-import { Body, Controller, Header, HttpException, HttpStatus, Post, Request } from '@nestjs/common'
+import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseRemove, ResponseUpdate } from './user.type'
+import { Body, Controller, Header, HttpException, HttpStatus, Post } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
 import { Public } from '~/common/decorators/public.decorator'
@@ -29,15 +23,15 @@ export class UserController {
 
     await this.userService.create(body)
 
-    return { message: 'Registration successful!' }
+    return { message: 'Create successful!' }
   }
 
   @Roles(['ADMIN'])
   @Post('update')
   @Header('content-type', 'application/json')
-  async update(@Body() body: UserUpdateDto, @Request() req: Request): Promise<ResponseUpdate> {
+  async update(@Body() body: UserUpdateDto, @User() user: Request['user']): Promise<ResponseUpdate> {
     if (body.isActive !== void 0) {
-      if (req.user.username === body.username && body.isActive === false) {
+      if (user.username === body.username && body.isActive === false) {
         throw new HttpException('Administrators cannot modify the status!', HttpStatus.BAD_REQUEST)
       }
     }
@@ -61,7 +55,7 @@ export class UserController {
 
     await this.userService.remove(body.username)
 
-    return { message: 'Deletion successful!' }
+    return { message: 'Remove successful!' }
   }
 
   @Post('find')

@@ -43,7 +43,7 @@ function Users() {
         form={drawerEdit.form}
         open={drawerEdit.open}
         loading={drawerEdit.loading}
-        loadingUpdate={drawerEdit.loadingUpdate}
+        loadingConfirm={drawerEdit.loadingConfirm}
         handleClose={drawerEdit.handleClose}
         handleFinish={drawerEdit.handleFinish}
       />

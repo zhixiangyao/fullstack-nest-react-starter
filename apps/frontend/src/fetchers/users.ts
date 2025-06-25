@@ -27,18 +27,6 @@ export async function userCreate(data: UserCreateRequest) {
   return result
 }
 
-export async function userFind(data?: UserFindRequest) {
-  const result = await fetchPost<UserFindResponse>('/api/user/find', JSON.stringify(data))
-
-  return result
-}
-
-export async function userFindAll(data: UserFindAllRequest) {
-  const result = await fetchPost<UserFindAllResponse>('/api/user/find-all', JSON.stringify(data))
-
-  return result
-}
-
 export async function userUpdate(data: UserUpdateRequest) {
   const result = await fetchPost<UserUpdateResponse>('/api/user/update', JSON.stringify(data))
 
@@ -47,6 +35,18 @@ export async function userUpdate(data: UserUpdateRequest) {
 
 export async function userRemove(data: UserRemoveRequest) {
   const result = await fetchPost<UserRemoveResponse>('/api/user/remove', JSON.stringify(data))
+
+  return result
+}
+
+export async function userFind(data?: UserFindRequest) {
+  const result = await fetchPost<UserFindResponse>('/api/user/find', JSON.stringify(data))
+
+  return result
+}
+
+export async function userFindAll(data: UserFindAllRequest) {
+  const result = await fetchPost<UserFindAllResponse>('/api/user/find-all', JSON.stringify(data))
 
   return result
 }

@@ -1,9 +1,21 @@
-import type { BlogCreateRequest, BlogCreateResponse, BlogFindAllRequest, BlogFindAllResponse } from './blogs.type'
+import type { BlogCreateRequest, BlogCreateResponse, BlogFindAllRequest, BlogFindAllResponse, BlogFindRequest, BlogFindResponse, BlogUpdateRequest, BlogUpdateResponse } from './blogs.type'
 
 import { fetchPost } from '~/utils/fetch'
 
 export async function blogCreate(data: BlogCreateRequest) {
   const result = await fetchPost<BlogCreateResponse>('/api/blog/create', JSON.stringify(data))
+
+  return result
+}
+
+export async function blogUpdate(data: BlogUpdateRequest) {
+  const result = await fetchPost<BlogUpdateResponse>('/api/blog/update', JSON.stringify(data))
+
+  return result
+}
+
+export async function blogFind(data: BlogFindRequest) {
+  const result = await fetchPost<BlogFindResponse>('/api/blog/find', JSON.stringify(data))
 
   return result
 }

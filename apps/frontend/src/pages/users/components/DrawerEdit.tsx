@@ -19,13 +19,13 @@ interface Props {
   form: TUseDrawerEditReturnType['form']
   open: TUseDrawerEditReturnType['open']
   loading: TUseDrawerEditReturnType['loading']
-  loadingUpdate: TUseDrawerEditReturnType['loadingUpdate']
+  loadingConfirm: TUseDrawerEditReturnType['loadingConfirm']
   handleClose: TUseDrawerEditReturnType['handleClose']
   handleFinish: TUseDrawerEditReturnType['handleFinish']
 }
 
 function DrawerEdit(props: Props) {
-  const { user, form, open, loading, loadingUpdate } = props
+  const { user, form, open, loading, loadingConfirm } = props
   const { handleClose, handleFinish } = props
 
   return (
@@ -37,9 +37,13 @@ function DrawerEdit(props: Props) {
       open={open}
       loading={loading}
       footer={(
-        <Button type="primary" onClick={form.submit} loading={loadingUpdate}>
-          Confirm
-        </Button>
+        <div className="flex gap-2">
+          <Button type="primary" onClick={form.submit} loading={loadingConfirm}>
+            Confirm
+          </Button>
+
+          <Button onClick={handleClose}>Cancel</Button>
+        </div>
       )}
     >
       <Form<User>
@@ -48,7 +52,7 @@ function DrawerEdit(props: Props) {
         autoComplete="off"
         onFinish={handleFinish}
         form={form}
-        disabled={loadingUpdate}
+        disabled={loadingConfirm}
       >
         <Form.Item<User> label="Username" name="username">
           <Input disabled />

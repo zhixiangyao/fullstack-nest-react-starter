@@ -15,7 +15,7 @@ function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const drawerUpdate = useDrawerUpdate()
-  const { columns, columnsWidth } = useBlogListColumns()
+  const { columns, columnsWidth } = useBlogListColumns({ handleOpenEdit: drawerUpdate.handleOpenEdit })
   const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })
 
   return (
@@ -49,6 +49,7 @@ function Blogs() {
         form={drawerUpdate.form}
         open={drawerUpdate.open}
         loading={drawerUpdate.loading}
+        loadingConfirm={drawerUpdate.loadingConfirm}
         handleClose={drawerUpdate.handleClose}
         handleFinish={drawerUpdate.handleFinish}
       />

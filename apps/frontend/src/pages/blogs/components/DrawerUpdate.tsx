@@ -21,12 +21,13 @@ interface Props {
   form: TUseDrawerUpdateReturnType['form']
   open: TUseDrawerUpdateReturnType['open']
   loading: TUseDrawerUpdateReturnType['loading']
+  loadingConfirm: TUseDrawerUpdateReturnType['loadingConfirm']
   handleClose: TUseDrawerUpdateReturnType['handleClose']
   handleFinish: TUseDrawerUpdateReturnType['handleFinish']
 }
 
 function DrawerUpdate(props: Props) {
-  const { rules, form, open, loading } = props
+  const { rules, form, open, loading, loadingConfirm } = props
   const { handleClose, handleFinish } = props
 
   return (
@@ -38,12 +39,23 @@ function DrawerUpdate(props: Props) {
       open={open}
       loading={loading}
       footer={(
-        <Button type="primary" onClick={form.submit}>
-          Confirm
-        </Button>
+        <div className="flex gap-2">
+          <Button type="primary" onClick={form.submit} loading={loadingConfirm}>
+            Confirm
+          </Button>
+
+          <Button onClick={handleClose}>Cancel</Button>
+        </div>
       )}
     >
-      <Form<Blog> {...formItemLayout} name="blog-update" autoComplete="off" onFinish={handleFinish} form={form}>
+      <Form<Blog>
+        {...formItemLayout}
+        name="blog-update"
+        autoComplete="off"
+        onFinish={handleFinish}
+        form={form}
+        disabled={loadingConfirm}
+      >
         <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
           <Input showCount placeholder="Please input the Title" maxLength={100} />
         </Form.Item>

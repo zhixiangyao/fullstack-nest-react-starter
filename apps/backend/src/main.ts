@@ -6,6 +6,7 @@ import compression from 'compression'
 
 import { AppModule } from '~/app.module'
 import { frontendProxyMiddleware } from '~/common/middleware/proxy.middleware'
+import { sleepMiddleware } from '~/common/middleware/sleep.middleware'
 import 'dotenv/config'
 
 const validationPipeOptions: ValidationPipeOptions = {
@@ -23,6 +24,7 @@ async function bootstrap() {
   app.enableCors()
   // Access frontend resources through middleware proxy (5088 → 5089).
   process.env.NODE_ENV === 'dev' && app.use(frontendProxyMiddleware)
+  process.env.NODE_ENV === 'dev' && app.use(sleepMiddleware)
 
   await app.listen(5088, '0.0.0.0')
 }

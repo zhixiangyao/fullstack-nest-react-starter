@@ -41,11 +41,7 @@ export class UserFindDto {
   readonly username?: User['username']
 }
 
-export class UserFindAllDto {
-  @IsString()
-  @IsOptional()
-  readonly username?: User['username']
-
+export class UserFindAllDto extends UserFindDto {
   @IsInt()
   @IsOptional()
   readonly pageNo? = 1

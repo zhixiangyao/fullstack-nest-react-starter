@@ -21,6 +21,38 @@ type CreateParams = Pick<User, 'username'>
 export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
+  async create(params: CreateParams): Promise<User> {
+    const hashedPassword = await this.passwordService.hashPassword(params.password)
+
+    const user = await this.prisma.user.create({
+      data: {
+        username: params.username,
+        hashedPassword,
+        email: params.email,
+      },
+    })
+
+    return user
+  }
+
+  async update(params: Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email' | 'lastLogin' | 'updatedAt'>>) {
+    const user = await this.prisma.user.update({
+      where: { username: params.username },
+      data: {
+        isActive: params.isActive,
+        email: params.email,
+        lastLogin: params.lastLogin,
+        updatedAt: params.updatedAt,
+      },
+    })
+
+    return user
+  }
+
+  async remove(username: User['username']): Promise<void> {
+    await this.prisma.user.delete({ where: { username } })
+  }
+
   async find(username: User['username']): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'>> {
     const user = await this.prisma.user.findUnique({
       where: { username },
@@ -91,42 +123,10 @@ export class UserService {
     }
   }
 
-  async create(params: CreateParams): Promise<User> {
-    const hashedPassword = await this.passwordService.hashPassword(params.password)
-
-    const user = await this.prisma.user.create({
-      data: {
-        username: params.username,
-        hashedPassword,
-        email: params.email,
-      },
-    })
-
-    return user
-  }
-
   async validate(params: Pick<User, 'username'> & { password: string }): Promise<boolean> {
     const user = await this.find(params.username)
 
     return await this.passwordService.comparePassword({ password: params.password, hashedPassword: user.hashedPassword })
-  }
-
-  async update(params: Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email' | 'lastLogin' | 'updatedAt'>>) {
-    const user = await this.prisma.user.update({
-      where: { username: params.username },
-      data: {
-        isActive: params.isActive,
-        email: params.email,
-        lastLogin: params.lastLogin,
-        updatedAt: params.updatedAt,
-      },
-    })
-
-    return user
-  }
-
-  async remove(username: User['username']): Promise<void> {
-    await this.prisma.user.delete({ where: { username } })
   }
 
   async check(username: User['username']): Promise<void> {

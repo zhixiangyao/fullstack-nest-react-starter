@@ -8,9 +8,6 @@ import { CACHE_KEY_USER_FIND_ALL } from './useUserList'
 
 export function useDrawerEdit() {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
-    manual: true,
-  })
   const { refreshAsync } = useRequest(fetchers.userFindAll, {
     cacheKey: CACHE_KEY_USER_FIND_ALL,
     manual: true,
@@ -19,6 +16,7 @@ export function useDrawerEdit() {
   const [user, setUser] = useState<User>()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadingConfirm, setLoadingConfirm] = useState(false)
 
   const handleOpen = useMemoizedFn(async (username: User['username']) => {
     try {
@@ -49,7 +47,8 @@ export function useDrawerEdit() {
       return
 
     try {
-      await runAsync({
+      setLoadingConfirm(true)
+      await fetchers.userUpdate({
         username: user?.username,
         email: values.email,
         isActive: values.isActive,
@@ -58,8 +57,8 @@ export function useDrawerEdit() {
       refreshAsync()
       handleClose()
     }
-    catch (error) {
-      console.log(error)
+    finally {
+      setLoadingConfirm(false)
     }
   })
 
@@ -68,7 +67,7 @@ export function useDrawerEdit() {
     form,
     open,
     loading,
-    loadingUpdate,
+    loadingConfirm,
     handleClose,
     handleOpen,
     handleFinish,

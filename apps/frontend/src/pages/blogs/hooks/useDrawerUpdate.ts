@@ -2,7 +2,7 @@ import type { FormItemProps } from 'antd'
 import type { Blog } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { CACHE_KEY_BLOG_FIND_ALL } from './useBlogList'
@@ -26,9 +26,11 @@ export function useDrawerUpdate() {
   })
   const [type, setType] = useState<TType>('add')
   const [form] = Form.useForm<Blog>()
+  const blogId = useRef<Blog['id']>()
   const [blog, setBlog] = useState<Blog>()
   const [open, setOpen] = useState(false)
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [loadingConfirm, setLoadingConfirm] = useState(false)
 
   const handleOpenAdd = useMemoizedFn(() => {
     setOpen(true)
@@ -38,13 +40,28 @@ export function useDrawerUpdate() {
     })
   })
 
-  const handleOpenEdit = useMemoizedFn(async () => {
-    setType('edit')
-    setOpen(true)
+  const handleOpenEdit = useMemoizedFn(async (id: Blog['id']) => {
+    try {
+      setLoading(true)
+      setOpen(true)
+      setType('edit')
+      blogId.current = id
 
-    form.setFieldsValue({
-      published: false,
-    })
+      const { data } = await fetchers.blogFind({ id })
+      setBlog(data.blog)
+      form.setFieldsValue({
+        title: data.blog.title,
+        content: data.blog.content,
+        slug: data.blog.slug,
+        published: data.blog.published,
+        tags: data.blog.tags,
+        imageUrl: data.blog.imageUrl,
+        category: data.blog.category,
+      })
+    }
+    finally {
+      setLoading(false)
+    }
   })
 
   const handleClose = useMemoizedFn(() => {
@@ -56,8 +73,22 @@ export function useDrawerUpdate() {
 
   const handleFinish = useMemoizedFn(async (values: Blog) => {
     try {
+      setLoadingConfirm(true)
       if (type === 'add') {
         await fetchers.blogCreate({
+          title: values.title,
+          content: values.content,
+          slug: values.slug,
+          published: values.published,
+          tags: values.tags,
+          imageUrl: values.imageUrl,
+          category: values.category,
+        })
+        message.success('Add successful!')
+      }
+      if (type === 'edit' && typeof blogId.current === 'number') {
+        await fetchers.blogUpdate({
+          id: blogId.current,
           title: values.title,
           content: values.content,
           slug: values.slug,
@@ -71,8 +102,8 @@ export function useDrawerUpdate() {
       refreshAsync()
       handleClose()
     }
-    catch (error) {
-      console.log(error)
+    finally {
+      setLoadingConfirm(false)
     }
   })
 
@@ -83,6 +114,7 @@ export function useDrawerUpdate() {
     blog,
     open,
     loading,
+    loadingConfirm,
     handleClose,
     handleOpenAdd,
     handleOpenEdit,

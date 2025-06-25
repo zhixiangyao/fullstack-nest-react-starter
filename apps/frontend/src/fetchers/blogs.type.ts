@@ -27,6 +27,24 @@ export interface BlogCreateResponse {
   message: string
 }
 
+export interface BlogUpdateRequest extends BlogCreateRequest {
+  id: Blog['id']
+}
+
+export interface BlogUpdateResponse {
+  message: string
+}
+
+export interface BlogFindRequest {
+  id: Blog['id']
+}
+
+export interface BlogFindResponse {
+  data: {
+    blog: Blog
+  }
+}
+
 export interface BlogFindAllRequest {
   pageNo?: number
   pageSize?: number
