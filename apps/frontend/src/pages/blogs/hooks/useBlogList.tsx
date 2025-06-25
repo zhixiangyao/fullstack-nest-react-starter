@@ -12,17 +12,13 @@ type TFieldFilter = BlogFindAllRequest
 
 const fields: TField<BlogFindAllRequest>[] = []
 
-export const CACHE_KEY_BLOG_FIND_ALL = 'cacheKey-blog-find-all'
-
 interface Prams {
   filterHeight: number
   columnsWidth: number
 }
 
 export function useBlogList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync } = useRequest(fetchers.blogFindAll, {
-    cacheKey: CACHE_KEY_BLOG_FIND_ALL,
-  })
+  const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
@@ -65,5 +61,6 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
 
     handleFinish,
     handleReset,
+    refresh,
   }
 }

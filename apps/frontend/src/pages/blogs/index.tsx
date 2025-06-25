@@ -14,9 +14,13 @@ import { useDrawerUpdate } from './hooks/useDrawerUpdate'
 function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
-  const drawerUpdate = useDrawerUpdate()
+  const drawerUpdate = useDrawerUpdate({ refresh })
   const { columns, columnsWidth } = useBlogListColumns({ handleOpenEdit: drawerUpdate.handleOpenEdit })
   const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })
+
+  function refresh() {
+    blogList.refresh()
+  }
 
   return (
     <>

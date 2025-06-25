@@ -13,9 +13,16 @@ import { useUserListColumns } from './hooks/useUserListColumns'
 function Users() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
-  const drawerEdit = useDrawerEdit()
-  const { columns, columnsWidth } = useUserListColumns({ handleOpen: drawerEdit.handleOpen })
+  const drawerEdit = useDrawerEdit({ refresh })
+  const { columns, columnsWidth } = useUserListColumns({
+    handleOpen: drawerEdit.handleOpen,
+    refresh,
+  })
   const userList = useUserList({ filterHeight: size?.height ?? 0, columnsWidth })
+
+  function refresh() {
+    userList.refresh()
+  }
 
   return (
     <>

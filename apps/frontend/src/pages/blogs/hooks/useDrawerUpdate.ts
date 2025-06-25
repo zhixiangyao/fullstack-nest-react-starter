@@ -1,11 +1,10 @@
 import type { FormItemProps } from 'antd'
 import type { Blog } from '~/fetchers'
-import { useMemoizedFn, useRequest } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
 import { useRef, useState } from 'react'
 
 import * as fetchers from '~/fetchers'
-import { CACHE_KEY_BLOG_FIND_ALL } from './useBlogList'
 
 type TType = 'add' | 'edit'
 
@@ -18,12 +17,12 @@ const rules = {
   category: [{ required: true, message: 'Please input the Category!' }],
 } satisfies Partial<Record<keyof Blog, FormItemProps['rules']>>
 
-export function useDrawerUpdate() {
+interface Prams {
+  refresh: () => void
+}
+
+export function useDrawerUpdate({ refresh }: Prams) {
   const { message } = AntdApp.useApp()
-  const { refreshAsync } = useRequest(fetchers.blogFindAll, {
-    cacheKey: CACHE_KEY_BLOG_FIND_ALL,
-    manual: true,
-  })
   const [type, setType] = useState<TType>('add')
   const [form] = Form.useForm<Blog>()
   const blogId = useRef<Blog['id']>()
@@ -99,7 +98,7 @@ export function useDrawerUpdate() {
         })
         message.success('Add successful!')
       }
-      refreshAsync()
+      refresh()
       handleClose()
     }
     finally {

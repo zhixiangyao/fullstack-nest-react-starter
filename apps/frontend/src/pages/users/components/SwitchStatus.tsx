@@ -1,42 +1,36 @@
 import type { User } from '~/fetchers'
-import { useMemoizedFn, useRequest } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Switch } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
-
 interface Props {
   record: User
+  refresh: () => void
 }
 
-function SwitchStatus({ record }: Props) {
+function SwitchStatus({ record, refresh }: Props) {
   const { message } = AntdApp.useApp()
-  const { loading: loadingUpdate, runAsync } = useRequest(fetchers.userUpdate, {
-    manual: true,
-  })
-  const { loading: loadingFindAll, refreshAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
-    manual: true,
-  })
+  const [loading, setLoading] = useState(false)
 
   const handleActive = useMemoizedFn(
     async (isActive: boolean) => {
       try {
-        const data = await runAsync({ username: record.username, isActive })
+        setLoading(true)
+        const data = await fetchers.userUpdate({ username: record.username, isActive })
         message.success(data.message)
-        refreshAsync()
+        refresh()
       }
-      catch (error) {
-        console.log(error)
+      finally {
+        setLoading(false)
       }
     },
   )
 
   return (
     <Switch
-      disabled={loadingFindAll || loadingUpdate || record.roles.map(role => role.name).includes('ADMIN')}
+      disabled={loading || record.roles.map(role => role.name).includes('ADMIN')}
       checkedChildren="Active"
       unCheckedChildren="Inactive"
       checked={record.isActive}

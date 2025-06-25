@@ -1,17 +1,16 @@
 import type { User } from '~/fetchers'
-import { useMemoizedFn, useRequest } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
 import { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
-import { CACHE_KEY_USER_FIND_ALL } from './useUserList'
 
-export function useDrawerEdit() {
+interface Prams {
+  refresh: () => void
+}
+
+export function useDrawerEdit({ refresh }: Prams) {
   const { message } = AntdApp.useApp()
-  const { refreshAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
-    manual: true,
-  })
   const [form] = Form.useForm<User>()
   const [user, setUser] = useState<User>()
   const [open, setOpen] = useState(false)
@@ -54,7 +53,7 @@ export function useDrawerEdit() {
         isActive: values.isActive,
       })
       message.success('Edit successful!')
-      refreshAsync()
+      refresh()
       handleClose()
     }
     finally {

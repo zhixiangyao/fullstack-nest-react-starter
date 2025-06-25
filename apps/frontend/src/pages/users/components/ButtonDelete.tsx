@@ -1,32 +1,28 @@
 import type { User } from '~/fetchers'
-import { useMemoizedFn, useRequest } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Button, Popconfirm } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-import { CACHE_KEY_USER_FIND_ALL } from '../hooks/useUserList'
-
 interface Props {
   record: User
+  refresh: () => void
 }
 
-function ButtonDelete({ record }: Props) {
+function ButtonDelete({ record, refresh }: Props) {
   const { message } = AntdApp.useApp()
-  const { loading: loadingDelete, runAsync } = useRequest(fetchers.userRemove, { manual: true })
-  const { refreshAsync, loading: loadingFindAll } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
-    manual: true,
-  })
+  const [loading, setLoading] = useState(false)
 
   const handleConfirm = useMemoizedFn(async () => {
     try {
-      const data = await runAsync({ username: record.username })
+      setLoading(true)
+      const data = await fetchers.userRemove({ username: record.username })
       message.success(data.message)
-      refreshAsync()
+      refresh()
     }
-    catch (error) {
-      console.log(error)
+    finally {
+      setLoading(false)
     }
   })
 
@@ -48,7 +44,7 @@ function ButtonDelete({ record }: Props) {
         danger
         type="link"
         className="!px-0"
-        disabled={loadingFindAll || loadingDelete || record.roles.map(role => role.name).includes('ADMIN')}
+        disabled={loading || record.roles.map(role => role.name).includes('ADMIN')}
       >
         Delete
       </Button>

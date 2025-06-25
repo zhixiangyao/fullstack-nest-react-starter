@@ -14,9 +14,10 @@ type TColumns = (ColumnsType<User>[number] & { dataIndex?: keyof User, key: keyo
 
 interface Prams {
   handleOpen: (username: User['username']) => Promise<void>
+  refresh: () => void
 }
 
-export function useUserListColumns({ handleOpen }: Prams) {
+export function useUserListColumns({ handleOpen, refresh }: Prams) {
   const columns = useMemo(
     () =>
       [
@@ -58,7 +59,7 @@ export function useUserListColumns({ handleOpen }: Prams) {
           key: 'isActive',
           width: 100,
           render(_, record) {
-            return <SwitchStatus record={record} />
+            return <SwitchStatus record={record} refresh={refresh} />
           },
         },
         {
@@ -129,14 +130,14 @@ export function useUserListColumns({ handleOpen }: Prams) {
           render(_, record) {
             return (
               <div className="flex items-center gap-2">
-                <ButtonDelete record={record} />
+                <ButtonDelete record={record} refresh={refresh} />
                 <ButtonEdit record={record} handleOpen={handleOpen} />
               </div>
             )
           },
         },
       ] satisfies TColumns,
-    [handleOpen],
+    [refresh, handleOpen],
   )
   const columnsWidth = useMemo(
     () => columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0),

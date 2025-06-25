@@ -12,17 +12,13 @@ type TFieldFilter = UserFindAllRequest
 
 const fields: TField<UserFindAllRequest>[] = []
 
-export const CACHE_KEY_ROLE_FIND_ALL = 'cacheKey-role-find-all'
-
 interface Prams {
   filterHeight: number
   columnsWidth: number
 }
 
 export function useRoleList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, {
-    cacheKey: CACHE_KEY_ROLE_FIND_ALL,
-  })
+  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])

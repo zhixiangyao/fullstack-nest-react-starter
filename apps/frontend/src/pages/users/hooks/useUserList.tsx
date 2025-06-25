@@ -12,17 +12,13 @@ type TFieldFilter = UserFindAllRequest
 
 const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username0', name: 'username', label: 'Username' }]
 
-export const CACHE_KEY_USER_FIND_ALL = 'cacheKey-user-find-all'
-
 interface Prams {
   filterHeight: number
   columnsWidth: number
 }
 
 export function useUserList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync } = useRequest(fetchers.userFindAll, {
-    cacheKey: CACHE_KEY_USER_FIND_ALL,
-  })
+  const { data, loading, runAsync, refresh } = useRequest(fetchers.userFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
@@ -65,5 +61,6 @@ export function useUserList({ filterHeight, columnsWidth }: Prams) {
 
     handleFinish,
     handleReset,
+    refresh,
   }
 }
