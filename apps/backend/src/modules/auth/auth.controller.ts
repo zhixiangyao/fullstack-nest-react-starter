@@ -14,7 +14,7 @@ export class AuthController {
   @Post('login')
   @Header('Content-Type', 'application/json')
   async signIn(@Body() body: AuthSignInDto): Promise<ResponseSignIn> {
-    const { token } = await this.authService.signIn(body.username, body.password)
+    const { token } = await this.authService.signIn(body)
 
     return { data: { token } }
   }

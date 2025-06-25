@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { CACHE_KEY_USER_FIND_ALL } from './useUserList'
@@ -25,8 +25,13 @@ export function useDrawerEdit() {
       setLoading(true)
       setOpen(true)
 
-      const user = await fetchers.userFind({ username })
-      setUser(user.data.user)
+      const { data } = await fetchers.userFind({ username })
+      setUser(data.user)
+      form.setFieldsValue({
+        username: data.user.username,
+        email: data.user.email,
+        isActive: data.user.isActive,
+      })
     }
     finally {
       setLoading(false)
@@ -34,6 +39,7 @@ export function useDrawerEdit() {
   })
 
   const handleClose = useMemoizedFn(() => {
+    form.resetFields()
     setUser(void 0)
     setOpen(false)
   })
@@ -60,16 +66,6 @@ export function useDrawerEdit() {
     [handleClose, message, refreshAsync, runAsync, user],
   )
 
-  useEffect(() => {
-    if (user) {
-      form.setFieldsValue({
-        username: user.username,
-        email: user.email,
-        isActive: user.isActive,
-      })
-    }
-  }, [user, form])
-
   return {
     user,
     form,
@@ -81,3 +77,5 @@ export function useDrawerEdit() {
     handleFinish,
   }
 }
+
+export type TUseDrawerEditReturnType = ReturnType<typeof useDrawerEdit>

@@ -1,5 +1,5 @@
 import type { User } from '@prisma/client'
-import { IsBoolean, IsDate, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class UserCreateDto {
   @IsString()
@@ -22,19 +22,11 @@ export class UserUpdateDto {
 
   @IsBoolean()
   @IsOptional()
-  readonly isActive?: User['isActive']
+  readonly isActive: User['isActive']
 
   @IsString()
   @IsOptional()
   readonly email?: User['email']
-
-  @IsDate()
-  @IsOptional()
-  readonly lastLogin?: User['lastLogin']
-
-  @IsDate()
-  @IsOptional()
-  readonly updatedAt?: User['updatedAt']
 }
 
 export class UserRemoveDto {
@@ -56,9 +48,9 @@ export class UserFindAllDto {
 
   @IsInt()
   @IsOptional()
-  readonly pageNo = 1
+  readonly pageNo? = 1
 
   @IsInt()
   @IsOptional()
-  readonly pageSize = 20
+  readonly pageSize? = 20
 }

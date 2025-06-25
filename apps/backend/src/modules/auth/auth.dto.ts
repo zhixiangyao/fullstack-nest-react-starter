@@ -1,9 +1,10 @@
+import type { User } from '@prisma/client'
 import { IsNotEmpty, IsString } from 'class-validator'
 
 export class AuthSignInDto {
   @IsString()
   @IsNotEmpty()
-  readonly username: string
+  readonly username: User['username']
 
   @IsString()
   @IsNotEmpty()

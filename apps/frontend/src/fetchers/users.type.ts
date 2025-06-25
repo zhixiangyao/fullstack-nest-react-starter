@@ -58,7 +58,11 @@ export interface UserFindAllResponse {
   }
 }
 
-export type UserUpdateRequest = Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email'>>
+export interface UserUpdateRequest {
+  username: User['username']
+  isActive: User['isActive']
+  email?: User['email']
+}
 
 export interface UserUpdateResponse {
   message: string

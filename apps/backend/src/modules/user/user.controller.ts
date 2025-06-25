@@ -1,7 +1,7 @@
 import type {
+  ResponseCreate,
   ResponseFind,
   ResponseFindAll,
-  ResponseRegisterUser,
   ResponseRemove,
   ResponseUpdate,
 } from './user.type'
@@ -22,7 +22,7 @@ export class UserController {
   @Public()
   @Post('create')
   @Header('content-type', 'application/json')
-  async create(@Body() body: UserCreateDto): Promise<ResponseRegisterUser> {
+  async create(@Body() body: UserCreateDto): Promise<ResponseCreate> {
     if (await this.userService.has(body.username)) {
       throw new HttpException('This user has been registered!', HttpStatus.BAD_REQUEST)
     }
@@ -42,7 +42,7 @@ export class UserController {
       }
     }
 
-    await this.userService.update(body.username, body)
+    await this.userService.update(body)
 
     return { message: 'Update successful!' }
   }

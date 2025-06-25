@@ -1,9 +1,7 @@
-import type { FormInstance } from 'antd'
+import type { TUseDrawerEditReturnType } from '../hooks/useDrawerEdit'
 import type { User } from '~/fetchers'
 import { Button, Drawer, Form, Input, Switch } from 'antd'
 import React from 'react'
-
-export type TFieldUser = User
 
 const formItemLayout = {
   labelCol: {
@@ -17,13 +15,13 @@ const formItemLayout = {
 }
 
 interface Props {
-  user?: User
-  form: FormInstance<User>
-  open: boolean
-  loading: boolean
-  loadingUpdate: boolean
-  handleClose: () => void
-  handleFinish: (values: User) => Promise<void>
+  user: TUseDrawerEditReturnType['user']
+  form: TUseDrawerEditReturnType['form']
+  open: TUseDrawerEditReturnType['open']
+  loading: TUseDrawerEditReturnType['loading']
+  loadingUpdate: TUseDrawerEditReturnType['loadingUpdate']
+  handleClose: TUseDrawerEditReturnType['handleClose']
+  handleFinish: TUseDrawerEditReturnType['handleFinish']
 }
 
 function DrawerEdit(props: Props) {
@@ -44,7 +42,7 @@ function DrawerEdit(props: Props) {
         </Button>
       )}
     >
-      <Form<TFieldUser>
+      <Form<User>
         {...formItemLayout}
         name="user-edit"
         autoComplete="off"
@@ -52,15 +50,15 @@ function DrawerEdit(props: Props) {
         form={form}
         disabled={loadingUpdate}
       >
-        <Form.Item<TFieldUser> label="Username" name="username">
+        <Form.Item<User> label="Username" name="username">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="Email" name="email">
-          <Input />
+        <Form.Item<User> label="Email" name="email">
+          <Input showCount placeholder="Please input the Email" />
         </Form.Item>
 
-        <Form.Item<TFieldUser> label="Active" name="isActive">
+        <Form.Item<User> label="Active" name="isActive">
           <Switch
             checkedChildren="Active"
             unCheckedChildren="Inactive"

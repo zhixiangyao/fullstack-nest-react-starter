@@ -8,7 +8,7 @@ export class PasswordService {
     return hash
   }
 
-  async comparePassword(password: string, hash: string): Promise<boolean> {
-    return await argon2.verify(hash, password)
+  async comparePassword(params: { password: string, hashedPassword: string }): Promise<boolean> {
+    return await argon2.verify(params.hashedPassword, params.password)
   }
 }

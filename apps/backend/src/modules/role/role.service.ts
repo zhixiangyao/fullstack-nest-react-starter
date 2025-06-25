@@ -4,14 +4,13 @@ import { Injectable } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
-import { RoleFindAllDto } from './role.dto'
 
 @Injectable()
 export class RoleService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(data: RoleFindAllDto): Promise<ResponseFindAll['data']> {
-    const { pageNo = 1, pageSize = 10 } = data
+  async findAll(params: { pageNo?: number, pageSize?: number }): Promise<ResponseFindAll['data']> {
+    const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 

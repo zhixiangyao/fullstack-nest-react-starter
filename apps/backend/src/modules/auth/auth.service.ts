@@ -1,3 +1,4 @@
+import type { User } from '@prisma/client'
 import type { JwtSignPayload } from './auth.type'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
@@ -9,18 +10,18 @@ import { UserService } from '~/modules/user/user.service'
 export class AuthService {
   constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  async signIn(username: string, password: string) {
-    if ((await this.userService.validate(username, password)) === false) {
+  async signIn(params: { username: User['username'], password: string }) {
+    if ((await this.userService.validate(params)) === false) {
       throw new UnauthorizedException('Password error or account error!')
     }
 
-    await this.userService.check(username)
+    await this.userService.check(params.username)
 
     // Login should not change updatedAt.
     // "User" changes will trigger prima to automatically update "updatedAt", so this needs to be done here.
-    const { updatedAt } = await this.userService.find(username)
+    const { updatedAt } = await this.userService.find(params.username)
     const lastLogin = dayjs().toDate()
-    const { uuid } = await this.userService.update(username, { lastLogin, updatedAt })
+    const { uuid, username } = await this.userService.update({ username: params.username, lastLogin, updatedAt })
     const payload: JwtSignPayload = { uuid, username }
 
     return { token: await this.jwtService.signAsync(payload) }

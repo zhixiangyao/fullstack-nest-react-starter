@@ -6,13 +6,22 @@ import { deleteProperty } from 'utils'
 import { PrismaService } from '~/modules/prisma/prisma.service'
 
 import { PasswordService } from './password.service'
-import { UserCreateDto, UserFindAllDto, UserUpdateDto } from './user.dto'
+
+type FindAllParams = {
+  pageNo?: number
+  pageSize?: number
+} & Partial<Pick<User, 'username'>>
+
+type CreateParams = Pick<User, 'username'>
+  & Partial<Pick<User, 'email'>> & {
+    password: string
+  }
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
-  async find(username: string): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'>> {
+  async find(username: User['username']): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'>> {
     const user = await this.prisma.user.findUnique({
       where: { username },
       include: {
@@ -34,8 +43,8 @@ export class UserService {
     }
   }
 
-  async findAll(data: UserFindAllDto): Promise<ResponseFindAll['data']> {
-    const { username, pageNo = 1, pageSize = 10 } = data
+  async findAll(params: FindAllParams): Promise<ResponseFindAll['data']> {
+    const { username, pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
@@ -82,45 +91,45 @@ export class UserService {
     }
   }
 
-  async create(data: UserCreateDto): Promise<User> {
-    const hashedPassword = await this.passwordService.hashPassword(data.password)
+  async create(params: CreateParams): Promise<User> {
+    const hashedPassword = await this.passwordService.hashPassword(params.password)
 
     const user = await this.prisma.user.create({
       data: {
-        username: data.username,
+        username: params.username,
         hashedPassword,
-        email: data.email,
+        email: params.email,
       },
     })
 
     return user
   }
 
-  async validate(username: string, password: string): Promise<boolean> {
-    const user = await this.find(username)
+  async validate(params: Pick<User, 'username'> & { password: string }): Promise<boolean> {
+    const user = await this.find(params.username)
 
-    return await this.passwordService.comparePassword(password, user.hashedPassword)
+    return await this.passwordService.comparePassword({ password: params.password, hashedPassword: user.hashedPassword })
   }
 
-  async update(username: string, data: Omit<UserUpdateDto, 'username'>) {
+  async update(params: Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email' | 'lastLogin' | 'updatedAt'>>) {
     const user = await this.prisma.user.update({
-      where: { username },
+      where: { username: params.username },
       data: {
-        isActive: data.isActive,
-        email: data.email,
-        lastLogin: data.lastLogin,
-        updatedAt: data.updatedAt,
+        isActive: params.isActive,
+        email: params.email,
+        lastLogin: params.lastLogin,
+        updatedAt: params.updatedAt,
       },
     })
 
     return user
   }
 
-  async remove(username: string): Promise<void> {
+  async remove(username: User['username']): Promise<void> {
     await this.prisma.user.delete({ where: { username } })
   }
 
-  async check(username: string): Promise<void> {
+  async check(username: User['username']): Promise<void> {
     const user = await this.find(username)
 
     if (user.isActive === false) {
@@ -128,7 +137,7 @@ export class UserService {
     }
   }
 
-  async has(username: string): Promise<boolean> {
+  async has(username: User['username']): Promise<boolean> {
     const user = await this.prisma.user.findUnique({ where: { username } })
 
     return !!user
