@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
-import { useRequest } from 'ahooks'
+import { useMemoizedFn, useRequest } from 'ahooks'
 import { App as AntdApp, Button, Popconfirm } from 'antd'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 import * as fetchers from '~/fetchers'
 
@@ -19,7 +19,7 @@ function ButtonDelete({ record }: Props) {
     manual: true,
   })
 
-  const handleConfirm = useCallback(async () => {
+  const handleConfirm = useMemoizedFn(async () => {
     try {
       const data = await runAsync({ username: record.username })
       message.success(data.message)
@@ -28,7 +28,7 @@ function ButtonDelete({ record }: Props) {
     catch (error) {
       console.log(error)
     }
-  }, [record.username, message, refreshAsync, runAsync])
+  })
 
   return (
     <Popconfirm

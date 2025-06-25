@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { CACHE_KEY_USER_FIND_ALL } from './useUserList'
@@ -44,27 +44,24 @@ export function useDrawerEdit() {
     setOpen(false)
   })
 
-  const handleFinish = useCallback(
-    async (values: User) => {
-      if (!user)
-        return
+  const handleFinish = useMemoizedFn(async (values: User) => {
+    if (!user)
+      return
 
-      try {
-        await runAsync({
-          username: user?.username,
-          email: values.email,
-          isActive: values.isActive,
-        })
-        refreshAsync()
-        handleClose()
-        message.success('Edit successful!')
-      }
-      catch (error) {
-        console.log(error)
-      }
-    },
-    [handleClose, message, refreshAsync, runAsync, user],
-  )
+    try {
+      await runAsync({
+        username: user?.username,
+        email: values.email,
+        isActive: values.isActive,
+      })
+      message.success('Edit successful!')
+      refreshAsync()
+      handleClose()
+    }
+    catch (error) {
+      console.log(error)
+    }
+  })
 
   return {
     user,

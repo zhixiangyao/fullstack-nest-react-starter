@@ -1,8 +1,9 @@
 import type { MenuProps } from 'antd'
 import { HeartTwoTone } from '@ant-design/icons'
+import { useMemoizedFn } from 'ahooks'
 import { Menu } from 'antd'
 import clsx from 'clsx'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 
@@ -18,9 +19,9 @@ function Nav() {
   const collapsed = appStore.leftWidth === 80
   const menus = useMemo(() => genMenus(user?.roles.map(role => role.name) ?? []), [user?.roles])
 
-  const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
+  const handleMenuClick = useMemoizedFn<NonNullable<MenuProps['onClick']>>(
     ({ key }) => pathname !== key && navigate(key),
-    [navigate, pathname],
+
   )
 
   return (

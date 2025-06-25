@@ -13,6 +13,20 @@ export interface Blog {
   category: string | null
 }
 
+export interface BlogCreateRequest {
+  title: Blog['title']
+  content: Blog['content']
+  slug: Blog['slug']
+  published: Blog['published']
+  tags: Blog['tags']
+  imageUrl?: Blog['imageUrl']
+  category?: Blog['category']
+}
+
+export interface BlogCreateResponse {
+  message: string
+}
+
 export interface BlogFindAllRequest {
   pageNo?: number
   pageSize?: number

@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
-import { useRequest } from 'ahooks'
+import { useMemoizedFn, useRequest } from 'ahooks'
 import { App as AntdApp, Switch } from 'antd'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 import * as fetchers from '~/fetchers'
 
@@ -21,7 +21,7 @@ function SwitchStatus({ record }: Props) {
     manual: true,
   })
 
-  const handleActive = useCallback(
+  const handleActive = useMemoizedFn(
     async (isActive: boolean) => {
       try {
         const data = await runAsync({ username: record.username, isActive })
@@ -32,7 +32,6 @@ function SwitchStatus({ record }: Props) {
         console.log(error)
       }
     },
-    [message, record.username, refreshAsync, runAsync],
   )
 
   return (

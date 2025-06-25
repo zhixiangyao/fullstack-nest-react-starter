@@ -1,13 +1,14 @@
 import type { MenuProps } from 'antd'
 import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 
 import { useAppStore } from '~/stores/useAppStore'
-
 import { useUserStore } from '~/stores/useUserStore'
+
 import { DrawerUserInfo } from './components/DrawerUserInfo'
 
 const MenuKey = {
@@ -48,29 +49,26 @@ function Header() {
   const { user, handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
 
-  const handleMenuClick = useCallback<NonNullable<MenuProps['onClick']>>(
-    (e) => {
-      switch (e.key) {
-        case MenuKey.THEME_LIGHT:
-          appStore.handleSwitchMode('light')
-          break
+  const handleMenuClick = useMemoizedFn<NonNullable<MenuProps['onClick']>>((e) => {
+    switch (e.key) {
+      case MenuKey.THEME_LIGHT:
+        appStore.handleSwitchMode('light')
+        break
 
-        case MenuKey.THEME_DARK:
-          appStore.handleSwitchMode('dark')
-          break
+      case MenuKey.THEME_DARK:
+        appStore.handleSwitchMode('dark')
+        break
 
-        case MenuKey.USER_INFO:
-          setOpen(true)
-          break
+      case MenuKey.USER_INFO:
+        setOpen(true)
+        break
 
-        case MenuKey.LOGOUT:
-          message.success('Logout.')
-          handleLogout()
-          break
-      }
-    },
-    [appStore, message, handleLogout],
-  )
+      case MenuKey.LOGOUT:
+        message.success('Logout.')
+        handleLogout()
+        break
+    }
+  })
 
   const title = useMemo(() => {
     const list = pathname.split('/').pop()?.split('-')

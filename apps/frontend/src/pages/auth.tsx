@@ -1,10 +1,11 @@
 import type { FormItemProps } from 'antd'
 import type { UserCreateRequest, UserLoginRequest } from '~/fetchers'
 import { CloudOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
+import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Button, Checkbox, Form, Input, Segmented } from 'antd'
-import React, { useCallback, useEffect, useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
+
 import { Rain } from '~/components/Rain'
 import { useUserStore } from '~/stores/useUserStore'
 
@@ -25,7 +26,7 @@ function Auth() {
   const [authType, setAuthType] = useState<TAuthType>('Login')
   const background = authType === 'Login' ? '/image1.png' : '/image2.png'
 
-  const handleFinish = useCallback(
+  const handleFinish = useMemoizedFn(
     async (values: TFieldType) => {
       try {
         if (values.username === undefined || values.password === undefined)
@@ -41,15 +42,15 @@ function Auth() {
       }
       catch {}
     },
-    [authType, handleCreate, handleLogin, message],
+
   )
 
-  const handleInjectForm = useCallback(() => {
+  const handleInjectForm = useMemoizedFn(() => {
     form.setFieldsValue({
       username: authType === 'Login' ? user?.username ?? '' : '',
       password: '',
     })
-  }, [authType, form, user?.username])
+  })
 
   useEffect(handleInjectForm, [handleInjectForm])
 

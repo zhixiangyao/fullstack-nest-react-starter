@@ -1,4 +1,36 @@
-import { IsInt, IsOptional } from 'class-validator'
+import { Blog } from '@prisma/client'
+import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+
+export class BlogCreateDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly title: Blog['title']
+
+  @IsString()
+  @IsNotEmpty()
+  readonly content: Blog['content']
+
+  @IsString()
+  @IsNotEmpty()
+  readonly slug: Blog['slug']
+
+  @IsBoolean()
+  @IsNotEmpty()
+  readonly published: Blog['published']
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsNotEmpty()
+  readonly tags: Blog['tags']
+
+  @IsString()
+  @IsOptional()
+  readonly imageUrl?: Blog['imageUrl']
+
+  @IsString()
+  @IsOptional()
+  readonly category?: Blog['category']
+}
 
 export class BlogFindAllDto {
   @IsInt()

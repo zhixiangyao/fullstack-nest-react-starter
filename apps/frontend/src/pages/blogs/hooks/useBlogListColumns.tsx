@@ -28,7 +28,7 @@ const columns = [
     title: 'Published?',
     dataIndex: 'published' satisfies keyof Blog,
     key: 'published',
-    width: 100,
+    width: 140,
     render(_, record) {
       return <SwitchPublished record={record} />
     },

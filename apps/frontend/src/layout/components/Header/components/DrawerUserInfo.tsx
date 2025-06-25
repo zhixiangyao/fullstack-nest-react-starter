@@ -1,7 +1,8 @@
 import type { DescriptionsProps } from 'antd'
 import type { Dispatch } from 'react'
+import { useMemoizedFn } from 'ahooks'
 import { Descriptions, Drawer } from 'antd'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
@@ -15,9 +16,9 @@ interface Props {
 function DrawerUserInfo({ open, setOpen }: Props) {
   const { user } = useUserStore()
 
-  const handleClose = useCallback(() => {
+  const handleClose = useMemoizedFn(() => {
     setOpen(false)
-  }, [setOpen])
+  })
 
   const items = useMemo<DescriptionsProps['items']>(
     () => [
