@@ -6,6 +6,10 @@ export interface ResponseCreate {
   message: string
 }
 
+export interface ResponseSwitch {
+  message: string
+}
+
 export interface ResponseUpdate {
   message: string
 }

@@ -18,7 +18,7 @@ function SwitchStatus({ record, refresh }: Props) {
     async (isActive: boolean) => {
       try {
         setLoading(true)
-        const data = await fetchers.userUpdate({ username: record.username, isActive })
+        const data = await fetchers.userSwitch({ username: record.username, isActive })
         message.success(data.message)
         refresh()
       }

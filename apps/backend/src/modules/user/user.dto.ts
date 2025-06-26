@@ -15,7 +15,7 @@ export class UserCreateDto {
   readonly email?: User['email']
 }
 
-export class UserUpdateDto {
+export class UserSwitchDto {
   @IsString()
   @IsNotEmpty()
   readonly username: User['username']
@@ -23,7 +23,9 @@ export class UserUpdateDto {
   @IsBoolean()
   @IsOptional()
   readonly isActive: User['isActive']
+}
 
+export class UserUpdateDto extends UserSwitchDto {
   @IsString()
   @IsOptional()
   readonly email?: User['email']

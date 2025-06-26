@@ -1,4 +1,11 @@
-import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseRemove, ResponseUpdate } from './user.type'
+import type {
+  ResponseCreate,
+  ResponseFind,
+  ResponseFindAll,
+  ResponseRemove,
+  ResponseSwitch,
+  ResponseUpdate,
+} from './user.type'
 import { Body, Controller, Header, HttpException, HttpStatus, Post } from '@nestjs/common'
 import { deleteProperty } from 'utils'
 
@@ -6,7 +13,14 @@ import { Public } from '~/common/decorators/public.decorator'
 import { Roles } from '~/common/decorators/roles.decorator'
 
 import { User } from '~/common/decorators/user.decorator'
-import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserUpdateDto } from './user.dto'
+import {
+  UserCreateDto,
+  UserFindAllDto,
+  UserFindDto,
+  UserRemoveDto,
+  UserSwitchDto,
+  UserUpdateDto,
+} from './user.dto'
 import { UserService } from './user.service'
 
 @Controller('user')
@@ -27,13 +41,24 @@ export class UserController {
   }
 
   @Roles(['ADMIN'])
+  @Post('switch')
+  @Header('content-type', 'application/json')
+  async switch(@Body() body: UserSwitchDto, @User() user: Request['user']): Promise<ResponseSwitch> {
+    if (user.username === body.username && body.isActive !== void 0) {
+      throw new HttpException('Users cannot modify their own isActive status!', HttpStatus.BAD_REQUEST)
+    }
+
+    await this.userService.update(body)
+
+    return { message: 'Update successful!' }
+  }
+
+  @Roles(['ADMIN'])
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @User() user: Request['user']): Promise<ResponseUpdate> {
-    if (body.isActive !== void 0) {
-      if (user.username === body.username && body.isActive === false) {
-        throw new HttpException('Administrators cannot modify the status!', HttpStatus.BAD_REQUEST)
-      }
+    if (user.username === body.username && body.isActive !== void 0) {
+      throw new HttpException('Users cannot modify their own isActive status!', HttpStatus.BAD_REQUEST)
     }
 
     await this.userService.update(body)

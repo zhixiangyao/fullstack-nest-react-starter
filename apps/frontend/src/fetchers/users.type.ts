@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface UserLoginRequest {
-  username: string
+  username: User['username']
   password: string
 }
 
@@ -23,34 +23,33 @@ export interface UserLoginResponse {
   }
 }
 
-export interface UserCreateRequest {
-  username: string
-  password: string
-  email?: string
+export interface UserCreateRequest extends UserLoginRequest {
+  email?: User['email']
 }
 
 export interface UserCreateResponse {
   message: string
 }
 
-export interface UserUpdateRequest {
+export interface UserSwitchRequest {
   username: User['username']
   isActive: User['isActive']
+}
+
+export interface UserSwitchResponse extends UserCreateResponse {}
+
+export interface UserUpdateRequest extends UserSwitchRequest {
   email?: User['email']
 }
 
-export interface UserUpdateResponse {
-  message: string
-}
+export interface UserUpdateResponse extends UserCreateResponse {}
 
 export type UserRemoveRequest = Pick<User, 'username'>
 
-export interface UserRemoveResponse {
-  message: string
-}
+export interface UserRemoveResponse extends UserCreateResponse {}
 
 export interface UserFindRequest {
-  username?: string
+  username?: User['username']
 }
 
 export interface UserFindResponse {
@@ -60,7 +59,7 @@ export interface UserFindResponse {
 }
 
 export interface UserFindAllRequest {
-  username?: string
+  username?: User['username']
   pageNo?: number
   pageSize?: number
 }

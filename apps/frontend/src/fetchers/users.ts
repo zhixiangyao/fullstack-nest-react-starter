@@ -9,6 +9,8 @@ import type {
   UserLoginResponse,
   UserRemoveRequest,
   UserRemoveResponse,
+  UserSwitchRequest,
+  UserSwitchResponse,
   UserUpdateRequest,
   UserUpdateResponse,
 } from './users.type'
@@ -23,6 +25,12 @@ export async function userLogin(data: UserLoginRequest) {
 
 export async function userCreate(data: UserCreateRequest) {
   const result = await fetchPost<UserCreateResponse>('/api/user/create', JSON.stringify(data))
+
+  return result
+}
+
+export async function userSwitch(data: UserSwitchRequest) {
+  const result = await fetchPost<UserSwitchResponse>('/api/user/switch', JSON.stringify(data))
 
   return result
 }
