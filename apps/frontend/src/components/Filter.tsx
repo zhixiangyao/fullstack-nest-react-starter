@@ -1,20 +1,33 @@
-import type { FormInstance, FormItemProps, RowProps } from 'antd'
+import type { FormInstance, FormItemProps, InputProps, RowProps, SelectProps, SwitchProps } from 'antd'
 import type { Ref } from 'react'
 import { DownOutlined, SearchOutlined, UndoOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Select, Switch } from 'antd'
 import React, { useMemo, useState } from 'react'
 
-export interface TField<T> {
-  type: 'input'
+interface TFieldBase<T> {
   key: string
   name: keyof T
   label: string
 }
 
+export type TField<T extends object>
+  = | (TFieldBase<T> & {
+    type: 'input'
+    props?: InputProps
+  })
+  | (TFieldBase<T> & {
+    type: 'select'
+    props?: SelectProps
+  })
+  | (TFieldBase<T> & {
+    type: 'switch'
+    props?: SwitchProps
+  })
+
 const gutter: RowProps['gutter'] = [0, 8]
 
-interface Props<T> {
+interface Props<T extends object> {
   form?: FormInstance<T>
   fields?: TField<T>[]
   loading?: boolean
@@ -25,7 +38,7 @@ interface Props<T> {
   handleReset?: () => void
 }
 
-function Filter<T>(props: Props<T>) {
+function Filter<T extends object>(props: Props<T>) {
   const { form, fields, loading, customRef, expandCount = 4, extra } = props
   const { handleFinish, handleReset } = props
   const [expand, setExpand] = useState(false)
@@ -38,11 +51,36 @@ function Filter<T>(props: Props<T>) {
               acc.push(
                 <Col span={6} key={field.key}>
                   <Form.Item<T> name={field.name as FormItemProps<T>['name']} label={field.label}>
-                    <Input type="text" placeholder={`Please enter ${field.label}`} />
+                    <Input allowClear type="text" placeholder={`Please enter ${field.label}`} {...field.props} />
                   </Form.Item>
                 </Col>,
               )
             }
+            break
+          }
+          case 'select': {
+            if (expand === true || index < expandCount) {
+              acc.push(
+                <Col span={6} key={field.key}>
+                  <Form.Item<T> name={field.name as FormItemProps<T>['name']} label={field.label}>
+                    <Select allowClear placeholder={`Please select ${field.label}`} {...field.props} />
+                  </Form.Item>
+                </Col>,
+              )
+            }
+            break
+          }
+          case 'switch': {
+            if (expand === true || index < expandCount) {
+              acc.push(
+                <Col span={6} key={field.key}>
+                  <Form.Item<T> name={field.name as FormItemProps<T>['name']} label={field.label}>
+                    <Switch {...field.props} />
+                  </Form.Item>
+                </Col>,
+              )
+            }
+            break
           }
         }
 
