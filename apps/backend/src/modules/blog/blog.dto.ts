@@ -55,6 +55,10 @@ export class BlogFindDto {
 }
 
 export class BlogFindAllDto {
+  @IsBoolean()
+  @IsOptional()
+  readonly published: Blog['published']
+
   @IsInt()
   @IsOptional()
   readonly pageNo = 1

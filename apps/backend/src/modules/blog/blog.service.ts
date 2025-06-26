@@ -11,7 +11,7 @@ type CreateParams = Pick<Blog, 'title' | 'content' | 'slug' | 'published' | 'tag
 type FindAllParams = {
   pageNo?: number
   pageSize?: number
-} & Pick<User, 'username'>
+} & Pick<Blog, 'published'> & Pick<User, 'username'>
 
 @Injectable()
 export class BlogService {
@@ -70,7 +70,7 @@ export class BlogService {
   }
 
   async findAll(params: FindAllParams): Promise<ResponseFindAll['data']> {
-    const { pageNo = 1, pageSize = 10, username } = params
+    const { pageNo = 1, pageSize = 10, username, published } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
@@ -78,6 +78,7 @@ export class BlogService {
       skip,
       take,
       where: {
+        published,
         author: {
           username,
         },

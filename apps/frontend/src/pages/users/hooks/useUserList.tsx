@@ -10,7 +10,7 @@ import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = UserFindAllRequest
 
-const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username0', name: 'username', label: 'Username' }]
+const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username', name: 'username', label: 'Username' }]
 
 interface Prams {
   filterHeight: number

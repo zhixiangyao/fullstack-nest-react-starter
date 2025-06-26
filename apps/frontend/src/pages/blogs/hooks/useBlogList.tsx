@@ -8,9 +8,35 @@ import { useMemo } from 'react'
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
-type TFieldFilter = BlogFindAllRequest
+type TFieldFilter = Omit<BlogFindAllRequest, 'published'> & { published?: 0 | 1 }
 
-const fields: TField<BlogFindAllRequest>[] = []
+function genFilterParams(values: TFieldFilter): fetchers.BlogFindAllRequest {
+  return {
+    ...values,
+    published: values.published === 1 ? true : values.published === 0 ? false : void 0,
+  }
+}
+
+const fields: TField<BlogFindAllRequest>[] = [
+  {
+    type: 'select',
+    props: {
+      options: [
+        {
+          label: 'Published',
+          value: 1,
+        },
+        {
+          label: 'Unpublished',
+          value: 0,
+        },
+      ],
+    },
+    key: 'published',
+    name: 'published',
+    label: 'Published',
+  },
+]
 
 interface Prams {
   filterHeight: number
@@ -29,8 +55,8 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
       total: data?.data.total,
       pageSize: data?.data.pageSize,
       onChange(pageNo, pageSize) {
-        const reset = form.getFieldsValue()
-        runAsync({ pageNo, pageSize, ...reset })
+        const values = form.getFieldsValue()
+        runAsync({ pageNo, pageSize, ...genFilterParams(values) })
       },
     }),
     [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
@@ -43,7 +69,7 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
   }, [columnsWidth, filterHeight, size?.height])
 
   const handleFinish = (values: TFieldFilter) => {
-    runAsync(values)
+    runAsync(genFilterParams(values))
   }
 
   const handleReset = () => {
