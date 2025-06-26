@@ -4,6 +4,7 @@ import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
 import { useRef, useState } from 'react'
 
+import { isValidHttpUrl } from 'utils'
 import * as fetchers from '~/fetchers'
 
 type TType = 'add' | 'edit'
@@ -12,9 +13,17 @@ const rules = {
   title: [{ required: true, message: 'Please input the Title!' }],
   content: [{ required: true, message: 'Please input the Content!' }],
   slug: [{ required: true, message: 'Please input the Slug!' }],
-  imageUrl: [{ required: true, message: 'Please input the Image Url!' }],
-  tags: [{ required: true, message: 'Please input the Tags!' }],
-  category: [{ required: true, message: 'Please input the Category!' }],
+  imageUrl: [
+    {
+      validator(rule, value) {
+        if (value && !isValidHttpUrl(value))
+          return Promise.reject(new Error('Please input a valid Image Url!'))
+        return Promise.resolve()
+      },
+    },
+  ],
+  tags: [],
+  category: [],
 } satisfies Partial<Record<keyof Blog, FormItemProps['rules']>>
 
 interface Prams {
@@ -36,6 +45,7 @@ export function useDrawerUpdate({ refresh }: Prams) {
 
     form.setFieldsValue({
       published: false,
+      tags: [],
     })
   })
 

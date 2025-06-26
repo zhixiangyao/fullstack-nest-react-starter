@@ -32,6 +32,16 @@ export class BlogCreateDto {
   readonly category?: Blog['category']
 }
 
+export class BlogSwitchDto {
+  @IsInt()
+  @IsOptional()
+  readonly id: Blog['id']
+
+  @IsBoolean()
+  @IsNotEmpty()
+  readonly published: Blog['published']
+}
+
 export class UserUpdateDto extends BlogCreateDto {
   @IsInt()
   @IsOptional()

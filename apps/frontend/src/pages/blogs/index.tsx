@@ -15,7 +15,10 @@ function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const drawerUpdate = useDrawerUpdate({ refresh })
-  const { columns, columnsWidth } = useBlogListColumns({ handleOpenEdit: drawerUpdate.handleOpenEdit })
+  const { columns, columnsWidth } = useBlogListColumns({
+    handleOpenEdit: drawerUpdate.handleOpenEdit,
+    refresh,
+  })
   const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })
 
   function refresh() {

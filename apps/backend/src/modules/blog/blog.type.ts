@@ -4,9 +4,9 @@ export interface ResponseCreate {
   message: string
 }
 
-export interface ResponseUpdate {
-  message: string
-}
+export interface ResponseSwitch extends ResponseCreate {}
+
+export interface ResponseUpdate extends ResponseCreate {}
 
 export interface ResponseFind {
   data: {

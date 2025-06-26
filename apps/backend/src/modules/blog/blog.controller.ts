@@ -1,9 +1,9 @@
-import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseUpdate } from './blog.type'
+import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseSwitch, ResponseUpdate } from './blog.type'
 import { Body, Controller, Header, Post } from '@nestjs/common'
 
 import { User } from '~/common/decorators/user.decorator'
 
-import { BlogCreateDto, BlogFindAllDto, BlogFindDto, UserUpdateDto } from './blog.dto'
+import { BlogCreateDto, BlogFindAllDto, BlogFindDto, BlogSwitchDto, UserUpdateDto } from './blog.dto'
 import { BlogService } from './blog.service'
 
 @Controller('blog')
@@ -16,6 +16,14 @@ export class BlogController {
     await this.blogService.create({ ...body, uuid: user.uuid })
 
     return { message: 'Create successful!' }
+  }
+
+  @Post('switch')
+  @Header('content-type', 'application/json')
+  async switch(@Body() body: BlogSwitchDto, @User() user: Request['user']): Promise<ResponseSwitch> {
+    await this.blogService.update({ ...body, username: user.username })
+
+    return { message: 'Update successful!' }
   }
 
   @Post('update')

@@ -12,9 +12,10 @@ type TColumns = (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyo
 
 interface Prams {
   handleOpenEdit: (id: Blog['id']) => Promise<void>
+  refresh: () => void
 }
 
-export function useBlogListColumns({ handleOpenEdit }: Prams) {
+export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
   const columns = useMemo(() => [
     {
       title: 'ID',
@@ -36,7 +37,7 @@ export function useBlogListColumns({ handleOpenEdit }: Prams) {
       key: 'published',
       width: 140,
       render(_, record) {
-        return <SwitchPublished record={record} />
+        return <SwitchPublished record={record} refresh={refresh} />
       },
     },
     {

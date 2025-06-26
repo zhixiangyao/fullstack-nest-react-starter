@@ -6,17 +6,11 @@ export interface ResponseCreate {
   message: string
 }
 
-export interface ResponseSwitch {
-  message: string
-}
+export interface ResponseSwitch extends ResponseCreate {}
 
-export interface ResponseUpdate {
-  message: string
-}
+export interface ResponseUpdate extends ResponseCreate {}
 
-export interface ResponseRemove {
-  message: string
-}
+export interface ResponseRemove extends ResponseCreate {}
 
 export interface ResponseFind {
   data: {

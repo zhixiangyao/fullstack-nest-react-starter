@@ -27,13 +27,18 @@ export interface BlogCreateResponse {
   message: string
 }
 
+export interface BlogSwitchRequest {
+  id: Blog['id']
+  published: Blog['published']
+}
+
+export interface BlogSwitchResponse extends BlogCreateResponse {}
+
 export interface BlogUpdateRequest extends BlogCreateRequest {
   id: Blog['id']
 }
 
-export interface BlogUpdateResponse {
-  message: string
-}
+export interface BlogUpdateResponse extends BlogCreateResponse {}
 
 export interface BlogFindRequest {
   id: Blog['id']

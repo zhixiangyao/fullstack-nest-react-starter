@@ -8,8 +8,6 @@ type CreateParams = Pick<Blog, 'title' | 'content' | 'slug' | 'published' | 'tag
   & Partial<Pick<Blog, 'imageUrl' | 'category'>>
   & Pick<User, 'uuid'>
 
-type UpdateParams = Omit<CreateParams, 'uuid'> & Pick<Blog, 'id'> & Pick<User, 'username'>
-
 type FindAllParams = {
   pageNo?: number
   pageSize?: number
@@ -36,7 +34,7 @@ export class BlogService {
     return blog
   }
 
-  async update(params: UpdateParams): Promise<Blog> {
+  async update(params: Partial<Omit<CreateParams, 'uuid'>> & Pick<Blog, 'id'> & Pick<User, 'username'>): Promise<Blog> {
     const blog = await this.prisma.blog.update({
       where: {
         author: {

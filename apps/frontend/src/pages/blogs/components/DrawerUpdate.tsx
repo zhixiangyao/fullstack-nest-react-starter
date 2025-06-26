@@ -8,11 +8,11 @@ import { Tags } from './Tags'
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 4 },
+    sm: { span: 6 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14 },
+    sm: { span: 12 },
   },
 }
 
@@ -61,7 +61,7 @@ function DrawerUpdate(props: Props) {
         </Form.Item>
 
         <Form.Item<Blog> label="Content" name="content" rules={rules.content}>
-          <Input.TextArea showCount placeholder="Please input the Content" rows={10} maxLength={50000} />
+          <Input.TextArea showCount placeholder="Please input the Content" rows={20} maxLength={50000} />
         </Form.Item>
 
         <Form.Item<Blog> label="Slug" name="slug" rules={rules.slug}>
