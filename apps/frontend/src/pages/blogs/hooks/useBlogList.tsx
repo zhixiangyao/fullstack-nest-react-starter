@@ -10,7 +10,7 @@ import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = Omit<BlogFindAllRequest, 'published'> & { published?: 0 | 1 }
 
-function genFilterParams(values: TFieldFilter): fetchers.BlogFindAllRequest {
+function genFilterParams(values: TFieldFilter): BlogFindAllRequest {
   return {
     ...values,
     published: values.published === 1 ? true : values.published === 0 ? false : void 0,

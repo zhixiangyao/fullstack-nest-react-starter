@@ -6,11 +6,16 @@ import dayjs from 'dayjs'
 
 import { UserService } from '~/modules/user/user.service'
 
+interface AuthSignInParams {
+  username: User['username']
+  password: string
+}
+
 @Injectable()
 export class AuthService {
   constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  async signIn(params: { username: User['username'], password: string }) {
+  async signIn(params: AuthSignInParams) {
     if ((await this.userService.validate(params)) === false) {
       throw new UnauthorizedException('Password error or account error!')
     }

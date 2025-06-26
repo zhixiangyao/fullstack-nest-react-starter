@@ -22,7 +22,7 @@ export class UserSwitchDto {
 
   @IsBoolean()
   @IsOptional()
-  readonly isActive: User['isActive']
+  readonly isActive?: User['isActive']
 }
 
 export class UserUpdateDto extends UserSwitchDto {

@@ -7,21 +7,36 @@ import { PrismaService } from '~/modules/prisma/prisma.service'
 
 import { PasswordService } from './password.service'
 
-type FindAllParams = {
+interface UserCreateParams {
+  username: User['username']
+  password: string
+  email?: User['email']
+}
+
+interface UserUpdateParams {
+  username: User['username']
+  isActive?: User['isActive']
+  email?: User['email']
+  lastLogin?: User['lastLogin']
+  updatedAt?: User['updatedAt']
+}
+
+interface UserFindAllParams {
+  username?: User['username']
   pageNo?: number
   pageSize?: number
-} & Partial<Pick<User, 'username'>>
+}
 
-type CreateParams = Pick<User, 'username'>
-  & Partial<Pick<User, 'email'>> & {
-    password: string
-  }
+interface UserValidateParams {
+  username: User['username']
+  password: string
+}
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
 
-  async create(params: CreateParams): Promise<User> {
+  async create(params: UserCreateParams): Promise<User> {
     const hashedPassword = await this.passwordService.hashPassword(params.password)
 
     const user = await this.prisma.user.create({
@@ -35,7 +50,7 @@ export class UserService {
     return user
   }
 
-  async update(params: Pick<User, 'username'> & Partial<Pick<User, 'isActive' | 'email' | 'lastLogin' | 'updatedAt'>>) {
+  async update(params: UserUpdateParams) {
     const user = await this.prisma.user.update({
       where: { username: params.username },
       data: {
@@ -75,7 +90,7 @@ export class UserService {
     }
   }
 
-  async findAll(params: FindAllParams): Promise<ResponseFindAll['data']> {
+  async findAll(params: UserFindAllParams): Promise<ResponseFindAll['data']> {
     const { username, pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
@@ -123,10 +138,13 @@ export class UserService {
     }
   }
 
-  async validate(params: Pick<User, 'username'> & { password: string }): Promise<boolean> {
+  async validate(params: UserValidateParams): Promise<boolean> {
     const user = await this.find(params.username)
 
-    return await this.passwordService.comparePassword({ password: params.password, hashedPassword: user.hashedPassword })
+    return await this.passwordService.comparePassword({
+      password: params.password,
+      hashedPassword: user.hashedPassword,
+    })
   }
 
   async check(username: User['username']): Promise<void> {

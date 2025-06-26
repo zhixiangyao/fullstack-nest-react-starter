@@ -5,11 +5,16 @@ import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
 
+interface RoleFindAllParams {
+  pageNo?: number
+  pageSize?: number
+}
+
 @Injectable()
 export class RoleService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(params: { pageNo?: number, pageSize?: number }): Promise<ResponseFindAll['data']> {
+  async findAll(params: RoleFindAllParams): Promise<ResponseFindAll['data']> {
     const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize

@@ -34,36 +34,36 @@ export class BlogCreateDto {
 
 export class BlogSwitchDto {
   @IsInt()
-  @IsOptional()
+  @IsNotEmpty()
   readonly id: Blog['id']
 
   @IsBoolean()
-  @IsNotEmpty()
-  readonly published: Blog['published']
+  @IsOptional()
+  readonly published?: Blog['published']
 }
 
 export class UserUpdateDto extends BlogCreateDto {
   @IsInt()
-  @IsOptional()
+  @IsNotEmpty()
   readonly id: Blog['id']
 }
 
 export class BlogFindDto {
   @IsInt()
-  @IsOptional()
+  @IsNotEmpty()
   readonly id: Blog['id']
 }
 
 export class BlogFindAllDto {
   @IsBoolean()
   @IsOptional()
-  readonly published: Blog['published']
+  readonly published?: Blog['published']
 
   @IsInt()
   @IsOptional()
-  readonly pageNo = 1
+  readonly pageNo? = 1
 
   @IsInt()
   @IsOptional()
-  readonly pageSize = 20
+  readonly pageSize? = 20
 }

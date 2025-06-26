@@ -4,20 +4,46 @@ import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
 
-type CreateParams = Pick<Blog, 'title' | 'content' | 'slug' | 'published' | 'tags'>
-  & Partial<Pick<Blog, 'imageUrl' | 'category'>>
-  & Pick<User, 'uuid'>
+interface BlogCreateParams {
+  uuid: User['uuid']
+  title: Blog['title']
+  content: Blog['content']
+  slug: Blog['slug']
+  published: Blog['published']
+  tags: Blog['tags']
+  imageUrl?: Blog['imageUrl']
+  category?: Blog['category']
+}
 
-type FindAllParams = {
+interface BlogUpdateParams {
+  username: User['username']
+  id: Blog['id']
+  title?: Blog['title']
+  content?: Blog['content']
+  slug?: Blog['slug']
+  published?: Blog['published']
+  tags?: Blog['tags']
+  imageUrl?: Blog['imageUrl']
+  category?: Blog['category']
+}
+
+interface BlogFindParams {
+  username: User['username']
+  id: Blog['id']
+}
+
+interface BlogFindAllParams {
+  username: User['username']
+  published?: Blog['published']
   pageNo?: number
   pageSize?: number
-} & Pick<Blog, 'published'> & Pick<User, 'username'>
+}
 
 @Injectable()
 export class BlogService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(params: CreateParams): Promise<Blog> {
+  async create(params: BlogCreateParams): Promise<Blog> {
     const blog = await this.prisma.blog.create({
       data: {
         title: params.title,
@@ -34,7 +60,7 @@ export class BlogService {
     return blog
   }
 
-  async update(params: Partial<Omit<CreateParams, 'uuid'>> & Pick<Blog, 'id'> & Pick<User, 'username'>): Promise<Blog> {
+  async update(params: BlogUpdateParams): Promise<Blog> {
     const blog = await this.prisma.blog.update({
       where: {
         author: {
@@ -56,7 +82,7 @@ export class BlogService {
     return blog
   }
 
-  async find(params: Pick<Blog, 'id'> & Pick<User, 'username'>): Promise<ResponseFind['data']['blog']> {
+  async find(params: BlogFindParams): Promise<ResponseFind['data']['blog']> {
     const blog = await this.prisma.blog.findUnique({
       where: {
         author: {
@@ -69,7 +95,7 @@ export class BlogService {
     return blog
   }
 
-  async findAll(params: FindAllParams): Promise<ResponseFindAll['data']> {
+  async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
     const { pageNo = 1, pageSize = 10, username, published } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
