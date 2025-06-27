@@ -28,6 +28,7 @@ export type TField<T extends object>
 const gutter: RowProps['gutter'] = [0, 8]
 
 interface Props<T extends object> {
+  name: string
   form?: FormInstance<T>
   fields?: TField<T>[]
   loading?: boolean
@@ -39,7 +40,7 @@ interface Props<T extends object> {
 }
 
 function Filter<T extends object>(props: Props<T>) {
-  const { form, fields, loading, customRef, expandCount = 4, extra } = props
+  const { name, form, fields, loading, customRef, expandCount = 4, extra } = props
   const { handleFinish, handleReset } = props
   const [expand, setExpand] = useState(false)
   const Cols = useMemo(
@@ -93,14 +94,7 @@ function Filter<T extends object>(props: Props<T>) {
 
   return (
     <div ref={customRef} className="box-border pb-4 w-full">
-      <Form<T>
-        name="user-list"
-        autoComplete="off"
-        layout="inline"
-        form={form}
-        onFinish={handleFinish}
-        disabled={loading}
-      >
+      <Form<T> name={name} autoComplete="off" layout="inline" form={form} onFinish={handleFinish} disabled={loading}>
         {Cols.length > 0 && (
           <Row className="w-full" gutter={gutter}>
             {Cols}

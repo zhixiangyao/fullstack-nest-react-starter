@@ -28,6 +28,7 @@ function Blogs() {
   return (
     <>
       <Filter
+        name="filter-blogs"
         customRef={ref}
         loading={blogList.loading}
         form={blogList.form}

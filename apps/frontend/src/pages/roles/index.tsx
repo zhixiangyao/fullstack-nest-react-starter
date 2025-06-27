@@ -17,6 +17,7 @@ function Roles() {
   return (
     <>
       <Filter
+        name="filter-roles"
         customRef={ref}
         loading={roleList.loading}
         form={roleList.form}

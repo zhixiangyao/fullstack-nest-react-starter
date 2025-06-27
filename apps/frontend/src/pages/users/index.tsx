@@ -27,6 +27,7 @@ function Users() {
   return (
     <>
       <Filter
+        name="filter-users"
         customRef={ref}
         loading={userList.loading}
         form={userList.form}
