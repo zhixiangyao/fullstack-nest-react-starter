@@ -1,5 +1,5 @@
-import type { Blog, User } from '@prisma/client'
-import type { ResponseFind, ResponseFindAll } from './blog.type'
+import type { Blog, Prisma, User } from '@prisma/client'
+import type { ResponseFind, ResponseFindAll, ResponseFindAllTags } from './blog.type'
 import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'
@@ -36,10 +36,15 @@ interface BlogFindAllParams {
   username: User['username']
   title?: Blog['title']
   published?: Blog['published']
+  tags?: Blog['tags']
   order?: 'desc' | 'asc'
   field?: keyof Pick<Blog, 'createdAt' | 'updatedAt'>
   pageNo?: number
   pageSize?: number
+}
+
+interface BlogFindAllTagsParams {
+  username: User['username']
 }
 
 @Injectable()
@@ -99,11 +104,17 @@ export class BlogService {
   }
 
   async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
-    const { username, title, published, order, field } = params
+    const { username, title, published, tags, order, field } = params
     const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
+    const where: Prisma.BlogWhereInput = {
+      title: { contains: title },
+      published,
+      tags: tags ? { hasSome: tags } : void 0,
+      author: { username },
+    }
     let orderBy: Partial<Record<BlogFindAllParams['field'], BlogFindAllParams['order']>> = { createdAt: 'desc' }
 
     if (order && field) {
@@ -113,25 +124,40 @@ export class BlogService {
     const list = await this.prisma.blog.findMany({
       skip,
       take,
-      where: {
-        title: {
-          contains: title,
-        },
-        published,
-        author: {
-          username,
-        },
-      },
+      where,
       orderBy,
     })
 
-    const total = await this.prisma.blog.count()
+    const total = await this.prisma.blog.count({ where })
 
     return {
       list,
       total,
       pageNo,
       pageSize,
+    }
+  }
+
+  async findAllTags(params: BlogFindAllTagsParams): Promise<ResponseFindAllTags['data']> {
+    const { username } = params
+
+    const where: Prisma.BlogWhereInput = { author: { username } }
+
+    const list = await this.prisma.blog.findMany({
+      where,
+      select: {
+        tags: true,
+      },
+    })
+
+    const total = await this.prisma.blog.count({ where })
+
+    return {
+      list: list.reduce<Blog['tags']>((acc, cur) => {
+        cur.tags.forEach(tag => !acc.includes(tag) && acc.push(tag))
+        return acc
+      }, []),
+      total,
     }
   }
 }

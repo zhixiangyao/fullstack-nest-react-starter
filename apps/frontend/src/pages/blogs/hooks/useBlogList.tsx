@@ -4,10 +4,12 @@ import type { TField } from '~/components/Filter'
 import type { Blog, BlogFindAllRequest } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
 import { Form } from 'antd'
-import { useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
+
+import { SelectTags } from '../components/SelectTags'
 
 type TFieldFilter = Omit<BlogFindAllRequest, 'published'> & { published?: 0 | 1 }
 
@@ -15,6 +17,7 @@ function genFilterParams(values: TFieldFilter, sorter?: SorterResult<Blog>): Blo
   return {
     ...values,
     published: values.published === 1 ? true : values.published === 0 ? false : void 0,
+    tags: values.tags?.length ? values.tags : void 0,
     order: sorter?.order === 'ascend' ? 'asc' : 'desc',
     field: sorter?.field?.toString(),
   }
@@ -44,6 +47,13 @@ const fields: TField<BlogFindAllRequest>[] = [
     key: 'published',
     name: 'published',
     label: 'Published',
+  },
+  {
+    type: 'custom',
+    key: 'tags',
+    name: 'tags',
+    label: 'Tags',
+    component: <SelectTags />,
   },
 ]
 

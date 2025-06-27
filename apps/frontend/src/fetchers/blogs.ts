@@ -3,6 +3,7 @@ import type {
   BlogCreateResponse,
   BlogFindAllRequest,
   BlogFindAllResponse,
+  BlogFindAllTagsResponse,
   BlogFindRequest,
   BlogFindResponse,
   BlogSwitchRequest,
@@ -39,6 +40,12 @@ export async function blogFind(data: BlogFindRequest) {
 
 export async function blogFindAll(data: BlogFindAllRequest) {
   const result = await fetchPost<BlogFindAllResponse>('/api/blog/find-all', JSON.stringify(data))
+
+  return result
+}
+
+export async function blogFindAllTags() {
+  const result = await fetchPost<BlogFindAllTagsResponse>('/api/blog/find-all-tags', void 0)
 
   return result
 }

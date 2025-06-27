@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { Prisma, User } from '@prisma/client'
 import type { ResponseFind, ResponseFindAll } from './user.type'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { deleteProperty } from 'utils'
@@ -96,14 +96,14 @@ export class UserService {
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
+    const where: Prisma.UserWhereInput = {
+      username: { contains: username },
+    }
+
     const list = await this.prisma.user.findMany({
       skip,
       take,
-      where: {
-        username: {
-          contains: username,
-        },
-      },
+      where,
       orderBy: { username: 'asc' },
       include: {
         roles: {
@@ -115,13 +115,7 @@ export class UserService {
       },
     })
 
-    const total = await this.prisma.user.count({
-      where: {
-        username: {
-          contains: username,
-        },
-      },
-    })
+    const total = await this.prisma.user.count({ where })
 
     return {
       list: list.map((user) => {

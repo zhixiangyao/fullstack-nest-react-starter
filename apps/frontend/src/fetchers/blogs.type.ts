@@ -53,6 +53,7 @@ export interface BlogFindResponse {
 export interface BlogFindAllRequest {
   title?: Blog['title']
   published?: Blog['published']
+  tags?: Blog['tags']
   order?: 'desc' | 'asc'
   field?: string
   pageNo?: number
@@ -65,5 +66,12 @@ export interface BlogFindAllResponse {
     total: number
     pageNo: number
     pageSize: number
+  }
+}
+
+export interface BlogFindAllTagsResponse {
+  data: {
+    list: Blog['tags']
+    total: number
   }
 }

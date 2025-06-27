@@ -63,6 +63,11 @@ export class BlogFindAllDto {
   @IsOptional()
   readonly published?: Blog['published']
 
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  readonly tags?: Blog['tags']
+
   @IsString()
   @IsOptional()
   @IsIn(['asc', 'desc'])

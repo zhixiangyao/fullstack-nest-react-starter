@@ -22,3 +22,10 @@ export interface ResponseFindAll {
     pageSize: number
   }
 }
+
+export interface ResponseFindAllTags {
+  data: {
+    list: Blog['tags']
+    total: number
+  }
+}
