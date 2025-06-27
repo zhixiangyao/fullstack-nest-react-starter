@@ -33,7 +33,8 @@ function DrawerEdit(props: Props) {
       width={700}
       title="Edit User"
       placement="right"
-      onClose={handleClose}
+      maskClosable={false}
+      keyboard={false}
       open={open}
       loading={loading}
       footer={(
@@ -45,6 +46,7 @@ function DrawerEdit(props: Props) {
           <Button onClick={handleClose}>Cancel</Button>
         </div>
       )}
+      onClose={handleClose}
     >
       <Form<User>
         {...formItemLayout}

@@ -4,8 +4,8 @@ import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
 import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { stringCapitalization } from 'utils'
 
+import { genTitle } from '~/router'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
@@ -44,7 +44,7 @@ const items: MenuProps['items'] = [
 function Header() {
   const { token } = theme.useToken()
   const appStore = useAppStore()
-  const { pathname } = useLocation()
+  const location = useLocation()
   const [open, setOpen] = useState(false)
   const { user, handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
@@ -70,11 +70,7 @@ function Header() {
     }
   })
 
-  const title = useMemo(() => {
-    const list = pathname.split('/').pop()?.split('-')
-
-    return list?.map(str => stringCapitalization(str)).join(' ')
-  }, [pathname])
+  const title = useMemo(() => genTitle(location.pathname), [location.pathname])
 
   const menuProps = useMemo(
     () => ({
@@ -90,7 +86,7 @@ function Header() {
         className="flex h-10 w-full items-center justify-between px-3"
         style={{ backgroundColor: token.colorBgContainerDisabled }}
       >
-        <span className="font-700 text-[20px]">{title}</span>
+        <span className="font-700 text-[20px]">{title ?? '-'}</span>
 
         <div className="flex items-center">
           <span className="mr-2 select-none">{user?.username}</span>

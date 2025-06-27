@@ -32,10 +32,11 @@ function DrawerUpdate(props: Props) {
 
   return (
     <Drawer
-      height="90%"
+      height="100%"
       title="Add Blog"
       placement="top"
-      onClose={handleClose}
+      maskClosable={false}
+      keyboard={false}
       open={open}
       loading={loading}
       footer={(
@@ -47,6 +48,7 @@ function DrawerUpdate(props: Props) {
           <Button onClick={handleClose}>Cancel</Button>
         </div>
       )}
+      onClose={handleClose}
     >
       <Form<Blog>
         {...formItemLayout}

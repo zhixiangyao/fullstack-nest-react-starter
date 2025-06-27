@@ -21,7 +21,6 @@ function Nav() {
 
   const handleMenuClick = useMemoizedFn<NonNullable<MenuProps['onClick']>>(
     ({ key }) => pathname !== key && navigate(key),
-
   )
 
   return (

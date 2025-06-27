@@ -63,7 +63,15 @@ function DrawerUserInfo({ open, setOpen }: Props) {
   )
 
   return (
-    <Drawer width={600} title="User Info" placement="right" onClose={handleClose} open={open}>
+    <Drawer
+      title="User Info"
+      placement="right"
+      open={open}
+      width={600}
+      maskClosable={false}
+      keyboard={false}
+      onClose={handleClose}
+    >
       <Descriptions bordered size="middle" items={items} />
     </Drawer>
   )

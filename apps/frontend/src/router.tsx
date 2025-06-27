@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { FileMarkdownOutlined, HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
 import React from 'react'
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, matchPath, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Spinning } from '~/components/Spinning'
 import { useUserStore } from '~/stores/useUserStore'
@@ -109,4 +109,10 @@ function genMenus(roles: string[]) {
     .map(({ path, label, icon }) => ({ key: path, label, icon }))
 }
 
-export { genMenus, Router }
+function genTitle(pathname: string) {
+  return routes
+    .find(route => matchPath(pathname, route.path))
+    ?.label
+}
+
+export { genMenus, genTitle, Router }
