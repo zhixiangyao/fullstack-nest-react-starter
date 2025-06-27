@@ -1,7 +1,7 @@
 import type { TablePaginationConfig } from 'antd'
 import type { TField } from '~/components/Filter'
 import type { BlogFindAllRequest } from '~/fetchers'
-import { useRequest } from 'ahooks'
+import { useMemoizedFn, useRequest } from 'ahooks'
 import { Form } from 'antd'
 import { useMemo } from 'react'
 
@@ -74,14 +74,14 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
     return { x, y }
   }, [columnsWidth, filterHeight, size?.height])
 
-  const handleFinish = (values: TFieldFilter) => {
+  const handleFinish = useMemoizedFn((values: TFieldFilter) => {
     runAsync(genFilterParams(values))
-  }
+  })
 
-  const handleReset = () => {
+  const handleReset = useMemoizedFn(() => {
     form.resetFields()
     runAsync({})
-  }
+  })
 
   return {
     fields,
