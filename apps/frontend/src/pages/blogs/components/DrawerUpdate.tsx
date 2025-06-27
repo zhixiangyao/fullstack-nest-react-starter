@@ -1,3 +1,4 @@
+import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
 import { Button, Drawer, Form, Input, Switch } from 'antd'
@@ -5,14 +6,20 @@ import React from 'react'
 
 import { Tags } from './Tags'
 
-const formItemLayout = {
+const formItemLayout: FormProps = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },
+    sm: { span: 24 },
+    md: { span: 24 },
+    lg: { span: 24 },
+    xl: { span: 6 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 12 },
+    sm: { span: 24 },
+    md: { span: 24 },
+    lg: { span: 24 },
+    xl: { span: 12 },
   },
 }
 

@@ -1,16 +1,17 @@
+import type { FormProps } from 'antd'
 import type { TUseDrawerEditReturnType } from '../hooks/useDrawerEdit'
 import type { User } from '~/fetchers'
 import { Button, Drawer, Form, Input, Switch } from 'antd'
 import React from 'react'
 
-const formItemLayout = {
+const formItemLayout: FormProps = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 4 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14 },
+    sm: { span: 18 },
   },
 }
 
