@@ -107,7 +107,7 @@ export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
         )
       },
     },
-  ] satisfies TColumns, [handleOpenEdit])
+  ] satisfies TColumns, [handleOpenEdit, refresh])
   const columnsWidth = useMemo(
     () => columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0),
     [columns],

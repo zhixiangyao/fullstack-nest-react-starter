@@ -137,7 +137,7 @@ export function useUserListColumns({ handleOpen, refresh }: Prams) {
           },
         },
       ] satisfies TColumns,
-    [refresh, handleOpen],
+    [handleOpen, refresh],
   )
   const columnsWidth = useMemo(
     () => columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0),
