@@ -24,6 +24,14 @@ export type TField<T extends object>
     type: 'switch'
     props?: SwitchProps
   })
+  | (TFieldBase<T> & {
+    type: 'custom'
+    component: React.ReactElement<{
+      id?: string
+      value?: unknown
+      onChange?: (value?: unknown) => void
+    }>
+  })
 
 const gutter: RowProps['gutter'] = [0, 8]
 
@@ -77,6 +85,18 @@ function Filter<T extends object>(props: Props<T>) {
                 <Col span={6} key={field.key}>
                   <Form.Item<T> name={field.name as FormItemProps<T>['name']} label={field.label}>
                     <Switch {...field.props} />
+                  </Form.Item>
+                </Col>,
+              )
+            }
+            break
+          }
+          case 'custom': {
+            if (expand === true || index < expandCount) {
+              acc.push(
+                <Col span={6} key={field.key}>
+                  <Form.Item<T> name={field.name as FormItemProps<T>['name']} label={field.label}>
+                    {field.component}
                   </Form.Item>
                 </Col>,
               )
