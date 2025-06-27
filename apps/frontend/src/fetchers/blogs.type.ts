@@ -51,6 +51,7 @@ export interface BlogFindResponse {
 }
 
 export interface BlogFindAllRequest {
+  title?: Blog['title']
   published?: Blog['published']
   pageNo?: number
   pageSize?: number

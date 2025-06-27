@@ -19,6 +19,12 @@ function genFilterParams(values: TFieldFilter): BlogFindAllRequest {
 
 const fields: TField<BlogFindAllRequest>[] = [
   {
+    type: 'input',
+    key: 'title',
+    name: 'title',
+    label: 'Title',
+  },
+  {
     type: 'select',
     props: {
       options: [

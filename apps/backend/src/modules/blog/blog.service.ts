@@ -34,6 +34,7 @@ interface BlogFindParams {
 
 interface BlogFindAllParams {
   username: User['username']
+  title?: Blog['title']
   published?: Blog['published']
   pageNo?: number
   pageSize?: number
@@ -96,7 +97,7 @@ export class BlogService {
   }
 
   async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
-    const { pageNo = 1, pageSize = 10, username, published } = params
+    const { pageNo = 1, pageSize = 10, username, title, published } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 
@@ -104,6 +105,9 @@ export class BlogService {
       skip,
       take,
       where: {
+        title: {
+          contains: title,
+        },
         published,
         author: {
           username,
