@@ -91,7 +91,8 @@ export class UserService {
   }
 
   async findAll(params: UserFindAllParams): Promise<ResponseFindAll['data']> {
-    const { username, pageNo = 1, pageSize = 10 } = params
+    const { username } = params
+    const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
 

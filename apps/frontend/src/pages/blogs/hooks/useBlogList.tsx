@@ -1,19 +1,22 @@
-import type { TablePaginationConfig } from 'antd'
+import type { TablePaginationConfig, TableProps } from 'antd'
+import type { SorterResult } from 'antd/es/table/interface'
 import type { TField } from '~/components/Filter'
-import type { BlogFindAllRequest } from '~/fetchers'
+import type { Blog, BlogFindAllRequest } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
 import { Form } from 'antd'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
 
 type TFieldFilter = Omit<BlogFindAllRequest, 'published'> & { published?: 0 | 1 }
 
-function genFilterParams(values: TFieldFilter): BlogFindAllRequest {
+function genFilterParams(values: TFieldFilter, sorter?: SorterResult<Blog>): BlogFindAllRequest {
   return {
     ...values,
     published: values.published === 1 ? true : values.published === 0 ? false : void 0,
+    order: sorter?.order === 'ascend' ? 'asc' : 'desc',
+    field: sorter?.field?.toString(),
   }
 }
 
@@ -54,18 +57,15 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
+  const sorterRef = useRef<SorterResult<Blog>>()
   const pagination = useMemo<TablePaginationConfig>(
     () => ({
       showTotal: total => `A total of ${total} items`,
       current: data?.data.pageNo,
       total: data?.data.total,
       pageSize: data?.data.pageSize,
-      onChange(pageNo, pageSize) {
-        const values = form.getFieldsValue()
-        runAsync({ pageNo, pageSize, ...genFilterParams(values) })
-      },
     }),
-    [data?.data.pageNo, data?.data.pageSize, data?.data.total, form, runAsync],
+    [data?.data.pageNo, data?.data.pageSize, data?.data.total],
   )
   const scroll = useMemo(() => {
     const x = columnsWidth
@@ -75,12 +75,22 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
   }, [columnsWidth, filterHeight, size?.height])
 
   const handleFinish = useMemoizedFn((values: TFieldFilter) => {
-    runAsync(genFilterParams(values))
+    runAsync(genFilterParams(values, sorterRef.current))
   })
 
   const handleReset = useMemoizedFn(() => {
     form.resetFields()
+    sorterRef.current = void 0
     runAsync({})
+  })
+
+  const handleTableChange = useMemoizedFn<NonNullable<TableProps<Blog>['onChange']>>((pagination, filters, sorter) => {
+    if (!Array.isArray(sorter)) {
+      sorterRef.current = sorter
+    }
+
+    const values = form.getFieldsValue()
+    handleFinish({ ...values, pageNo: pagination.current, pageSize: pagination.pageSize })
   })
 
   return {
@@ -93,6 +103,7 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
 
     handleFinish,
     handleReset,
+    handleTableChange,
     refresh,
   }
 }

@@ -53,6 +53,8 @@ export interface BlogFindResponse {
 export interface BlogFindAllRequest {
   title?: Blog['title']
   published?: Blog['published']
+  order?: 'desc' | 'asc'
+  field?: string
   pageNo?: number
   pageSize?: number
 }

@@ -36,6 +36,8 @@ interface BlogFindAllParams {
   username: User['username']
   title?: Blog['title']
   published?: Blog['published']
+  order?: 'desc' | 'asc'
+  field?: keyof Pick<Blog, 'createdAt' | 'updatedAt'>
   pageNo?: number
   pageSize?: number
 }
@@ -97,9 +99,16 @@ export class BlogService {
   }
 
   async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
-    const { pageNo = 1, pageSize = 10, username, title, published } = params
+    const { username, title, published, order, field } = params
+    const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
+
+    let orderBy: Partial<Record<BlogFindAllParams['field'], BlogFindAllParams['order']>> = { createdAt: 'desc' }
+
+    if (order && field) {
+      orderBy = { [field]: order }
+    }
 
     const list = await this.prisma.blog.findMany({
       skip,
@@ -113,7 +122,7 @@ export class BlogService {
           username,
         },
       },
-      orderBy: { createdAt: 'asc' },
+      orderBy,
     })
 
     const total = await this.prisma.blog.count()

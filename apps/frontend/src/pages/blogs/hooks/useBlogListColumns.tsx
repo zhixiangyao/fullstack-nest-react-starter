@@ -67,6 +67,7 @@ export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
       dataIndex: 'createdAt' satisfies keyof Blog,
       key: 'createdAt',
       width: 300,
+      sorter: true,
       render(_, { createdAt }) {
         return (
           <div className="flex gap-2 items-center">
@@ -83,6 +84,7 @@ export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
       dataIndex: 'updatedAt' satisfies keyof Blog,
       key: 'updatedAt',
       width: 300,
+      sorter: true,
       render(_, { updatedAt }) {
         return (
           <div className="flex gap-2 items-center">

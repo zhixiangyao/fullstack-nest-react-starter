@@ -49,6 +49,7 @@ function Blogs() {
         pagination={blogList.pagination}
         loading={blogList.loading}
         scroll={blogList.scroll}
+        onChange={blogList.handleTableChange}
       />
 
       <DrawerUpdate

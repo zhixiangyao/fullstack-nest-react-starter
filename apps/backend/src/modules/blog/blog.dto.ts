@@ -1,5 +1,5 @@
 import { Blog } from '@prisma/client'
-import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsArray, IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class BlogCreateDto {
   @IsString()
@@ -62,6 +62,16 @@ export class BlogFindAllDto {
   @IsBoolean()
   @IsOptional()
   readonly published?: Blog['published']
+
+  @IsString()
+  @IsOptional()
+  @IsIn(['asc', 'desc'])
+  readonly order?: 'desc' | 'asc'
+
+  @IsString()
+  @IsOptional()
+  @IsIn(['createdAt', 'updatedAt'])
+  readonly field?: keyof Pick<Blog, 'createdAt' | 'updatedAt'>
 
   @IsInt()
   @IsOptional()
