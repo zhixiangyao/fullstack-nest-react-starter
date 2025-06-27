@@ -1,5 +1,5 @@
 interface SimulatorOptions {
-  viewport: any
+  viewport: unknown
   spawnInterval: [number, number]
   spawnSize: [number, number]
   spawnLimit: number
@@ -64,7 +64,7 @@ declare global {
   interface Window {
     copy?: (e: string) => void
     RaindropFX: typeof RaindropFX
-    dataLayer: any[]
+    dataLayer: unknown[]
   }
 }
 

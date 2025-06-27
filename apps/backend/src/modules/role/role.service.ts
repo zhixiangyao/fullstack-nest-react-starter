@@ -1,6 +1,5 @@
 import type { ResponseFindAll } from './role.type'
 import { Injectable } from '@nestjs/common'
-
 import { deleteProperty } from 'utils'
 
 import { PrismaService } from '~/modules/prisma/prisma.service'

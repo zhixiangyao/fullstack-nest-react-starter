@@ -11,8 +11,8 @@ import { deleteProperty } from 'utils'
 
 import { Public } from '~/common/decorators/public.decorator'
 import { Roles } from '~/common/decorators/roles.decorator'
-
 import { User } from '~/common/decorators/user.decorator'
+
 import {
   UserCreateDto,
   UserFindAllDto,
