@@ -17,7 +17,7 @@ interface Prams {
   refresh: () => void
 }
 
-export function useUserListColumns({ handleOpen, refresh }: Prams) {
+function useUserListColumns({ handleOpen, refresh }: Prams) {
   const columns = useMemo(
     () =>
       [
@@ -146,3 +146,5 @@ export function useUserListColumns({ handleOpen, refresh }: Prams) {
 
   return { columns, columnsWidth }
 }
+
+export { useUserListColumns }

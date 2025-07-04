@@ -17,7 +17,7 @@ interface Prams {
   columnsWidth: number
 }
 
-export function useUserList({ filterHeight, columnsWidth }: Prams) {
+function useUserList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync, refresh } = useRequest(fetchers.userFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
@@ -64,3 +64,5 @@ export function useUserList({ filterHeight, columnsWidth }: Prams) {
     refresh,
   }
 }
+
+export { useUserList }

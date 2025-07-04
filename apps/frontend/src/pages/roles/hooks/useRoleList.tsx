@@ -17,7 +17,7 @@ interface Prams {
   columnsWidth: number
 }
 
-export function useRoleList({ filterHeight, columnsWidth }: Prams) {
+function useRoleList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync } = useRequest(fetchers.roleFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
@@ -63,3 +63,5 @@ export function useRoleList({ filterHeight, columnsWidth }: Prams) {
     handleReset,
   }
 }
+
+export { useRoleList }

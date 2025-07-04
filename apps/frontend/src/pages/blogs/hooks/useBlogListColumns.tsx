@@ -15,7 +15,7 @@ interface Prams {
   refresh: () => void
 }
 
-export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
+function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
   const columns = useMemo(() => [
     {
       title: 'ID',
@@ -117,3 +117,5 @@ export function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
 
   return { columns, columnsWidth }
 }
+
+export { useBlogListColumns }

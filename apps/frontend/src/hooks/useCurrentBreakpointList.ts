@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 const { useBreakpoint } = Grid
 
-export function useCurrentBreakpointList() {
+function useCurrentBreakpointList() {
   const screens = useBreakpoint()
   const [currentBreakpointList, setCurrentBreakpointList] = useState<Breakpoint[]>()
 
@@ -21,3 +21,5 @@ export function useCurrentBreakpointList() {
 
   return currentBreakpointList
 }
+
+export { useCurrentBreakpointList }

@@ -30,7 +30,7 @@ interface Prams {
   refresh: () => void
 }
 
-export function useDrawerUpdate({ refresh }: Prams) {
+function useDrawerUpdate({ refresh }: Prams) {
   const { message } = AntdApp.useApp()
   const [type, setType] = useState<TType>('add')
   const [form] = Form.useForm<Blog>()
@@ -130,5 +130,7 @@ export function useDrawerUpdate({ refresh }: Prams) {
     handleFinish,
   }
 }
+
+export { useDrawerUpdate }
 
 export type TUseDrawerUpdateReturnType = ReturnType<typeof useDrawerUpdate>

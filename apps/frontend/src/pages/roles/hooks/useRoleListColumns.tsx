@@ -47,7 +47,7 @@ const columns = [
   },
 ] satisfies TColumns
 
-export function useRoleListColumns() {
+function useRoleListColumns() {
   const columnsWidth = useMemo(
     () => columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0),
     [],
@@ -55,3 +55,5 @@ export function useRoleListColumns() {
 
   return { columns, columnsWidth }
 }
+
+export { useRoleListColumns }

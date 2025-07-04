@@ -62,7 +62,7 @@ interface Prams {
   columnsWidth: number
 }
 
-export function useBlogList({ filterHeight, columnsWidth }: Prams) {
+function useBlogList({ filterHeight, columnsWidth }: Prams) {
   const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll)
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
@@ -117,3 +117,5 @@ export function useBlogList({ filterHeight, columnsWidth }: Prams) {
     refresh,
   }
 }
+
+export { useBlogList }

@@ -9,7 +9,7 @@ interface Prams {
   refresh: () => void
 }
 
-export function useDrawerEdit({ refresh }: Prams) {
+function useDrawerEdit({ refresh }: Prams) {
   const { message } = AntdApp.useApp()
   const [form] = Form.useForm<User>()
   const [user, setUser] = useState<User>()
@@ -72,5 +72,7 @@ export function useDrawerEdit({ refresh }: Prams) {
     handleFinish,
   }
 }
+
+export { useDrawerEdit }
 
 export type TUseDrawerEditReturnType = ReturnType<typeof useDrawerEdit>
