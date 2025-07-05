@@ -68,7 +68,7 @@ export class UserService {
     await this.prisma.user.delete({ where: { username } })
   }
 
-  async find(username: User['username']): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'>> {
+  async find(username: User['username']): Promise<ResponseFind['data']['user'] & Pick<User, 'hashedPassword'> | undefined> {
     const user = await this.prisma.user.findUnique({
       where: { username },
       include: {
@@ -80,6 +80,9 @@ export class UserService {
         blogs: true,
       },
     })
+
+    if (!user)
+      return void 0
 
     const userWithoutBlogs = deleteProperty(user, 'blogs')
 
@@ -135,6 +138,9 @@ export class UserService {
 
   async validate(params: UserValidateParams): Promise<boolean> {
     const user = await this.find(params.username)
+
+    if (!user)
+      return false
 
     return await this.passwordService.comparePassword({
       password: params.password,
