@@ -9,7 +9,7 @@
     "start:prod": "cross-env NODE_ENV=prod node dist/main",
     "------------- PRISMA -------------": "",
     "db:init": "npx prisma generate && npx prisma migrate dev --name 'init'",
-    "db:seed": "ts-node prisma/seed.ts",
+    "db:seed": "tsx ./prisma/seed.ts",
     "db:reset": "npx prisma migrate reset"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "@types/node": "22.15.27",
     "source-map-support": "0.5.21",
     "tsconfig-paths": "4.2.0",
+    "tsx": "4.20.3",
     "typescript": "5.8.3"
   }
 }
