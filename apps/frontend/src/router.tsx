@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import { FileMarkdownOutlined, HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 import React from 'react'
 import { createBrowserRouter, matchPath, Navigate, RouterProvider } from 'react-router-dom'
 
-import { Spinning } from '~/components/Spinning'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
@@ -72,8 +72,8 @@ const router = createBrowserRouter([
     path: '/',
     lazy: () => import('~/layout').then(({ Layout }) => ({ Component: Layout })),
     HydrateFallback: () => (
-      <div className="w-screen h-screen relative">
-        <Spinning />
+      <div className="w-screen h-screen flex justify-center items-center">
+        <Spin spinning />
       </div>
     ),
     children: routes.map(route => ({

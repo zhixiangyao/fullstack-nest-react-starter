@@ -1,10 +1,9 @@
 import { useSize } from 'ahooks'
-import { Splitter } from 'antd'
+import { Spin, Splitter } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { Progress } from '~/components/Progress'
-import { Spinning } from '~/components/Spinning'
 import { Header } from '~/layout/components/Header'
 import { Main } from '~/layout/components/Main'
 import { Nav } from '~/layout/components/Nav'
@@ -38,7 +37,11 @@ function Layout() {
   }
 
   if (!loaded) {
-    return <Spinning />
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <Spin spinning />
+      </div>
+    )
   }
 
   if (location.pathname === '/') {
