@@ -1,0 +1,144 @@
+@import '~/styles/tailwindcss.css';
+
+html.dark .markdown {
+  --markdown-text-color: #c9d1d9;
+  --markdown-heading-border-color: #30363d;
+  --markdown-link-color: #58a6ff;
+  --markdown-blockquote-border-color: #444c56;
+  --markdown-blockquote-text-color: #8b949e;
+  --markdown-code-bg-color: #161b22;
+  --markdown-inline-code-bg-color: rgb(110 118 129 / 40%);
+  --markdown-table-border-color: #444c56;
+  --markdown-table-header-bg-color: #21262d;
+  --markdown-hr-color: #30363d;
+}
+
+.markdown {
+  --markdown-text-color: #333;
+  --markdown-heading-border-color: #eee;
+  --markdown-link-color: #0366d6;
+  --markdown-blockquote-border-color: #dfe2e5;
+  --markdown-blockquote-text-color: #6a737d;
+  --markdown-code-bg-color: #f6f8fa;
+  --markdown-inline-code-bg-color: rgb(27 31 35 / 5%);
+  --markdown-table-border-color: #dfe2e5;
+  --markdown-table-header-bg-color: #f6f8fa;
+  --markdown-hr-color: #eee;
+
+  @apply font-sans leading-relaxed text-[var(--markdown-text-color)] break-words;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  @apply font-semibold leading-tight mt-4 mb-2;
+}
+
+.markdown h1 {
+  @apply text-3xl pb-1 border-b border-[var(--markdown-heading-border-color)];
+}
+
+.markdown h2 {
+  @apply text-2xl pb-1 border-b border-[var(--markdown-heading-border-color)];
+}
+
+.markdown h3 {
+  @apply text-xl;
+}
+
+.markdown h4 {
+  @apply text-lg;
+}
+
+.markdown h5 {
+  @apply text-base;
+}
+
+.markdown h6 {
+  @apply text-sm text-[var(--markdown-blockquote-text-color)];
+}
+
+.markdown p {
+  @apply mb-4;
+}
+
+.markdown a {
+  @apply text-[var(--markdown-link-color)] no-underline;
+}
+
+.markdown a:hover {
+  @apply underline;
+}
+
+.markdown ul,
+.markdown ol {
+  @apply mb-4 pl-8;
+}
+
+.markdown ul li {
+  @apply list-disc;
+}
+
+.markdown ol li {
+  @apply list-decimal;
+}
+
+.markdown li + li {
+  @apply mt-2;
+}
+
+.markdown blockquote {
+  @apply my-4 px-4 text-[var(--markdown-blockquote-text-color)] border-l-4 border-[var(--markdown-blockquote-border-color)];
+}
+
+.markdown blockquote p {
+  @apply m-0;
+}
+
+.markdown div {
+  @apply px-4 py-3 bg-blue-200 font-mono text-sm text-blue-800 font-semibold rounded-t-md;
+}
+
+.markdown div + pre {
+  @apply rounded-b-md;
+}
+
+.markdown pre {
+  @apply bg-[var(--markdown-code-bg-color)] p-4 rounded-md overflow-x-auto mb-4;
+}
+
+.markdown pre code {
+  @apply font-mono text-sm text-[var(--markdown-text-color)];
+}
+
+.markdown code {
+  @apply font-mono bg-[var(--markdown-inline-code-bg-color)] px-1 py-0.5 rounded text-sm text-[var(--markdown-text-color)];
+}
+
+.markdown table {
+  @apply w-full border-collapse mb-4;
+}
+
+.markdown th,
+.markdown td {
+  @apply border border-[var(--markdown-table-border-color)] px-4 py-2 text-left;
+}
+
+.markdown th {
+  @apply bg-[var(--markdown-table-header-bg-color)] font-semibold;
+}
+
+.markdown hr {
+  @apply border-0 h-px bg-[var(--markdown-hr-color)] my-8;
+}
+
+.markdown img {
+  @apply max-w-full h-auto block my-4;
+}
+
+.markdown input[type='checkbox'] {
+  @apply mr-2;
+}

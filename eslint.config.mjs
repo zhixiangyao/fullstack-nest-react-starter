@@ -16,6 +16,7 @@ export default antfu(
     rules: {
       'no-template-curly-in-string': ['off'],
       'react/no-clone-element': ['off'],
+      'react-dom/no-dangerously-set-innerhtml': ['off'],
       'react-hooks-extra/no-direct-set-state-in-use-effect': ['off'],
       'react-refresh/only-export-components': ['off'],
     },
