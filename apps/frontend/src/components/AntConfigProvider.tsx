@@ -1,7 +1,7 @@
 import type { ConfigProviderProps, ThemeConfig } from 'antd'
 import type { ReactNode } from 'react'
 import { ConfigProvider, theme } from 'antd'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import { useAppStore } from '~/stores/useAppStore'
 
@@ -30,6 +30,10 @@ function AntConfigProvider({ children }: Props) {
     }),
     [appStore.mode, appStore.token],
   )
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', appStore.mode === 'dark')
+  }, [appStore.mode])
 
   return (
     <ConfigProvider theme={theme} form={formConfig} getPopupContainer={getPopupContainerConfig}>
