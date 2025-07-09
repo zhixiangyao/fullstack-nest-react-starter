@@ -1,5 +1,5 @@
 import { useEventListener, useExternal, useMemoizedFn } from 'ahooks'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const path = 'https://yaozhixiang.top/assets/js/RaindropFX.js'
 

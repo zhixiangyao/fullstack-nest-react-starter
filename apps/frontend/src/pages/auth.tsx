@@ -3,7 +3,7 @@ import type { UserCreateRequest, UserLoginRequest } from '~/fetchers'
 import { CloudOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Button, Checkbox, Form, Input, Segmented } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Rain } from '~/components/Rain'

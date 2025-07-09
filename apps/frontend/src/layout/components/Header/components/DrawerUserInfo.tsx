@@ -2,7 +2,7 @@ import type { DescriptionsProps } from 'antd'
 import type { Dispatch } from 'react'
 import { useMemoizedFn } from 'ahooks'
 import { Descriptions, Drawer } from 'antd'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { FormatOptions, formatTime } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'

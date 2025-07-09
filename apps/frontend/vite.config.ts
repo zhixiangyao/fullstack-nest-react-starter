@@ -8,7 +8,7 @@ import viteCompression from 'vite-plugin-compression'
 
 const baseConfig: UserConfig = {
   plugins: [
-    react(),
+    react({ jsxImportSource: '@emotion/react' }),
     checker({
       typescript: {
         tsconfigPath: 'tsconfig.app.json',

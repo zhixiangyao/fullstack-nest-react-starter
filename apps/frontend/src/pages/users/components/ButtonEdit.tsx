@@ -1,6 +1,5 @@
 import type { User } from '~/fetchers'
 import { Button } from 'antd'
-import React from 'react'
 
 interface Props {
   record: User

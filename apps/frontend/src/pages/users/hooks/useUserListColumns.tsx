@@ -2,7 +2,7 @@ import type { ColumnsType } from 'antd/es/table'
 import type { User } from '~/fetchers'
 import { Tag } from 'antd'
 import dayjs from 'dayjs'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'

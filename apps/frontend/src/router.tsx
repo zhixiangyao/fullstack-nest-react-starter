@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { FileMarkdownOutlined, HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-import React from 'react'
 import { createBrowserRouter, matchPath, Navigate, RouterProvider } from 'react-router-dom'
 
 import { useUserStore } from '~/stores/useUserStore'

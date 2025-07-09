@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Input, Tag } from 'antd'
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'motion/react'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const tagClassName = '!mr-0 !h-8 !text-sm !flex !items-center'
 const exit: MotionProps['exit'] = { opacity: 0, scale: 0.8, transition: { duration: 0.2 } }

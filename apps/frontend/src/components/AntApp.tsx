@@ -1,7 +1,7 @@
 import type { AppProps } from 'antd'
 import type { CSSProperties, ReactNode } from 'react'
 import { App, theme } from 'antd'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 const message: AppProps['message'] = { maxCount: 1 }
 

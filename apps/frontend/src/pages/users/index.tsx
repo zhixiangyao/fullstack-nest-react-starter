@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
 import { useSize } from 'ahooks'
 import { Table } from 'antd'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
 import { Filter } from '~/components/Filter'
 

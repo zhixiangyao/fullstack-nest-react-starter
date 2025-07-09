@@ -2,7 +2,6 @@ import type { FormProps } from 'antd'
 import type { TUseDrawerEditReturnType } from '../hooks/useDrawerEdit'
 import type { User } from '~/fetchers'
 import { Button, Drawer, Form, Input, Switch } from 'antd'
-import React from 'react'
 
 const formItemLayout: FormProps = {
   labelCol: {

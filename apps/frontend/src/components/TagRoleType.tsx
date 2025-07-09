@@ -1,6 +1,5 @@
 import type { PresetColorKey } from 'antd/es/theme/interface'
 import { Tag } from 'antd'
-import React from 'react'
 import { stringCapitalization } from 'utils'
 
 interface Props {

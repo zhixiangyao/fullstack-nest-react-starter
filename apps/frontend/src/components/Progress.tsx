@@ -1,6 +1,5 @@
 import { useNProgress } from '@tanem/react-nprogress'
 import clsx from 'clsx'
-import React from 'react'
 
 interface ProgressProps {
   isAnimating: boolean

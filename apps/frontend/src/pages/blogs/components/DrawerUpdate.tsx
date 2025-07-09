@@ -2,7 +2,6 @@ import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
 import { Button, Drawer, Form, Input, Switch } from 'antd'
-import React from 'react'
 
 import { Tags } from './Tags'
 

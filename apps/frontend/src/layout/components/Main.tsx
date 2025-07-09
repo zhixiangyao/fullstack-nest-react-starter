@@ -1,6 +1,6 @@
 import type { WatermarkProps } from 'antd'
 import { Watermark } from 'antd'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useUserStore } from '~/stores/useUserStore'

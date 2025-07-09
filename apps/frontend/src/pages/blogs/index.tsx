@@ -2,7 +2,7 @@ import type { Blog } from '~/fetchers'
 import { FileAddOutlined } from '@ant-design/icons'
 import { useSize } from 'ahooks'
 import { Button, Table } from 'antd'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
 import { Filter } from '~/components/Filter'
 

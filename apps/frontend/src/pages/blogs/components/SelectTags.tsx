@@ -1,7 +1,7 @@
 import type { SelectProps } from 'antd'
 import { useRequest } from 'ahooks'
 import { Select } from 'antd'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import * as fetchers from '~/fetchers'
 

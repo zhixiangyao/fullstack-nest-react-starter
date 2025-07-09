@@ -3,7 +3,7 @@ import { HeartTwoTone } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { Menu } from 'antd'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { stringCapitalization } from 'utils'
 

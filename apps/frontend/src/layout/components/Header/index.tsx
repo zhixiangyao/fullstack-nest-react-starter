@@ -2,7 +2,7 @@ import type { MenuProps } from 'antd'
 import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { genTitle } from '~/router'

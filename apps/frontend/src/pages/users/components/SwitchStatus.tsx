@@ -1,7 +1,7 @@
 import type { User } from '~/fetchers'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Switch } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 

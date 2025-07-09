@@ -1,7 +1,7 @@
 import type { ConfigProviderProps, ThemeConfig } from 'antd'
 import type { ReactNode } from 'react'
 import { ConfigProvider, theme } from 'antd'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { useAppStore } from '~/stores/useAppStore'
 

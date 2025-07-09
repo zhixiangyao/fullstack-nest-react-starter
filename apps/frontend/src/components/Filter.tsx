@@ -3,7 +3,7 @@ import type { Ref } from 'react'
 import { DownOutlined, SearchOutlined, UndoOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { Button, Col, Form, Input, Row, Select, Switch } from 'antd'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface TFieldBase<T> {
   key: string
