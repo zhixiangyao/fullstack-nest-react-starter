@@ -8,7 +8,7 @@ import * as fetchers from '~/fetchers'
 
 function Blog() {
   const params = useParams()
-  const { loading, data, run } = useRequest(fetchers.blogFind, { manual: true, cacheKey: 'cacheKey-blogFind' })
+  const { loading, data, run } = useRequest(fetchers.blogFind, { manual: true, cacheKey: fetchers.blogFind.name })
 
   useEffect(() => {
     params.id && run({ id: Number(params.id) })

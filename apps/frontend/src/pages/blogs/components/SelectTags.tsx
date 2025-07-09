@@ -8,7 +8,7 @@ import * as fetchers from '~/fetchers'
 interface Props extends Pick<SelectProps, 'value' | 'id' | 'onChange' | 'placeholder'> {}
 
 function SelectTags(props: Props) {
-  const { data, loading } = useRequest(fetchers.blogFindAllTags, { cacheKey: 'cacheKey-blogFindAllTags' })
+  const { data, loading } = useRequest(fetchers.blogFindAllTags, { cacheKey: fetchers.blogFindAllTags.name })
   const options = useMemo(() => data?.data.list.map(tag => ({ label: tag, value: tag })) ?? [], [data?.data.list])
 
   return (

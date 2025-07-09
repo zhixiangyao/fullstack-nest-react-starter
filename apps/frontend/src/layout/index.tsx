@@ -1,6 +1,7 @@
+import type { WatermarkProps } from 'antd'
 import { useSize } from 'ahooks'
-import { Spin, Splitter } from 'antd'
-import { useEffect, useState } from 'react'
+import { Spin, Splitter, Watermark } from 'antd'
+import { useEffect, useMemo, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { Progress } from '~/components/Progress'
@@ -15,7 +16,11 @@ function Layout() {
   const appStore = useAppStore()
   const { leftWidth, rightWidth } = appStore
   const { handleWindowSize, handleSplitterSizes } = appStore
-  const { token, loaded, handleGetCurrentUserInfo } = useUserStore()
+  const { token, loaded, user, handleGetCurrentUserInfo } = useUserStore()
+  const watermarkConfig = useMemo<WatermarkProps>(() => ({
+    content: user?.username,
+    gap: [150, 150],
+  }), [user?.username])
   const [pathname, setPathname] = useState('/')
   const size = useSize(document.querySelector('#root'))
   const isAnimating = location.pathname !== pathname
@@ -49,7 +54,10 @@ function Layout() {
   }
 
   return (
-    <>
+    <Watermark
+      content={watermarkConfig.content}
+      gap={watermarkConfig.gap}
+    >
       <Progress isAnimating={isAnimating} />
 
       <Splitter onResize={handleSplitterSizes}>
@@ -63,7 +71,7 @@ function Layout() {
           <Main />
         </Splitter.Panel>
       </Splitter>
-    </>
+    </Watermark>
   )
 }
 

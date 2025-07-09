@@ -63,7 +63,7 @@ interface Prams {
 }
 
 function useBlogList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll, { cacheKey: 'cacheKey-blogFindAll' })
+  const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll, { cacheKey: fetchers.blogFindAll.name })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
@@ -79,7 +79,7 @@ function useBlogList({ filterHeight, columnsWidth }: Prams) {
   )
   const scroll = useMemo(() => {
     const x = columnsWidth
-    const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
+    const y = (size?.height ?? 0) - 40 - 24 - filterHeight - 39 - 56
 
     return { x, y }
   }, [columnsWidth, filterHeight, size?.height])

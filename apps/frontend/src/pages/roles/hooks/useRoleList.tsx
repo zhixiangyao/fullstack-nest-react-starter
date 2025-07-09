@@ -18,7 +18,7 @@ interface Prams {
 }
 
 function useRoleList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, { cacheKey: 'cacheKey-roleFindAll' })
+  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, { cacheKey: fetchers.roleFindAll.name })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])
@@ -37,7 +37,7 @@ function useRoleList({ filterHeight, columnsWidth }: Prams) {
   )
   const scroll = useMemo(() => {
     const x = columnsWidth
-    const y = (size?.height ?? 0) - 40 - 8 - filterHeight - 39 - 56
+    const y = (size?.height ?? 0) - 40 - 24 - filterHeight - 39 - 56
 
     return { x, y }
   }, [columnsWidth, filterHeight, size?.height])
