@@ -18,7 +18,7 @@ interface Prams {
 }
 
 function useUserList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync, refresh } = useRequest(fetchers.userFindAll)
+  const { data, loading, runAsync, refresh } = useRequest(fetchers.userFindAll, { cacheKey: 'cacheKey-userFindAll' })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])

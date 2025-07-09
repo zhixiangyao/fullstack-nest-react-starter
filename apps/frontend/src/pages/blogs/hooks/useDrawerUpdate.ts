@@ -3,8 +3,9 @@ import type { Blog } from '~/fetchers'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
 import { useRef, useState } from 'react'
-import { isValidHttpUrl } from 'utils'
+import { useNavigate } from 'react-router'
 
+import { isValidHttpUrl } from 'utils'
 import * as fetchers from '~/fetchers'
 
 type TType = 'add' | 'edit'
@@ -31,6 +32,7 @@ interface Prams {
 }
 
 function useDrawerUpdate({ refresh }: Prams) {
+  const navigate = useNavigate()
   const { message } = AntdApp.useApp()
   const [type, setType] = useState<TType>('add')
   const [form] = Form.useForm<Blog>()
@@ -71,6 +73,10 @@ function useDrawerUpdate({ refresh }: Prams) {
     finally {
       setLoading(false)
     }
+  })
+
+  const handleOpenView = useMemoizedFn(async (id: Blog['id']) => {
+    navigate(`/blog/${id}`)
   })
 
   const handleClose = useMemoizedFn(() => {
@@ -127,6 +133,7 @@ function useDrawerUpdate({ refresh }: Prams) {
     handleClose,
     handleOpenAdd,
     handleOpenEdit,
+    handleOpenView,
     handleFinish,
   }
 }

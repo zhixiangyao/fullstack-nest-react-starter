@@ -1,24 +1,20 @@
 import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
-import { Button, Drawer, Form, Input, Switch } from 'antd'
+import { useSize } from 'ahooks'
+import { Button, Col, Drawer, Form, Input, Row, Switch } from 'antd'
+import { useMemo, useRef } from 'react'
+
+import { Markdown } from '~/components/Markdown'
 
 import { Tags } from './Tags'
 
 const formItemLayout: FormProps = {
   labelCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-    md: { span: 24 },
-    lg: { span: 24 },
-    xl: { span: 6 },
+    span: 24,
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-    md: { span: 24 },
-    lg: { span: 24 },
-    xl: { span: 12 },
+    span: 24,
   },
 }
 
@@ -35,6 +31,9 @@ interface Props {
 function DrawerUpdate(props: Props) {
   const { rules, form, open, loading, loadingConfirm } = props
   const { handleClose, handleFinish } = props
+  const content = Form.useWatch('content', form)
+  const leftRef = useRef<HTMLDivElement | null>(null)
+  const leftSize = useSize(leftRef)
 
   return (
     <Drawer
@@ -64,33 +63,48 @@ function DrawerUpdate(props: Props) {
         form={form}
         disabled={loadingConfirm}
       >
-        <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
-          <Input showCount placeholder="Please input the Title" maxLength={100} />
-        </Form.Item>
+        <Row gutter={8} align="top">
+          <Col xs={24} xl={12} ref={leftRef}>
+            <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
+              <Input showCount placeholder="Please input the Title" maxLength={100} />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Content" name="content" rules={rules.content}>
-          <Input.TextArea showCount placeholder="Please input the Content" rows={20} maxLength={50000} />
-        </Form.Item>
+            <Form.Item<Blog> label="Content" name="content" rules={rules.content}>
+              <Input.TextArea showCount placeholder="Please input the Content" rows={20} maxLength={50000} />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Slug" name="slug" rules={rules.slug}>
-          <Input showCount placeholder="Please input the Slug" maxLength={100} />
-        </Form.Item>
+            <Form.Item<Blog> label="Slug" name="slug" rules={rules.slug}>
+              <Input showCount placeholder="Please input the Slug" maxLength={100} />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Published" name="published" required>
-          <Switch checkedChildren="Published" unCheckedChildren="Unpublished" />
-        </Form.Item>
+            <Form.Item<Blog> label="Published" name="published" required>
+              <Switch checkedChildren="Published" unCheckedChildren="Unpublished" />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Image Url" name="imageUrl" rules={rules.imageUrl}>
-          <Input showCount placeholder="Please input the Image Url" maxLength={200} />
-        </Form.Item>
+            <Form.Item<Blog> label="Image Url" name="imageUrl" rules={rules.imageUrl}>
+              <Input showCount placeholder="Please input the Image Url" maxLength={200} />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Tags" name="tags" rules={rules.tags}>
-          <Tags placeholder="Input Tag" maxLength={5} />
-        </Form.Item>
+            <Form.Item<Blog> label="Tags" name="tags" rules={rules.tags}>
+              <Tags placeholder="Input Tag" maxLength={5} />
+            </Form.Item>
 
-        <Form.Item<Blog> label="Category" name="category" rules={rules.category}>
-          <Input showCount placeholder="Please input the Category" maxLength={50} />
-        </Form.Item>
+            <Form.Item<Blog> label="Category" name="category" rules={rules.category}>
+              <Input showCount placeholder="Please input the Category" maxLength={50} />
+            </Form.Item>
+          </Col>
+
+          <Col xs={0} xl={12}>
+            <Form.Item label="Markdown">
+              <Markdown
+                className="border border-[#d9d9d9] border-solid dark:border-[#424242] p-2 rounded-xs dark:bg-[#141414] overflow-y-auto"
+                style={useMemo(() => ({ height: leftSize?.height }), [leftSize?.height])}
+              >
+                {content}
+              </Markdown>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Drawer>
   )

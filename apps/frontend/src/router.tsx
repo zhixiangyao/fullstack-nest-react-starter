@@ -10,6 +10,14 @@ interface Props {
   roles?: string[]
 }
 
+function HydrateFallback() {
+  return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <Spin spinning />
+    </div>
+  )
+}
+
 function RolesAuthRoute({ children, roles }: Props) {
   const { user } = useUserStore()
 
@@ -70,11 +78,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     lazy: () => import('~/layout').then(({ Layout }) => ({ Component: Layout })),
-    HydrateFallback: () => (
-      <div className="w-screen h-screen flex justify-center items-center">
-        <Spin spinning />
-      </div>
-    ),
+    HydrateFallback,
     children: routes.map(route => ({
       path: route.path,
       async lazy() {
@@ -87,14 +91,22 @@ const router = createBrowserRouter([
   {
     path: '/auth',
     lazy: () => import('./pages/auth').then(({ Auth }) => ({ Component: Auth })),
+    HydrateFallback,
   },
   {
     path: '/404',
     lazy: () => import('./pages/404').then(({ NotFound }) => ({ Component: NotFound })),
+    HydrateFallback,
+  },
+  {
+    path: '/blog/:id',
+    lazy: () => import('./pages/[id]').then(({ Blog }) => ({ Component: Blog })),
+    HydrateFallback,
   },
   {
     path: '*',
     Component: () => <Navigate to="/404" replace />,
+    HydrateFallback,
   },
 ])
 
@@ -109,9 +121,7 @@ function genMenus(roles: string[]) {
 }
 
 function genTitle(pathname: string) {
-  return routes
-    .find(route => matchPath(pathname, route.path))
-    ?.label
+  return routes.find(route => matchPath(pathname, route.path))?.label
 }
 
 export { genMenus, genTitle, Router }

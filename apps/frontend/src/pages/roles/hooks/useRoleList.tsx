@@ -18,7 +18,7 @@ interface Prams {
 }
 
 function useRoleList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll)
+  const { data, loading, runAsync } = useRequest(fetchers.roleFindAll, { cacheKey: 'cacheKey-roleFindAll' })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])

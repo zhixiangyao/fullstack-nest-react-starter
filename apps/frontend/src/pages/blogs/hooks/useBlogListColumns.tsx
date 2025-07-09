@@ -6,16 +6,18 @@ import { useMemo } from 'react'
 import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
 import { ButtonEdit } from '../components/ButtonEdit'
+import { ButtonView } from '../components/ButtonView'
 import { SwitchPublished } from '../components/SwitchPublished'
 
 type TColumns = (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyof Blog | 'actions' })[]
 
 interface Prams {
   handleOpenEdit: (id: Blog['id']) => Promise<void>
+  handleOpenView: (id: Blog['id']) => Promise<void>
   refresh: () => void
 }
 
-function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
+function useBlogListColumns({ handleOpenEdit, handleOpenView, refresh }: Prams) {
   const columns = useMemo(() => [
     {
       title: 'ID',
@@ -105,11 +107,12 @@ function useBlogListColumns({ handleOpenEdit, refresh }: Prams) {
         return (
           <div className="flex items-center gap-2">
             <ButtonEdit record={record} handleOpenEdit={handleOpenEdit} />
+            <ButtonView record={record} handleOpenView={handleOpenView} />
           </div>
         )
       },
     },
-  ] satisfies TColumns, [handleOpenEdit, refresh])
+  ] satisfies TColumns, [handleOpenEdit, handleOpenView, refresh])
   const columnsWidth = useMemo(
     () => columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0),
     [columns],

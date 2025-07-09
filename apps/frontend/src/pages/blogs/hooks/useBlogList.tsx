@@ -63,7 +63,7 @@ interface Prams {
 }
 
 function useBlogList({ filterHeight, columnsWidth }: Prams) {
-  const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll)
+  const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll, { cacheKey: 'cacheKey-blogFindAll' })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
   const dataSource = useMemo(() => data?.data.list ?? [], [data?.data.list])

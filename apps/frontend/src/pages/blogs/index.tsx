@@ -16,6 +16,7 @@ function Blogs() {
   const size = useSize(ref)
   const drawerUpdate = useDrawerUpdate({ refresh })
   const { columns, columnsWidth } = useBlogListColumns({
+    handleOpenView: drawerUpdate.handleOpenView,
     handleOpenEdit: drawerUpdate.handleOpenEdit,
     refresh,
   })
