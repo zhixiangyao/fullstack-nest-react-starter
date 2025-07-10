@@ -5,8 +5,9 @@ import { useSize } from 'ahooks'
 import { Button, Col, Drawer, Form, Input, Row, Switch } from 'antd'
 import { useMemo, useRef } from 'react'
 
-import { Markdown } from '~/components/Markdown'
+import { stringCapitalization } from 'utils'
 
+import { Markdown } from '~/components/Markdown'
 import { Tags } from './Tags'
 
 const formItemLayout: FormProps = {
@@ -19,6 +20,7 @@ const formItemLayout: FormProps = {
 }
 
 interface Props {
+  type: TUseDrawerUpdateReturnType['type']
   rules: TUseDrawerUpdateReturnType['rules']
   form: TUseDrawerUpdateReturnType['form']
   open: TUseDrawerUpdateReturnType['open']
@@ -29,7 +31,7 @@ interface Props {
 }
 
 function DrawerUpdate(props: Props) {
-  const { rules, form, open, loading, loadingConfirm } = props
+  const { type, rules, form, open, loading, loadingConfirm } = props
   const { handleClose, handleFinish } = props
   const content = Form.useWatch('content', form)
   const leftRef = useRef<HTMLDivElement | null>(null)
@@ -38,7 +40,7 @@ function DrawerUpdate(props: Props) {
   return (
     <Drawer
       height="100%"
-      title="Add Blog"
+      title={`${stringCapitalization(type)} Blog`}
       placement="top"
       maskClosable={false}
       keyboard={false}

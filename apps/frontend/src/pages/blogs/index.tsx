@@ -55,6 +55,7 @@ function Blogs() {
       />
 
       <DrawerUpdate
+        type={drawerUpdate.type}
         rules={drawerUpdate.rules}
         form={drawerUpdate.form}
         open={drawerUpdate.open}
