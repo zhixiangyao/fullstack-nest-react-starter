@@ -3,13 +3,12 @@ import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-de
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
 import { useMemo, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
-import { genTitle } from '~/router'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
 import { DrawerUserInfo } from './components/DrawerUserInfo'
+import { Tabs } from './components/Tabs'
 
 const MenuKey = {
   THEME_LIGHT: 'THEME_LIGHT',
@@ -44,7 +43,6 @@ const items: MenuProps['items'] = [
 function Header() {
   const { token } = theme.useToken()
   const appStore = useAppStore()
-  const location = useLocation()
   const [open, setOpen] = useState(false)
   const { user, handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
@@ -70,8 +68,6 @@ function Header() {
     }
   })
 
-  const title = useMemo(() => genTitle(location.pathname), [location.pathname])
-
   const menuProps = useMemo(
     () => ({
       items,
@@ -86,7 +82,7 @@ function Header() {
         className="flex h-10 w-full items-center justify-between px-3"
         style={{ backgroundColor: token.colorBgContainerDisabled }}
       >
-        <span className="font-700 text-[20px]">{title ?? '-'}</span>
+        <Tabs />
 
         <div className="flex items-center">
           <span className="mr-2 select-none">{user?.username}</span>
