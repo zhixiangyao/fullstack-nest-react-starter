@@ -27,7 +27,7 @@ function useBlogListColumns({ handleOpenEdit, handleOpenCopy, handleOpenView, re
           title: 'ID',
           dataIndex: 'id' satisfies keyof Blog,
           key: 'id',
-          width: 100,
+          width: 60,
           fixed: 'left',
         },
         {
