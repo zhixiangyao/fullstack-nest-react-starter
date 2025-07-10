@@ -67,33 +67,48 @@ function DrawerUpdate(props: Props) {
       >
         <Row gutter={8} align="top">
           <Col xs={24} xl={12} ref={leftRef}>
-            <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
-              <Input showCount placeholder="Please input the Title" maxLength={100} />
-            </Form.Item>
+            <Row gutter={8}>
+              <Col span={12}>
+                <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
+                  <Input showCount placeholder="Please input the Title" maxLength={100} />
+                </Form.Item>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item<Blog> label="Slug" name="slug" rules={rules.slug}>
+                  <Input showCount placeholder="Please input the Slug" maxLength={100} />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={8}>
+              <Col span={12}>
+
+                <Form.Item<Blog> label="Image Url" name="imageUrl" rules={rules.imageUrl}>
+                  <Input showCount placeholder="Please input the Image Url" maxLength={200} />
+                </Form.Item>
+
+              </Col>
+
+              <Col span={12}>
+                <Form.Item<Blog> label="Category" name="category" rules={rules.category}>
+                  <Input showCount placeholder="Please input the Category" maxLength={50} />
+                </Form.Item>
+              </Col>
+            </Row>
 
             <Form.Item<Blog> label="Content" name="content" rules={rules.content}>
-              <Input.TextArea showCount placeholder="Please input the Content" rows={20} maxLength={50000} />
-            </Form.Item>
-
-            <Form.Item<Blog> label="Slug" name="slug" rules={rules.slug}>
-              <Input showCount placeholder="Please input the Slug" maxLength={100} />
+              <Input.TextArea showCount placeholder="Please input the Content" rows={8} maxLength={50000} />
             </Form.Item>
 
             <Form.Item<Blog> label="Published" name="published" required>
               <Switch checkedChildren="Published" unCheckedChildren="Unpublished" />
             </Form.Item>
 
-            <Form.Item<Blog> label="Image Url" name="imageUrl" rules={rules.imageUrl}>
-              <Input showCount placeholder="Please input the Image Url" maxLength={200} />
-            </Form.Item>
-
             <Form.Item<Blog> label="Tags" name="tags" rules={rules.tags}>
               <Tags placeholder="Input Tag" maxLength={5} />
             </Form.Item>
 
-            <Form.Item<Blog> label="Category" name="category" rules={rules.category}>
-              <Input showCount placeholder="Please input the Category" maxLength={50} />
-            </Form.Item>
           </Col>
 
           <Col xs={0} xl={12}>

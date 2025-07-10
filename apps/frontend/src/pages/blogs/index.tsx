@@ -18,6 +18,7 @@ function Blogs() {
   const { columns, columnsWidth } = useBlogListColumns({
     handleOpenView: drawerUpdate.handleOpenView,
     handleOpenEdit: drawerUpdate.handleOpenEdit,
+    handleOpenCopy: drawerUpdate.handleOpenCopy,
     refresh,
   })
   const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })

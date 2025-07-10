@@ -2,13 +2,13 @@ import type { FormItemProps } from 'antd'
 import type { Blog } from '~/fetchers'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { isValidHttpUrl } from 'utils'
+import { isValidHttpUrl, stringCapitalization } from 'utils'
 import * as fetchers from '~/fetchers'
 
-type TType = 'add' | 'edit'
+type TType = 'add' | 'edit' | 'copy'
 
 const rules = {
   title: [{ required: true, message: 'Please input the Title!' }],
@@ -36,7 +36,6 @@ function useDrawerUpdate({ refresh }: Prams) {
   const { message } = AntdApp.useApp()
   const [type, setType] = useState<TType>('add')
   const [form] = Form.useForm<Blog>()
-  const blogId = useRef<Blog['id']>()
   const [blog, setBlog] = useState<Blog>()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -56,10 +55,31 @@ function useDrawerUpdate({ refresh }: Prams) {
       setLoading(true)
       setOpen(true)
       setType('edit')
-      blogId.current = id
 
       const { data } = await fetchers.blogFind({ id })
       setBlog(data.blog)
+      form.setFieldsValue({
+        title: data.blog.title,
+        content: data.blog.content,
+        slug: data.blog.slug,
+        published: data.blog.published,
+        tags: data.blog.tags,
+        imageUrl: data.blog.imageUrl,
+        category: data.blog.category,
+      })
+    }
+    finally {
+      setLoading(false)
+    }
+  })
+
+  const handleOpenCopy = useMemoizedFn(async (id: Blog['id']) => {
+    try {
+      setLoading(true)
+      setOpen(true)
+      setType('copy')
+
+      const { data } = await fetchers.blogFind({ id })
       form.setFieldsValue({
         title: data.blog.title,
         content: data.blog.content,
@@ -89,7 +109,7 @@ function useDrawerUpdate({ refresh }: Prams) {
   const handleFinish = useMemoizedFn(async (values: Blog) => {
     try {
       setLoadingConfirm(true)
-      if (type === 'add') {
+      if (['add', 'copy'].includes(type)) {
         await fetchers.blogCreate({
           title: values.title,
           content: values.content,
@@ -99,11 +119,10 @@ function useDrawerUpdate({ refresh }: Prams) {
           imageUrl: values.imageUrl,
           category: values.category,
         })
-        message.success('Add successful!')
       }
-      if (type === 'edit' && typeof blogId.current === 'number') {
+      if (type === 'edit' && typeof blog?.id === 'number') {
         await fetchers.blogUpdate({
-          id: blogId.current,
+          id: blog.id,
           title: values.title,
           content: values.content,
           slug: values.slug,
@@ -112,8 +131,8 @@ function useDrawerUpdate({ refresh }: Prams) {
           imageUrl: values.imageUrl,
           category: values.category,
         })
-        message.success('Add successful!')
       }
+      message.success(`${stringCapitalization(type)} successful!`)
       refresh()
       handleClose()
     }
@@ -133,6 +152,7 @@ function useDrawerUpdate({ refresh }: Prams) {
     handleClose,
     handleOpenAdd,
     handleOpenEdit,
+    handleOpenCopy,
     handleOpenView,
     handleFinish,
   }
