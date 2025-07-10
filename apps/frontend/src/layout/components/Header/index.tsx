@@ -1,5 +1,5 @@
 import type { MenuProps } from 'antd'
-import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
+import { InfoCircleOutlined, LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
 import { useMemo, useState } from 'react'
@@ -8,12 +8,14 @@ import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
 import { DrawerUserInfo } from './components/DrawerUserInfo'
+import { ModalAbout } from './components/ModalAbout'
 import { Tabs } from './components/Tabs'
 
 const MenuKey = {
   THEME_LIGHT: 'THEME_LIGHT',
   THEME_DARK: 'THEME_DARK',
   USER_INFO: 'USER_INFO',
+  ABOUT: 'ABOUT',
   LOGOUT: 'LOGOUT',
 } as const
 
@@ -34,6 +36,11 @@ const items: MenuProps['items'] = [
     icon: <UserOutlined />,
   },
   {
+    label: 'About',
+    key: MenuKey.ABOUT,
+    icon: <InfoCircleOutlined />,
+  },
+  {
     label: 'Logout',
     key: MenuKey.LOGOUT,
     icon: <LogoutOutlined />,
@@ -43,7 +50,8 @@ const items: MenuProps['items'] = [
 function Header() {
   const { token } = theme.useToken()
   const appStore = useAppStore()
-  const [open, setOpen] = useState(false)
+  const [openUserInfo, setOpenUserInfo] = useState(false)
+  const [openAbout, setOpenAbout] = useState(false)
   const { user, handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
 
@@ -58,7 +66,11 @@ function Header() {
         break
 
       case MenuKey.USER_INFO:
-        setOpen(true)
+        setOpenUserInfo(true)
+        break
+
+      case MenuKey.ABOUT:
+        setOpenAbout(true)
         break
 
       case MenuKey.LOGOUT:
@@ -93,7 +105,8 @@ function Header() {
         </div>
       </header>
 
-      <DrawerUserInfo open={open} setOpen={setOpen} />
+      <DrawerUserInfo open={openUserInfo} setOpen={setOpenUserInfo} />
+      <ModalAbout open={openAbout} setOpen={setOpenAbout} />
     </>
   )
 }
