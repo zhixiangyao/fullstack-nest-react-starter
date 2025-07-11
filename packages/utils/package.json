@@ -3,18 +3,25 @@
   "type": "module",
   "version": "0.1.0",
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
-  "main": "dist/index.js",
+  "main": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript"
+    "dev": "vite build --watch",
+    "build": "tsc --noEmit && vite build"
   },
   "dependencies": {
-    "dayjs": "1.11.13"
+    "dayjs": "1.11.13",
+    "rehype-stringify": "10.0.1",
+    "remark-code-title": "0.2.5",
+    "remark-emoji": "5.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "unified": "11.0.5"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "12.1.4",
-    "rollup": "4.44.2",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "vite": "7.0.4",
+    "vite-plugin-dts": "4.5.4"
   }
 }
