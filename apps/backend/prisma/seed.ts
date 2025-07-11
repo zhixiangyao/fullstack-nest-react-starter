@@ -7,9 +7,11 @@ const prisma = new PrismaClient()
 
 async function main() {
   // Delete existing roles
-  await prisma.role.deleteMany() // Deletes all roles
+  await prisma.role.deleteMany()
   // Delete existing users
-  await prisma.user.deleteMany() // Deletes all users
+  await prisma.user.deleteMany()
+  // Delete existing blogs
+  await prisma.blog.deleteMany()
 
   const adminRole = await prisma.role.create({
     data: {
@@ -53,7 +55,7 @@ async function main() {
   })
 
   const [admin] = await Promise.all(promiseList)
-  await prisma.blog.create({
+  const firstBlog = await prisma.blog.create({
     data: {
       title: 'My first blog post',
       content: 'This is the content of my first blog post.',
@@ -63,6 +65,14 @@ async function main() {
       imageUrl: 'https://example.com/blog-image.jpg',
       tags: ['NestJS', 'Prisma', 'TypeScript'],
       category: 'Development',
+    },
+  })
+
+  await prisma.blogTreeNode.create({
+    data: {
+      name: 'tree: My first blog post',
+      blogId: firstBlog.id,
+      authorUuid: admin.uuid,
     },
   })
 

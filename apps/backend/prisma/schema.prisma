@@ -11,16 +11,17 @@ generator client {
 }
 
 model User {
-  uuid           String     @id @default(uuid()) @db.Uuid
-  username       String     @unique
+  uuid           String         @id @default(uuid()) @db.Uuid
+  username       String         @unique
   hashedPassword String
   roles          UserRole[] // Many-to-many relationship with Role
-  isActive       Boolean    @default(true)
-  createdAt      DateTime   @default(now()) @db.Timestamptz()
-  updatedAt      DateTime   @default(now()) @updatedAt @db.Timestamptz()
-  lastLogin      DateTime?  @db.Timestamptz()
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now()) @db.Timestamptz()
+  updatedAt      DateTime       @default(now()) @updatedAt @db.Timestamptz()
+  lastLogin      DateTime?      @db.Timestamptz()
   email          String?
   blogs          Blog[]
+  BlogTreeNode   BlogTreeNode[]
 }
 
 model Role {
@@ -53,4 +54,23 @@ model Blog {
   imageUrl   String?
   tags       String[]
   category   String?
+
+  blogTreeNode BlogTreeNode?
+}
+
+model BlogTreeNode {
+  id         Int            @id @default(autoincrement())
+  name       String
+  createdAt  DateTime       @default(now()) @db.Timestamptz()
+  updatedAt  DateTime       @default(now()) @updatedAt @db.Timestamptz()
+  order      Int            @default(0)
+  parentId   Int?
+  parent     BlogTreeNode?  @relation("ChildBlogTreeNodes", fields: [parentId], references: [id], onDelete: Cascade) // "ChildBlogTreeNodes" is a relation name, similar to a tag
+  children   BlogTreeNode[] @relation("ChildBlogTreeNodes")
+  author     User           @relation(fields: [authorUuid], references: [uuid], onDelete: Cascade)
+  authorUuid String         @db.Uuid
+  blogId     Int?           @unique
+  blog       Blog?          @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([name, parentId]) // Composite unique key
 }
