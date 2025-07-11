@@ -3,7 +3,6 @@ global {
     VITE_APP_NODE_ENV: string
     // More environment variables...
   }
-
 }
 
 export {}
