@@ -1,4 +1,4 @@
-import type { Role } from './roles.type'
+import type { Role } from './role.type'
 
 export interface User {
   uuid: string

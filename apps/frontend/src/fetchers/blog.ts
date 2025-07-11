@@ -10,7 +10,7 @@ import type {
   BlogSwitchResponse,
   BlogUpdateRequest,
   BlogUpdateResponse,
-} from './blogs.type'
+} from './blog.type'
 
 import { fetchPost } from '~/utils/fetch'
 

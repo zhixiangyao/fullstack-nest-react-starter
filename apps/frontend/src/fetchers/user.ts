@@ -13,7 +13,7 @@ import type {
   UserSwitchResponse,
   UserUpdateRequest,
   UserUpdateResponse,
-} from './users.type'
+} from './user.type'
 
 import { fetchPost } from '~/utils/fetch'
 

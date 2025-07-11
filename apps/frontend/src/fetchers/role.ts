@@ -1,4 +1,4 @@
-import type { RoleFindAllRequest, RoleFindAllResponse } from './roles.type'
+import type { RoleFindAllRequest, RoleFindAllResponse } from './role.type'
 
 import { fetchPost } from '~/utils/fetch'
 
