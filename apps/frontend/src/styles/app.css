@@ -1,4 +1,6 @@
-@import '~/styles/tailwindcss.css';
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Override base SVG style to work with Ant Design */
 svg {
