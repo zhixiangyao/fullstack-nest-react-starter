@@ -1,3 +1,4 @@
+import type { Request } from 'express'
 import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseFindAllTags, ResponseSwitch, ResponseUpdate } from './blog.type'
 import { Body, Controller, Header, Post } from '@nestjs/common'
 
