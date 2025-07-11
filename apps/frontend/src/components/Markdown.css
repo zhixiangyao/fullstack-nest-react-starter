@@ -65,8 +65,9 @@ html.dark .markdown {
   @apply mb-4;
 }
 
+.markdown a > *,
 .markdown a {
-  @apply text-[var(--markdown-link-color)] no-underline;
+  @apply !text-[var(--markdown-link-color)] no-underline;
 }
 
 .markdown a:hover {

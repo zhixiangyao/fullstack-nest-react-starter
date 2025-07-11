@@ -1,25 +1,36 @@
 import type { Dispatch } from 'react'
 import { useMemoizedFn } from 'ahooks'
 import { Button, Modal } from 'antd'
+
 import { Markdown } from '~/components/Markdown'
 
 const content = `
-- [Github: fullstack-nest-react-starter](https://github.com/zhixiangyao/fullstack-nest-react-starter)
-- [Author: zhixiangyao](https://github.com/zhixiangyao)
-- Tech
-  - Backend
-    - Nestjs
-    - Prisma
-    - PostgreSQL
-  - Backend
-    - React
-    - Antd
-    - Ahooks
-    - React Flow
-    - Zustand
-    - Remark
-    - Tailwindcss
-    - Vite
+[project]: https://github.com/zhixiangyao/fullstack-nest-react-starter
+[zhixiangyao]: https://github.com/zhixiangyao
+[dayjs]: https://github.com/iamkun/dayjs/
+[ts]: https://github.com/microsoft/TypeScript
+[nestjs]: https://github.com/nestjs/nest
+[react]: https://github.com/facebook/react
+[vite]: https://github.com/vitejs/vite
+[xyflow]: https://github.com/xyflow/xyflow
+[remark]: https://github.com/remarkjs/remark
+[ahooks]: https://github.com/alibaba/hooks
+[antd]: https://github.com/ant-design/ant-design
+[prisma]: https://github.com/prisma/prisma
+[rxjs]: https://github.com/ReactiveX/rxjs
+[zustand]: https://github.com/pmndrs/zustand
+[tailwindcss]: https://github.com/tailwindlabs/tailwindcss
+[react-router]: https://github.com/remix-run/react-router
+[postgres]: https://github.com/postgres/postgres
+
+- [Github: fullstack-nest-react-starter][project]
+- [Author: zhixiangyao][zhixiangyao]
+
+| Type | Packages |
+| --: | :-: |
+| Common | [\`Dayjs\`][dayjs] / [\`TypeScript\`][ts] |
+| Backend | [\`Nestjs\`][nestjs] / [\`Prisma\`][prisma] / [\`PostgreSQL\`][postgres] / [\`Rxjs\`][rxjs] |
+| Frontend | [\`React\`][react] / [\`React Router\`][react-router] / [\`React Flow\`][xyflow] / [\`Zustand\`][zustand] / [\`Antd\`][antd] / [\`Ahooks\`][ahooks] / [\`Remark\`][remark] / [\`Tailwindcss\`][tailwindcss] / [\`Vite\`][vite] |
 `
 
 interface Props {

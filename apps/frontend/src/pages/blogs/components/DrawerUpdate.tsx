@@ -1,13 +1,13 @@
 import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
-import { useSize } from 'ahooks'
 import { Button, Col, Drawer, Form, Input, Row, Switch } from 'antd'
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 
 import { stringCapitalization } from 'utils'
 
 import { Markdown } from '~/components/Markdown'
+import { useAppStore } from '~/stores/useAppStore'
 import { Tags } from './Tags'
 
 const formItemLayout: FormProps = {
@@ -34,8 +34,7 @@ function DrawerUpdate(props: Props) {
   const { type, rules, form, open, loading, loadingConfirm } = props
   const { handleClose, handleFinish } = props
   const content = Form.useWatch('content', form)
-  const leftRef = useRef<HTMLDivElement | null>(null)
-  const leftSize = useSize(leftRef)
+  const appStore = useAppStore()
 
   return (
     <Drawer
@@ -66,7 +65,7 @@ function DrawerUpdate(props: Props) {
         disabled={loadingConfirm}
       >
         <Row gutter={8} align="top">
-          <Col xs={24} xl={12} ref={leftRef}>
+          <Col xs={24} xl={12} xxl={10}>
             <Row gutter={8}>
               <Col span={12}>
                 <Form.Item<Blog> label="Title" name="title" rules={rules.title}>
@@ -83,11 +82,9 @@ function DrawerUpdate(props: Props) {
 
             <Row gutter={8}>
               <Col span={12}>
-
                 <Form.Item<Blog> label="Image Url" name="imageUrl" rules={rules.imageUrl}>
                   <Input showCount placeholder="Please input the Image Url" maxLength={200} />
                 </Form.Item>
-
               </Col>
 
               <Col span={12}>
@@ -98,24 +95,23 @@ function DrawerUpdate(props: Props) {
             </Row>
 
             <Form.Item<Blog> label="Content" name="content" rules={rules.content}>
-              <Input.TextArea showCount placeholder="Please input the Content" rows={8} maxLength={50000} />
-            </Form.Item>
-
-            <Form.Item<Blog> label="Published" name="published" required>
-              <Switch checkedChildren="Published" unCheckedChildren="Unpublished" />
+              <Input.TextArea showCount placeholder="Please input the Content" rows={16} maxLength={50000} />
             </Form.Item>
 
             <Form.Item<Blog> label="Tags" name="tags" rules={rules.tags}>
               <Tags placeholder="Input Tag" maxLength={5} />
             </Form.Item>
 
+            <Form.Item<Blog> label="Published" name="published" required>
+              <Switch checkedChildren="Published" unCheckedChildren="Unpublished" />
+            </Form.Item>
           </Col>
 
-          <Col xs={0} xl={12}>
-            <Form.Item label="Markdown">
+          <Col xs={0} xl={12} xxl={14}>
+            <Form.Item label="Markdown" className="!mb-0">
               <Markdown
                 className="border border-[#d9d9d9] border-solid dark:border-[#424242] p-2 rounded-xs dark:bg-[#141414] overflow-y-auto"
-                style={useMemo(() => ({ height: leftSize?.height }), [leftSize?.height])}
+                style={useMemo(() => ({ height: (appStore.size?.height ?? 0) - 194 }), [appStore.size?.height])}
               >
                 {content}
               </Markdown>
