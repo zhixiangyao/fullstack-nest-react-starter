@@ -1,7 +1,15 @@
 import type { MenuProps } from 'antd'
-import { InfoCircleOutlined, LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  GithubOutlined,
+  InfoCircleOutlined,
+  LogoutOutlined,
+  MenuOutlined,
+  MoonOutlined,
+  SunOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
-import { App as AntdApp, Avatar, Dropdown, theme } from 'antd'
+import { App as AntdApp, Dropdown, theme } from 'antd'
 import { useMemo, useState } from 'react'
 
 import { useAppStore } from '~/stores/useAppStore'
@@ -52,7 +60,7 @@ function Header() {
   const appStore = useAppStore()
   const [openUserInfo, setOpenUserInfo] = useState(false)
   const [openAbout, setOpenAbout] = useState(false)
-  const { user, handleLogout } = useUserStore()
+  const { handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
 
   const handleMenuClick = useMemoizedFn<NonNullable<MenuProps['onClick']>>((e) => {
@@ -96,11 +104,11 @@ function Header() {
       >
         <Tabs />
 
-        <div className="flex items-center">
-          <span className="mr-2 select-none">{user?.username}</span>
+        <div className="flex gap-4 items-center">
+          <GithubOutlined className="text-xl cursor-pointer" onClick={() => window.open('https://github.com/zhixiangyao/fullstack-nest-react-starter')} />
 
           <Dropdown menu={menuProps}>
-            <Avatar size="small" icon={<UserOutlined />} />
+            <MenuOutlined className="text-xl cursor-pointer" />
           </Dropdown>
         </div>
       </header>
