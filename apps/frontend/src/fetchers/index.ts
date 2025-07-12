@@ -1,4 +1,6 @@
 export * from './blog'
+export * from './blog-tree-node'
+export * from './blog-tree-node.type'
 export * from './blog.type'
 export * from './role'
 export * from './role.type'

@@ -11,8 +11,8 @@ import { useRoleListColumns } from './hooks/useRoleListColumns'
 function Roles() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
-  const { columns, columnsWidth } = useRoleListColumns()
-  const roleList = useRoleList({ filterHeight: size?.height ?? 0, columnsWidth })
+  const roleListColumns = useRoleListColumns()
+  const roleList = useRoleList({ filterHeight: size?.height ?? 0, columnsWidth: roleListColumns.columnsWidth })
 
   return (
     <>
@@ -29,7 +29,7 @@ function Roles() {
       <Table<Role>
         size="small"
         rowKey={'id' satisfies keyof Role}
-        columns={columns}
+        columns={roleListColumns.columns}
         dataSource={roleList.dataSource}
         pagination={roleList.pagination}
         loading={roleList.loading}
