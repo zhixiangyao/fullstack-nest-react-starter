@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "api-service",
   "type": "commonjs",
   "version": "0.1.0",
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",

@@ -22,7 +22,7 @@ export default antfu(
     },
   },
   {
-    files: ['apps/backend/**/*.ts', 'apps/backend/**/*.mjs', 'packages/**/*.js'],
+    files: ['apps/api-service/**/*.ts', 'apps/api-service/**/*.mjs', 'packages/**/*.js'],
     rules: {
       'ts/consistent-type-imports': ['off'],
     },
