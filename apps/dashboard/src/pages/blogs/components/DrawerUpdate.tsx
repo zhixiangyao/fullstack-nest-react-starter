@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 
 import { stringCapitalization } from 'utils'
 
+import { Container } from '~/components/Container'
 import { Markdown } from '~/components/Markdown'
 import { useAppStore } from '~/stores/useAppStore'
 import { Tags } from './Tags'
@@ -110,12 +111,14 @@ function DrawerUpdate(props: Props) {
 
           <Col xs={0} xl={12} xxl={14}>
             <Form.Item label="Markdown" className="!mb-0">
-              <Markdown
-                className="border border-[#d9d9d9] border-solid dark:border-[#424242] p-2 rounded-xs dark:bg-[#141414] overflow-y-auto"
-                style={useMemo(() => ({ height: (appStore.size?.height ?? 0) - 194 }), [appStore.size?.height])}
-              >
-                {content}
-              </Markdown>
+              <Container className="dark:bg-[#141414]">
+                <Markdown
+                  className="overflow-y-auto"
+                  style={useMemo(() => ({ height: (appStore.size?.height ?? 0) - 194 }), [appStore.size?.height])}
+                >
+                  {content}
+                </Markdown>
+              </Container>
             </Form.Item>
           </Col>
         </Row>
