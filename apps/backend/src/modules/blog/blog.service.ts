@@ -16,7 +16,7 @@ interface BlogCreateParams {
 }
 
 interface BlogUpdateParams {
-  username: User['username']
+  uuid: User['uuid']
   id: Blog['id']
   title?: Blog['title']
   content?: Blog['content']
@@ -28,12 +28,12 @@ interface BlogUpdateParams {
 }
 
 interface BlogFindParams {
-  username: User['username']
+  uuid?: User['uuid']
   id: Blog['id']
 }
 
 interface BlogFindAllParams {
-  username: User['username']
+  uuid?: User['uuid']
   title?: Blog['title']
   published?: Blog['published']
   tags?: Blog['tags']
@@ -44,7 +44,7 @@ interface BlogFindAllParams {
 }
 
 interface BlogFindAllTagsParams {
-  username: User['username']
+  uuid?: User['uuid']
 }
 
 @Injectable()
@@ -71,9 +71,7 @@ export class BlogService {
   async update(params: BlogUpdateParams): Promise<Blog> {
     const blog = await this.prisma.blog.update({
       where: {
-        author: {
-          username: params.username,
-        },
+        author: { uuid: params.uuid },
         id: params.id,
       },
       data: {
@@ -93,9 +91,7 @@ export class BlogService {
   async find(params: BlogFindParams): Promise<ResponseFind['data']['blog']> {
     const blog = await this.prisma.blog.findUnique({
       where: {
-        author: {
-          username: params.username,
-        },
+        author: { uuid: params.uuid },
         id: params.id,
       },
     })
@@ -104,7 +100,7 @@ export class BlogService {
   }
 
   async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
-    const { username, title, published, tags, order, field } = params
+    const { title, published, tags, order, field } = params
     const { pageNo = 1, pageSize = 10 } = params
     const skip = (pageNo - 1) * pageSize
     const take = pageSize
@@ -113,7 +109,7 @@ export class BlogService {
       title: { contains: title },
       published,
       tags: tags ? { hasSome: tags } : void 0,
-      author: { username },
+      author: { uuid: params.uuid },
     }
     let orderBy: Partial<Record<BlogFindAllParams['field'], BlogFindAllParams['order']>> = { createdAt: 'desc' }
 
@@ -139,9 +135,7 @@ export class BlogService {
   }
 
   async findAllTags(params: BlogFindAllTagsParams): Promise<ResponseFindAllTags['data']> {
-    const { username } = params
-
-    const where: Prisma.BlogWhereInput = { author: { username } }
+    const where: Prisma.BlogWhereInput = { author: { uuid: params.uuid } }
 
     const list = await this.prisma.blog.findMany({
       where,

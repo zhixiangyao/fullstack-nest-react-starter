@@ -2,6 +2,7 @@ import type { Request } from 'express'
 import type { ResponseCreate, ResponseFind, ResponseFindAll, ResponseFindAllTags, ResponseSwitch, ResponseUpdate } from './blog.type'
 import { Body, Controller, Header, Post } from '@nestjs/common'
 
+import { Public } from '~/common/decorators/public.decorator'
 import { User } from '~/common/decorators/user.decorator'
 
 import { BlogCreateDto, BlogFindAllDto, BlogFindDto, BlogSwitchDto, UserUpdateDto } from './blog.dto'
@@ -22,7 +23,7 @@ export class BlogController {
   @Post('switch')
   @Header('content-type', 'application/json')
   async switch(@Body() body: BlogSwitchDto, @User() user: Request['user']): Promise<ResponseSwitch> {
-    await this.blogService.update({ ...body, username: user.username })
+    await this.blogService.update({ ...body, uuid: user.uuid })
 
     return { message: 'Update successful!' }
   }
@@ -30,31 +31,34 @@ export class BlogController {
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @User() user: Request['user']): Promise<ResponseUpdate> {
-    await this.blogService.update({ ...body, username: user.username })
+    await this.blogService.update({ ...body, uuid: user.uuid })
 
     return { message: 'Update successful!' }
   }
 
+  @Public()
   @Post('find')
   @Header('content-type', 'application/json')
   async find(@Body() body: BlogFindDto, @User() user: Request['user']): Promise<ResponseFind> {
-    const blog = await this.blogService.find({ ...body, username: user.username })
+    const blog = await this.blogService.find({ ...body, uuid: user.uuid })
 
     return { data: { blog } }
   }
 
+  @Public()
   @Post('find-all')
   @Header('Content-Type', 'application/json')
   async findAll(@Body() body: BlogFindAllDto, @User() user: Request['user']): Promise<ResponseFindAll> {
-    const data = await this.blogService.findAll({ ...body, username: user.username })
+    const data = await this.blogService.findAll({ ...body, uuid: user.uuid })
 
     return { data }
   }
 
+  @Public()
   @Post('find-all-tags')
   @Header('Content-Type', 'application/json')
   async findAllTags(@User() user: Request['user']): Promise<ResponseFindAllTags> {
-    const data = await this.blogService.findAllTags({ username: user.username })
+    const data = await this.blogService.findAllTags({ uuid: user.uuid })
 
     return { data }
   }

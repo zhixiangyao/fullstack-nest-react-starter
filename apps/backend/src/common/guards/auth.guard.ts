@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
     }
 
     if (!token) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException('You must be logged in to access this resource!')
     }
 
     try {
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
       request.user = payload
     }
     catch {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException('Invalid token! Please log in again.')
     }
     return true
   }
