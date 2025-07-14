@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react'
 import { FileMarkdownOutlined, HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
-import { Spin } from 'antd'
+import { App, Spin } from 'antd'
+import { useEffect } from 'react'
 import { createBrowserRouter, matchPath, Navigate, RouterProvider } from 'react-router-dom'
 
+import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
 interface Props {
@@ -111,6 +113,11 @@ const router = createBrowserRouter([
 ])
 
 function Router() {
+  const { message } = App.useApp()
+  const { handleInitMessage } = useAppStore()
+
+  useEffect(() => handleInitMessage(message), [handleInitMessage, message])
+
   return <RouterProvider router={router} />
 }
 

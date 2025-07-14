@@ -1,12 +1,13 @@
-import { message } from 'antd'
-
+import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
+
+const getMessage = () => useAppStore.getState().message
 
 async function handleResponseOK(response: Response) {
   if (!response.ok) {
     const json = await response.json()
 
-    message.error(json?.message ?? response.statusText)
+    getMessage()?.error(json?.message ?? response.statusText)
 
     switch (response.status) {
       case 401:

@@ -69,9 +69,6 @@ const useUserStore = create<Store>()(
 
         return remember ? localStorage : sessionStorage
       }),
-      partialize: (state) => {
-        return Object.fromEntries(Object.entries(state).filter(([key]) => !['loadingGetCurrentUserInfo'].includes(key)))
-      },
     },
   ),
 )

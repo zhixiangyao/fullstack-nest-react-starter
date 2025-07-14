@@ -14,13 +14,9 @@ function App() {
   const { token, handleGetCurrentUserInfo } = useUserStore()
   const size = useSize(document.querySelector('#root'))
 
-  useEffect(() => {
-    size && handleWindowSize(size)
-  }, [handleWindowSize, size])
+  useEffect(() => size && handleWindowSize(size), [handleWindowSize, size])
 
-  useMount(() => {
-    token && handleGetCurrentUserInfo()
-  })
+  useMount(() => token && handleGetCurrentUserInfo())
 
   return (
     <AntConfigProvider>
