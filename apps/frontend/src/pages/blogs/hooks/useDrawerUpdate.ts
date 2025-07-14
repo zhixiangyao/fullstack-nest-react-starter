@@ -27,11 +27,7 @@ const rules = {
   category: [],
 } satisfies Partial<Record<keyof Blog, FormItemProps['rules']>>
 
-interface Prams {
-  refresh: () => void
-}
-
-function useDrawerUpdate({ refresh }: Prams) {
+function useDrawerUpdate() {
   const navigate = useNavigate()
   const { message } = AntdApp.useApp()
   const [type, setType] = useState<TType>('add')
@@ -106,7 +102,7 @@ function useDrawerUpdate({ refresh }: Prams) {
     setOpen(false)
   })
 
-  const handleFinish = useMemoizedFn(async (values: Blog) => {
+  const handleFinish = useMemoizedFn(async (values: Blog, cb: () => void) => {
     try {
       setLoadingConfirm(true)
       if (['add', 'copy'].includes(type)) {
@@ -133,7 +129,7 @@ function useDrawerUpdate({ refresh }: Prams) {
         })
       }
       message.success(`${stringCapitalization(type)} successful!`)
-      refresh()
+      cb()
       handleClose()
     }
     finally {

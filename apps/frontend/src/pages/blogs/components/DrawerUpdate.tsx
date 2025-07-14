@@ -28,11 +28,12 @@ interface Props {
   loadingConfirm: TUseDrawerUpdateReturnType['loadingConfirm']
   handleClose: TUseDrawerUpdateReturnType['handleClose']
   handleFinish: TUseDrawerUpdateReturnType['handleFinish']
+  refresh: () => void
 }
 
 function DrawerUpdate(props: Props) {
   const { type, rules, form, open, loading, loadingConfirm } = props
-  const { handleClose, handleFinish } = props
+  const { handleClose, handleFinish, refresh } = props
   const content = Form.useWatch('content', form)
   const appStore = useAppStore()
 
@@ -60,9 +61,9 @@ function DrawerUpdate(props: Props) {
         {...formItemLayout}
         name="blog-update"
         autoComplete="off"
-        onFinish={handleFinish}
         form={form}
         disabled={loadingConfirm}
+        onFinish={values => handleFinish(values, () => refresh())}
       >
         <Row gutter={8} align="top">
           <Col xs={24} xl={12} xxl={10}>

@@ -5,11 +5,7 @@ import { useState } from 'react'
 
 import * as fetchers from '~/fetchers'
 
-interface Prams {
-  refresh: () => void
-}
-
-function useDrawerEdit({ refresh }: Prams) {
+function useDrawerEdit() {
   const { message } = AntdApp.useApp()
   const [form] = Form.useForm<User>()
   const [user, setUser] = useState<User>()
@@ -17,7 +13,7 @@ function useDrawerEdit({ refresh }: Prams) {
   const [loading, setLoading] = useState(false)
   const [loadingConfirm, setLoadingConfirm] = useState(false)
 
-  const handleOpen = useMemoizedFn(async (username: User['username']) => {
+  const handleOpenEdit = useMemoizedFn(async (username: User['username']) => {
     try {
       setLoading(true)
       setOpen(true)
@@ -41,7 +37,7 @@ function useDrawerEdit({ refresh }: Prams) {
     setOpen(false)
   })
 
-  const handleFinish = useMemoizedFn(async (values: User) => {
+  const handleFinish = useMemoizedFn(async (values: User, cb: () => void) => {
     if (!user)
       return
 
@@ -53,7 +49,7 @@ function useDrawerEdit({ refresh }: Prams) {
         isActive: values.isActive,
       })
       message.success('Edit successful!')
-      refresh()
+      cb()
       handleClose()
     }
     finally {
@@ -68,7 +64,7 @@ function useDrawerEdit({ refresh }: Prams) {
     loading,
     loadingConfirm,
     handleClose,
-    handleOpen,
+    handleOpenEdit,
     handleFinish,
   }
 }

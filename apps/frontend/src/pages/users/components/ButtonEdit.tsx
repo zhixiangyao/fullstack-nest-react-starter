@@ -3,12 +3,12 @@ import { Button } from 'antd'
 
 interface Props {
   record: User
-  handleOpen: (username: User['username']) => Promise<void>
+  handleOpenEdit: (username: User['username']) => Promise<void>
 }
 
-function ButtonEdit({ record, handleOpen }: Props) {
+function ButtonEdit({ record, handleOpenEdit }: Props) {
   return (
-    <Button type="link" className="!px-0" onClick={() => handleOpen(record.username)}>
+    <Button type="link" className="!px-0" onClick={() => handleOpenEdit(record.username)}>
       Edit
     </Button>
   )

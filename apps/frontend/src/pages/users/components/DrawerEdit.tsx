@@ -22,11 +22,12 @@ interface Props {
   loadingConfirm: TUseDrawerEditReturnType['loadingConfirm']
   handleClose: TUseDrawerEditReturnType['handleClose']
   handleFinish: TUseDrawerEditReturnType['handleFinish']
+  refresh: () => void
 }
 
 function DrawerEdit(props: Props) {
   const { user, form, open, loading, loadingConfirm } = props
-  const { handleClose, handleFinish } = props
+  const { handleClose, handleFinish, refresh } = props
 
   return (
     <Drawer
@@ -52,7 +53,7 @@ function DrawerEdit(props: Props) {
         {...formItemLayout}
         name="user-edit"
         autoComplete="off"
-        onFinish={handleFinish}
+        onFinish={values => handleFinish(values, () => refresh())}
         form={form}
         disabled={loadingConfirm}
       >

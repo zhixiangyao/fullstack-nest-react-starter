@@ -8,27 +8,18 @@ import { Filter } from '~/components/Filter'
 import { DrawerEdit } from './components/DrawerEdit'
 import { useDrawerEdit } from './hooks/useDrawerEdit'
 import { useUserList } from './hooks/useUserList'
-import { useUserListColumns } from './hooks/useUserListColumns'
 
 function Users() {
-  const ref = useRef<HTMLDivElement>(null)
-  const size = useSize(ref)
-  const drawerEdit = useDrawerEdit({ refresh })
-  const userListColumns = useUserListColumns({
-    handleOpen: drawerEdit.handleOpen,
-    refresh,
-  })
-  const userList = useUserList({ filterHeight: size?.height ?? 0, columnsWidth: userListColumns.columnsWidth })
-
-  function refresh() {
-    userList.refresh()
-  }
+  const refFilter = useRef<HTMLDivElement>(null)
+  const size = useSize(refFilter)
+  const drawerEdit = useDrawerEdit()
+  const userList = useUserList({ filterHeight: size?.height ?? 0, handleOpenEdit: drawerEdit.handleOpenEdit })
 
   return (
     <>
       <Filter
         name="filter-users"
-        customRef={ref}
+        customRef={refFilter}
         loading={userList.loading}
         form={userList.form}
         fields={userList.fields}
@@ -39,7 +30,7 @@ function Users() {
       <Table<User>
         size="small"
         rowKey={'uuid' satisfies keyof User}
-        columns={userListColumns.columns}
+        columns={userList.columns}
         dataSource={userList.dataSource}
         pagination={userList.pagination}
         loading={userList.loading}
@@ -54,6 +45,7 @@ function Users() {
         loadingConfirm={drawerEdit.loadingConfirm}
         handleClose={drawerEdit.handleClose}
         handleFinish={drawerEdit.handleFinish}
+        refresh={userList.refresh}
       />
     </>
   )

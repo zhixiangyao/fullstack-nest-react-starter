@@ -6,19 +6,17 @@ import { useRef } from 'react'
 import { Filter } from '~/components/Filter'
 
 import { useRoleList } from './hooks/useRoleList'
-import { useRoleListColumns } from './hooks/useRoleListColumns'
 
 function Roles() {
-  const ref = useRef<HTMLDivElement>(null)
-  const size = useSize(ref)
-  const roleListColumns = useRoleListColumns()
-  const roleList = useRoleList({ filterHeight: size?.height ?? 0, columnsWidth: roleListColumns.columnsWidth })
+  const refFilter = useRef<HTMLDivElement>(null)
+  const size = useSize(refFilter)
+  const roleList = useRoleList({ filterHeight: size?.height ?? 0 })
 
   return (
     <>
       <Filter
         name="filter-roles"
-        customRef={ref}
+        customRef={refFilter}
         loading={roleList.loading}
         form={roleList.form}
         fields={roleList.fields}
@@ -29,7 +27,7 @@ function Roles() {
       <Table<Role>
         size="small"
         rowKey={'id' satisfies keyof Role}
-        columns={roleListColumns.columns}
+        columns={roleList.columns}
         dataSource={roleList.dataSource}
         pagination={roleList.pagination}
         loading={roleList.loading}

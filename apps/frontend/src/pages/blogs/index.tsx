@@ -8,24 +8,18 @@ import { Filter } from '~/components/Filter'
 
 import { DrawerUpdate } from './components/DrawerUpdate'
 import { useBlogList } from './hooks/useBlogList'
-import { useBlogListColumns } from './hooks/useBlogListColumns'
 import { useDrawerUpdate } from './hooks/useDrawerUpdate'
 
 function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
-  const drawerUpdate = useDrawerUpdate({ refresh })
-  const blogListColumns = useBlogListColumns({
+  const drawerUpdate = useDrawerUpdate()
+  const blogList = useBlogList({
+    filterHeight: size?.height ?? 0,
     handleOpenView: drawerUpdate.handleOpenView,
     handleOpenEdit: drawerUpdate.handleOpenEdit,
     handleOpenCopy: drawerUpdate.handleOpenCopy,
-    refresh,
   })
-  const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth: blogListColumns.columnsWidth })
-
-  function refresh() {
-    blogList.refresh()
-  }
 
   return (
     <>
@@ -47,7 +41,7 @@ function Blogs() {
       <Table<Blog>
         size="small"
         rowKey={'id' satisfies keyof Blog}
-        columns={blogListColumns.columns}
+        columns={blogList.columns}
         dataSource={blogList.dataSource}
         pagination={blogList.pagination}
         loading={blogList.loading}
@@ -64,6 +58,7 @@ function Blogs() {
         loadingConfirm={drawerUpdate.loadingConfirm}
         handleClose={drawerUpdate.handleClose}
         handleFinish={drawerUpdate.handleFinish}
+        refresh={blogList.refresh}
       />
     </>
   )
