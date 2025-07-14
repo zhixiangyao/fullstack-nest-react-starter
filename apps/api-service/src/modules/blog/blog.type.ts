@@ -8,6 +8,8 @@ export interface ResponseSwitch extends ResponseCreate {}
 
 export interface ResponseUpdate extends ResponseCreate {}
 
+export interface ResponseRemove extends ResponseCreate {}
+
 export interface ResponseFind {
   data: {
     blog: Blog

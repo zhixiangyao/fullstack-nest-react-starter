@@ -88,6 +88,10 @@ export class BlogService {
     return blog
   }
 
+  async remove(params: { id: Blog['id'], uuid: User['uuid'] }): Promise<void> {
+    await this.prisma.blog.delete({ where: { id: params.id, author: { uuid: params.uuid } } })
+  }
+
   async find(params: BlogFindParams): Promise<ResponseFind['data']['blog']> {
     const blog = await this.prisma.blog.findUnique({
       where: {

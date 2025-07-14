@@ -7,6 +7,7 @@ import { useRef } from 'react'
 import { Filter } from '~/components/Filter'
 
 import { ButtonCopy } from './components/ButtonCopy'
+import { ButtonDelete } from './components/ButtonDelete'
 import { ButtonEdit } from './components/ButtonEdit'
 import { ButtonView } from './components/ButtonView'
 import { DrawerUpdate } from './components/DrawerUpdate'
@@ -61,13 +62,14 @@ function Blogs() {
         <Table.Column<Blog>
           title="Actions"
           key="actions"
-          width={140}
+          width={190}
           fixed="right"
           render={(_, record) => (
             <div className="flex items-center gap-2">
               <ButtonEdit record={record} handleOpenEdit={drawerUpdate.handleOpenEdit} />
               <ButtonCopy record={record} handleOpenCopy={drawerUpdate.handleOpenCopy} />
               <ButtonView record={record} handleOpenView={drawerUpdate.handleOpenView} />
+              <ButtonDelete record={record} refresh={blogList.refresh} />
             </div>
           )}
         />

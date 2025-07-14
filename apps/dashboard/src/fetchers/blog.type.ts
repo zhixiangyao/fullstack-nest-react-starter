@@ -40,6 +40,10 @@ export interface BlogUpdateRequest extends BlogCreateRequest {
 
 export interface BlogUpdateResponse extends BlogCreateResponse {}
 
+export type BlogRemoveRequest = Pick<Blog, 'id'>
+
+export interface BlogRemoveResponse extends BlogCreateResponse {}
+
 export interface BlogFindRequest {
   id: Blog['id']
 }

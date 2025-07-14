@@ -42,7 +42,13 @@ export class BlogSwitchDto {
   readonly published?: Blog['published']
 }
 
-export class UserUpdateDto extends BlogCreateDto {
+export class BlogUpdateDto extends BlogCreateDto {
+  @IsInt()
+  @IsNotEmpty()
+  readonly id: Blog['id']
+}
+
+export class BlogRemoveDto {
   @IsInt()
   @IsNotEmpty()
   readonly id: Blog['id']

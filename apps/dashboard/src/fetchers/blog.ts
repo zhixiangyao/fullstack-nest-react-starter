@@ -6,6 +6,8 @@ import type {
   BlogFindAllTagsResponse,
   BlogFindRequest,
   BlogFindResponse,
+  BlogRemoveRequest,
+  BlogRemoveResponse,
   BlogSwitchRequest,
   BlogSwitchResponse,
   BlogUpdateRequest,
@@ -28,6 +30,12 @@ export async function blogSwitch(data: BlogSwitchRequest) {
 
 export async function blogUpdate(data: BlogUpdateRequest) {
   const result = await fetchPost<BlogUpdateResponse>('/api/blog/update', JSON.stringify(data))
+
+  return result
+}
+
+export async function blogRemove(data: BlogRemoveRequest) {
+  const result = await fetchPost<BlogRemoveResponse>('/api/blog/remove', JSON.stringify(data))
 
   return result
 }
