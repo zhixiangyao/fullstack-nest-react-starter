@@ -22,9 +22,17 @@ function Nav() {
     ({ key }) => pathname !== key && navigate(key),
   )
 
+  const handleAvatarClick = useMemoizedFn(() => {
+    const leftWidth = appStore.leftWidth >= 200 ? 80 : 320
+    appStore.handleSplitterSizes([leftWidth, (appStore.size?.width ?? 0) - leftWidth])
+  })
+
   return (
     <nav className="min-h-screen relative">
-      <div className="sticky top-0 z-[1] flex h-[70px] w-full cursor-pointer select-none items-center justify-center">
+      <div
+        className="sticky top-0 z-[1] flex h-[70px] w-full cursor-pointer select-none items-center justify-center"
+        onDoubleClick={handleAvatarClick}
+      >
         <Avatar src={user?.avatar ?? void 0}>{!user?.avatar ? user?.username : null}</Avatar>
       </div>
 

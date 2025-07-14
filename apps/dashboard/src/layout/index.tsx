@@ -26,7 +26,7 @@ function Layout() {
   return (
     <Container>
       <Splitter onResize={handleSplitterSizes}>
-        <Splitter.Panel size={leftWidth} min={80} max={400} className="!p-0" collapsible>
+        <Splitter.Panel size={leftWidth} min={80} max={320} className="!p-0" collapsible>
           <Nav />
         </Splitter.Panel>
 
