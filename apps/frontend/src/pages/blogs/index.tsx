@@ -6,6 +6,9 @@ import { useRef } from 'react'
 
 import { Filter } from '~/components/Filter'
 
+import { ButtonCopy } from './components/ButtonCopy'
+import { ButtonEdit } from './components/ButtonEdit'
+import { ButtonView } from './components/ButtonView'
 import { DrawerUpdate } from './components/DrawerUpdate'
 import { useBlogList } from './hooks/useBlogList'
 import { useDrawerUpdate } from './hooks/useDrawerUpdate'
@@ -14,12 +17,7 @@ function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const drawerUpdate = useDrawerUpdate()
-  const blogList = useBlogList({
-    filterHeight: size?.height ?? 0,
-    handleOpenView: drawerUpdate.handleOpenView,
-    handleOpenEdit: drawerUpdate.handleOpenEdit,
-    handleOpenCopy: drawerUpdate.handleOpenCopy,
-  })
+  const blogList = useBlogList({ filterHeight: size?.height ?? 0 })
 
   return (
     <>
@@ -41,13 +39,39 @@ function Blogs() {
       <Table<Blog>
         size="small"
         rowKey={'id' satisfies keyof Blog}
-        columns={blogList.columns}
         dataSource={blogList.dataSource}
         pagination={blogList.pagination}
         loading={blogList.loading}
         scroll={blogList.scroll}
         onChange={blogList.handleTableChange}
-      />
+      >
+        {blogList.columns.map(column => (
+          <Table.Column<Blog>
+            title={column.title}
+            dataIndex={column.dataIndex}
+            key={column.key}
+            width={column.width}
+            sorter={column.sorter}
+            fixed={column.fixed}
+            ellipsis={column.ellipsis}
+            render={column.render}
+          />
+        ))}
+
+        <Table.Column<Blog>
+          title="Actions"
+          key="actions"
+          width={140}
+          fixed="right"
+          render={(_, record) => (
+            <div className="flex items-center gap-2">
+              <ButtonEdit record={record} handleOpenEdit={drawerUpdate.handleOpenEdit} />
+              <ButtonCopy record={record} handleOpenCopy={drawerUpdate.handleOpenCopy} />
+              <ButtonView record={record} handleOpenView={drawerUpdate.handleOpenView} />
+            </div>
+          )}
+        />
+      </Table>
 
       <DrawerUpdate
         type={drawerUpdate.type}

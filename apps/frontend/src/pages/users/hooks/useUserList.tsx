@@ -10,24 +10,21 @@ import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
 import { TagRoleType } from '~/components/TagRoleType'
 import * as fetchers from '~/fetchers'
-
 import { useAppStore } from '~/stores/useAppStore'
-import { ButtonDelete } from '../components/ButtonDelete'
-import { ButtonEdit } from '../components/ButtonEdit'
+
 import { SwitchStatus } from '../components/SwitchStatus'
 
 type TFieldFilter = UserFindAllRequest
 
-type TColumns = (ColumnsType<User>[number] & { dataIndex?: keyof User, key: keyof User | 'actions' })[]
+type TColumns = (ColumnsType<User>[number] & { dataIndex?: keyof User, key: keyof User })[]
 
 const fields: TField<UserFindAllRequest>[] = [{ type: 'input', key: 'username', name: 'username', label: 'Username' }]
 
 interface Prams {
-  handleOpenEdit: (username: User['username']) => Promise<void>
   filterHeight: number
 }
 
-function useUserList({ filterHeight, handleOpenEdit }: Prams) {
+function useUserList({ filterHeight }: Prams) {
   const { data, loading, runAsync, refresh } = useRequest(fetchers.userFindAll, { cacheKey: fetchers.userFindAll.name })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
@@ -149,22 +146,8 @@ function useUserList({ filterHeight, handleOpenEdit }: Prams) {
             )
           },
         },
-        {
-          title: 'Actions',
-          key: 'actions',
-          width: 100,
-          fixed: 'right',
-          render(_, record) {
-            return (
-              <div className="flex items-center gap-2">
-                <ButtonDelete record={record} refresh={refresh} />
-                <ButtonEdit record={record} handleOpenEdit={handleOpenEdit} />
-              </div>
-            )
-          },
-        },
       ] satisfies TColumns,
-    [handleOpenEdit, refresh],
+    [refresh],
   )
   const scroll = useMemo(() => {
     const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)

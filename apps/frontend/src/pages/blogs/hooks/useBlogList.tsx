@@ -12,15 +12,12 @@ import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
 
 import * as fetchers from '~/fetchers'
 import { useAppStore } from '~/stores/useAppStore'
-import { ButtonCopy } from '../components/ButtonCopy'
-import { ButtonEdit } from '../components/ButtonEdit'
-import { ButtonView } from '../components/ButtonView'
 import { SelectTags } from '../components/SelectTags'
 import { SwitchPublished } from '../components/SwitchPublished'
 
 type TFieldFilter = Omit<BlogFindAllRequest, 'published'> & { published?: 0 | 1 }
 
-type TColumns = (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyof Blog | 'actions' })[]
+type TColumns = (ColumnsType<Blog>[number] & { dataIndex?: keyof Blog, key: keyof Blog })[]
 
 function genFilterParams(values: TFieldFilter, sorter?: SorterResult<Blog>): BlogFindAllRequest {
   return {
@@ -68,14 +65,10 @@ const fields: TField<BlogFindAllRequest>[] = [
 
 interface Prams {
   filterHeight: number
-  handleOpenEdit: (id: Blog['id']) => Promise<void>
-  handleOpenCopy: (id: Blog['id']) => Promise<void>
-  handleOpenView: (id: Blog['id']) => Promise<void>
 }
 
 function useBlogList(prams: Prams) {
   const { filterHeight } = prams
-  const { handleOpenEdit, handleOpenCopy, handleOpenView } = prams
   const { data, loading, runAsync, refresh } = useRequest(fetchers.blogFindAll, { cacheKey: fetchers.blogFindAll.name })
   const { size } = useAppStore()
   const [form] = Form.useForm<TFieldFilter>()
@@ -127,16 +120,6 @@ function useBlogList(prams: Prams) {
           dataIndex: 'tags' satisfies keyof Blog,
           key: 'tags',
           width: 300,
-          render(_, record) {
-            if (record.tags.length === 0)
-              return '/'
-
-            return record.tags.map(tag => (
-              <Tag key={tag} className="select-none">
-                {tag}
-              </Tag>
-            ))
-          },
         },
         {
           title: 'Created At',
@@ -172,23 +155,8 @@ function useBlogList(prams: Prams) {
             )
           },
         },
-        {
-          title: 'Actions',
-          key: 'actions',
-          width: 140,
-          fixed: 'right',
-          render(_, record) {
-            return (
-              <div className="flex items-center gap-2">
-                <ButtonEdit record={record} handleOpenEdit={handleOpenEdit} />
-                <ButtonCopy record={record} handleOpenCopy={handleOpenCopy} />
-                <ButtonView record={record} handleOpenView={handleOpenView} />
-              </div>
-            )
-          },
-        },
       ] satisfies TColumns,
-    [handleOpenEdit, handleOpenCopy, handleOpenView, refresh],
+    [refresh],
   )
   const scroll = useMemo(() => {
     const x = columns.reduce((acc, cur) => acc + (typeof cur.width === 'number' ? cur.width : 200), 0)
