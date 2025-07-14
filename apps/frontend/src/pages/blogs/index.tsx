@@ -15,13 +15,13 @@ function Blogs() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const drawerUpdate = useDrawerUpdate({ refresh })
-  const { columns, columnsWidth } = useBlogListColumns({
+  const blogListColumns = useBlogListColumns({
     handleOpenView: drawerUpdate.handleOpenView,
     handleOpenEdit: drawerUpdate.handleOpenEdit,
     handleOpenCopy: drawerUpdate.handleOpenCopy,
     refresh,
   })
-  const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth })
+  const blogList = useBlogList({ filterHeight: size?.height ?? 0, columnsWidth: blogListColumns.columnsWidth })
 
   function refresh() {
     blogList.refresh()
@@ -47,7 +47,7 @@ function Blogs() {
       <Table<Blog>
         size="small"
         rowKey={'id' satisfies keyof Blog}
-        columns={columns}
+        columns={blogListColumns.columns}
         dataSource={blogList.dataSource}
         pagination={blogList.pagination}
         loading={blogList.loading}

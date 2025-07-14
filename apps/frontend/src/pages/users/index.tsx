@@ -14,11 +14,11 @@ function Users() {
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref)
   const drawerEdit = useDrawerEdit({ refresh })
-  const { columns, columnsWidth } = useUserListColumns({
+  const userListColumns = useUserListColumns({
     handleOpen: drawerEdit.handleOpen,
     refresh,
   })
-  const userList = useUserList({ filterHeight: size?.height ?? 0, columnsWidth })
+  const userList = useUserList({ filterHeight: size?.height ?? 0, columnsWidth: userListColumns.columnsWidth })
 
   function refresh() {
     userList.refresh()
@@ -39,7 +39,7 @@ function Users() {
       <Table<User>
         size="small"
         rowKey={'uuid' satisfies keyof User}
-        columns={columns}
+        columns={userListColumns.columns}
         dataSource={userList.dataSource}
         pagination={userList.pagination}
         loading={userList.loading}
