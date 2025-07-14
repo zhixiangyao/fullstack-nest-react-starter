@@ -1,10 +1,7 @@
-import type { WatermarkProps } from 'antd'
-import { useSize } from 'ahooks'
-import { Spin, Splitter, Watermark } from 'antd'
-import { useEffect, useMemo, useState } from 'react'
+import { Splitter } from 'antd'
 import { Navigate, useLocation } from 'react-router-dom'
 
-import { Progress } from '~/components/Progress'
+import { Container } from '~/layout/components/Container'
 import { Header } from '~/layout/components/Header'
 import { Main } from '~/layout/components/Main'
 import { Nav } from '~/layout/components/Nav'
@@ -16,44 +13,10 @@ function Layout() {
   const appStore = useAppStore()
   const userStore = useUserStore()
   const { leftWidth, rightWidth } = appStore
-  const { handleWindowSize, handleSplitterSizes } = appStore
-  const { token, user, handleGetCurrentUserInfo } = userStore
-  const watermarkConfig = useMemo<WatermarkProps>(
-    () => ({
-      content: user?.username,
-      gap: [150, 150],
-    }),
-    [user?.username],
-  )
-  const [loading, setLoading] = useState(true)
-  const [pathname, setPathname] = useState('/')
-  const size = useSize(document.querySelector('#root'))
-  const isAnimating = location.pathname !== pathname
+  const { handleSplitterSizes } = appStore
 
-  useEffect(() => {
-    size && handleWindowSize(size)
-  }, [handleWindowSize, size])
-
-  useEffect(() => {
-    setPathname(location.pathname)
-  }, [location.pathname])
-
-  useEffect(() => {
-    token && handleGetCurrentUserInfo().finally(() => {
-      setLoading(false)
-    })
-  }, [handleGetCurrentUserInfo, token])
-
-  if (!token) {
+  if (!userStore.token) {
     return <Navigate replace to="/auth" />
-  }
-
-  if (loading) {
-    return (
-      <div className="w-screen h-screen flex justify-center items-center">
-        <Spin spinning />
-      </div>
-    )
   }
 
   if (location.pathname === '/') {
@@ -61,9 +24,7 @@ function Layout() {
   }
 
   return (
-    <Watermark content={watermarkConfig.content} gap={watermarkConfig.gap}>
-      <Progress isAnimating={isAnimating} />
-
+    <Container>
       <Splitter onResize={handleSplitterSizes}>
         <Splitter.Panel size={leftWidth} min={80} max={400} className="!p-0" collapsible>
           <Nav />
@@ -75,7 +36,7 @@ function Layout() {
           <Main />
         </Splitter.Panel>
       </Splitter>
-    </Watermark>
+    </Container>
   )
 }
 

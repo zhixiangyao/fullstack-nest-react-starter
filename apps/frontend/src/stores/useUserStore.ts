@@ -56,6 +56,7 @@ const useUserStore = create<Store>()(
       },
       handleGetCurrentUserInfo: async () => {
         try {
+          await new Promise(resolve => setTimeout(resolve, 1000))
           const { data } = await fetchers.userFind()
           set(() => ({ user: data.user }))
         }
