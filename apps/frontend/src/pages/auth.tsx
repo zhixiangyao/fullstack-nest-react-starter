@@ -19,31 +19,33 @@ const rules = {
   email: [],
 } satisfies Record<string, FormItemProps['rules']>
 
-function Auth() {
-  const { remember, loading, token, user, handleLogin, handleCreate, handleRemember } = useUserStore()
+function useAuth() {
+  const { user, handleLogin, handleCreate } = useUserStore()
+  const [loading, setLoading] = useState(false)
   const { message } = AntdApp.useApp()
   const [form] = Form.useForm<TFieldType>()
   const [authType, setAuthType] = useState<TAuthType>('Login')
   const background = authType === 'Login' ? '/image1.png' : '/image2.png'
 
-  const handleFinish = useMemoizedFn(
-    async (values: TFieldType) => {
-      try {
-        if (values.username === undefined || values.password === undefined)
-          return
+  const handleFinish = useMemoizedFn(async (values: TFieldType) => {
+    if (values.username === undefined || values.password === undefined)
+      return
 
-        if (authType === 'Login')
-          await handleLogin(values)
-        if (authType === 'Register') {
-          await handleCreate(values, (e) => {
-            message.success(e.message)
-          })
-        }
+    try {
+      setLoading(true)
+
+      if (authType === 'Login')
+        await handleLogin(values)
+      if (authType === 'Register') {
+        await handleCreate(values, (e) => {
+          message.success(e.message)
+        })
       }
-      catch {}
-    },
-
-  )
+    }
+    finally {
+      setLoading(false)
+    }
+  })
 
   const handleInjectForm = useMemoizedFn(() => {
     form.setFieldsValue({
@@ -54,21 +56,35 @@ function Auth() {
 
   useEffect(handleInjectForm, [handleInjectForm])
 
+  return {
+    loading,
+    form,
+    authType,
+    background,
+    setAuthType,
+    handleFinish,
+  }
+}
+
+function Auth() {
+  const { token, remember, handleRemember } = useUserStore()
+  const auth = useAuth()
+
   if (token) {
     return <Navigate replace to="/" />
   }
 
   return (
     <main className="flex h-full w-full flex-col items-center pt-60 gap-6">
-      <Rain background={background} />
+      <Rain background={auth.background} />
 
       <Segmented<TAuthType>
         options={['Login', 'Register']}
-        value={authType}
-        onChange={setAuthType}
+        value={auth.authType}
+        onChange={auth.setAuthType}
         className="select-none z-10"
       />
-      <Form<TFieldType> name="auth" autoComplete="off" className="w-72 z-10" form={form} onFinish={handleFinish}>
+      <Form<TFieldType> name="auth" autoComplete="off" className="w-72 z-10" form={auth.form} onFinish={auth.handleFinish}>
         <Form.Item<TFieldType> name="username" rules={rules.username}>
           <Input prefix={<UserOutlined />} placeholder="Please enter the username." />
         </Form.Item>
@@ -77,7 +93,7 @@ function Auth() {
           <Input.Password prefix={<LockOutlined />} placeholder="Please enter the password." />
         </Form.Item>
 
-        {authType === 'Login' && (
+        {auth.authType === 'Login' && (
           <Form.Item>
             <Form.Item valuePropName="checked" noStyle>
               <Checkbox
@@ -91,15 +107,15 @@ function Auth() {
           </Form.Item>
         )}
 
-        {authType === 'Register' && (
+        {auth.authType === 'Register' && (
           <Form.Item<TFieldType> name="email" rules={rules.email}>
             <Input prefix={<CloudOutlined />} placeholder="Please enter your email address." />
           </Form.Item>
         )}
 
         <Form.Item>
-          <Button className="w-full select-none" type="primary" htmlType="submit" loading={loading}>
-            {authType}
+          <Button className="w-full select-none" type="primary" htmlType="submit" loading={auth.loading}>
+            {auth.authType}
           </Button>
         </Form.Item>
       </Form>

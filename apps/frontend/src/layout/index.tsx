@@ -14,13 +14,18 @@ import { useUserStore } from '~/stores/useUserStore'
 function Layout() {
   const location = useLocation()
   const appStore = useAppStore()
+  const userStore = useUserStore()
   const { leftWidth, rightWidth } = appStore
   const { handleWindowSize, handleSplitterSizes } = appStore
-  const { token, loaded, user, handleGetCurrentUserInfo } = useUserStore()
-  const watermarkConfig = useMemo<WatermarkProps>(() => ({
-    content: user?.username,
-    gap: [150, 150],
-  }), [user?.username])
+  const { token, user, handleGetCurrentUserInfo } = userStore
+  const watermarkConfig = useMemo<WatermarkProps>(
+    () => ({
+      content: user?.username,
+      gap: [150, 150],
+    }),
+    [user?.username],
+  )
+  const [loading, setLoading] = useState(true)
   const [pathname, setPathname] = useState('/')
   const size = useSize(document.querySelector('#root'))
   const isAnimating = location.pathname !== pathname
@@ -34,14 +39,16 @@ function Layout() {
   }, [location.pathname])
 
   useEffect(() => {
-    token && handleGetCurrentUserInfo()
+    token && handleGetCurrentUserInfo().finally(() => {
+      setLoading(false)
+    })
   }, [handleGetCurrentUserInfo, token])
 
   if (!token) {
     return <Navigate replace to="/auth" />
   }
 
-  if (!loaded) {
+  if (loading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
         <Spin spinning />
@@ -54,10 +61,7 @@ function Layout() {
   }
 
   return (
-    <Watermark
-      content={watermarkConfig.content}
-      gap={watermarkConfig.gap}
-    >
+    <Watermark content={watermarkConfig.content} gap={watermarkConfig.gap}>
       <Progress isAnimating={isAnimating} />
 
       <Splitter onResize={handleSplitterSizes}>
