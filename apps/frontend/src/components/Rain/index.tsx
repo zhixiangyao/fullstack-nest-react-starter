@@ -23,10 +23,13 @@ function Rain({ background }: Props) {
   })
 
   const handleReset = useMemoizedFn(() => {
-    raindropFxRef.current?.setBackground(void 0)
-    raindropFxRef.current?.stop()
-    raindropFxRef.current = void 0
-    currentBackground.current = void 0
+    try {
+      raindropFxRef.current?.setBackground('')
+      raindropFxRef.current?.stop()
+      raindropFxRef.current = void 0
+      currentBackground.current = void 0
+    }
+    catch {}
   })
 
   const handleUpdateBackground = useMemoizedFn(() => {
