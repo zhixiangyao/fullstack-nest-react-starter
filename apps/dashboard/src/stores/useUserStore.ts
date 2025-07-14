@@ -15,10 +15,7 @@ interface Store {
   handleClear: () => void
   handleLogin: (params: UserLoginRequest) => Promise<void>
   handleLogout: () => Promise<void>
-  handleCreate: (
-    params: UserCreateRequest,
-    successfulCallback?: (response: UserCreateResponse) => void
-  ) => Promise<void>
+  handleCreate: (params: UserCreateRequest, cb?: (response: UserCreateResponse) => void) => Promise<void>
   handleGetCurrentUserInfo: () => Promise<void>
 }
 
@@ -42,6 +39,7 @@ const useUserStore = create<Store>()(
         try {
           const { data } = await fetchers.userLogin(params)
           set(() => ({ token: data.token }))
+          await get().handleGetCurrentUserInfo()
         }
         catch {
           get().handleClear()
@@ -50,13 +48,12 @@ const useUserStore = create<Store>()(
       handleLogout: async () => {
         get().handleClear()
       },
-      handleCreate: async (params, successfulCallback) => {
+      handleCreate: async (params, cb) => {
         const response = await fetchers.userCreate(params)
-        successfulCallback?.(response)
+        cb?.(response)
       },
       handleGetCurrentUserInfo: async () => {
         try {
-          await new Promise(resolve => setTimeout(resolve, 1000))
           const { data } = await fetchers.userFind()
           set(() => ({ user: data.user }))
         }

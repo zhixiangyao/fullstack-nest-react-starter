@@ -1,4 +1,4 @@
-import { useSize } from 'ahooks'
+import { useMount, useSize } from 'ahooks'
 import { useEffect } from 'react'
 
 import { AntApp } from '~/components/AntApp'
@@ -18,9 +18,9 @@ function App() {
     size && handleWindowSize(size)
   }, [handleWindowSize, size])
 
-  useEffect(() => {
+  useMount(() => {
     token && handleGetCurrentUserInfo()
-  }, [handleGetCurrentUserInfo, token])
+  })
 
   return (
     <AntConfigProvider>
