@@ -9,7 +9,7 @@ import { RolesGuard } from '~/common/guards/roles.guard'
 import { LoggerDurationInterceptor } from '~/common/interceptors/logger-duration.interceptor'
 import { loggerMiddleware } from '~/common/middleware/logger.middleware'
 import { AuthModule } from '~/modules/auth/auth.module'
-import { FrontendStaticModule } from '~/modules/frontend-static.module'
+import { DashboardStaticModule } from '~/modules/dashboard-static.module'
 import { PrismaModule } from '~/modules/prisma/prisma.module'
 import { UserModule } from '~/modules/user/user.module'
 import { BlogModule } from './modules/blog/blog.module'
@@ -29,9 +29,9 @@ const imports: ModuleMetadata['imports'] = [
   BlogModule,
 ]
 
-// Directly use FrontendStaticModule to provide packaged static.
+// Directly use DashboardStaticModule to provide packaged static.
 if (process.env.NODE_ENV !== 'dev') {
-  imports.push(FrontendStaticModule.forRoot())
+  imports.push(DashboardStaticModule.forRoot())
 }
 
 @Module({

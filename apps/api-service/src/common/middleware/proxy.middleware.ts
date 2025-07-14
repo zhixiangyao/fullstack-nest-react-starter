@@ -12,6 +12,6 @@ const requestHandler = createProxyMiddleware({
   },
 })
 
-export async function frontendProxyMiddleware(req: Request, res: Response, next: NextFunction) {
+export async function dashboardProxyMiddleware(req: Request, res: Response, next: NextFunction) {
   requestHandler(req, res, next)
 }

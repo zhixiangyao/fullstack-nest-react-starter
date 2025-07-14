@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core'
 import compression from 'compression'
 
 import { AppModule } from '~/app.module'
-import { frontendProxyMiddleware } from '~/common/middleware/proxy.middleware'
+import { dashboardProxyMiddleware } from '~/common/middleware/proxy.middleware'
 import { sleepMiddleware } from '~/common/middleware/sleep.middleware'
 import 'dotenv/config'
 
@@ -22,8 +22,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions))
   app.use(compression())
   app.enableCors()
-  // Access frontend resources through middleware proxy (5088 → 5089).
-  process.env.NODE_ENV === 'dev' && app.use(frontendProxyMiddleware)
+  // Access dashboard resources through middleware proxy (5088 → 5089).
+  process.env.NODE_ENV === 'dev' && app.use(dashboardProxyMiddleware)
   process.env.NODE_ENV === 'dev' && app.use(sleepMiddleware)
 
   await app.listen(5088, '0.0.0.0')

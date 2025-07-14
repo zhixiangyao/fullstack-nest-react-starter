@@ -88,5 +88,5 @@ pm2 start ecosystem.config.js
 
 ## Hint
 
-- Development environment: Access frontend resources through middleware proxy (5088 → 5089).
-- Production environment: Directly use FrontendStaticModule to provide packaged static resources.
+- Development environment: Access dashboard resources through middleware proxy (5088 → 5089).
+- Production environment: Directly use DashboardStaticModule to provide packaged static resources.

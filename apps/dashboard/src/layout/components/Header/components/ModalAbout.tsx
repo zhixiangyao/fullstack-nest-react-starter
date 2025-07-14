@@ -29,8 +29,8 @@ const content = `
 | Type | Packages |
 | --: | :-: |
 | Common | [\`Dayjs\`][dayjs] / [\`TypeScript\`][ts] |
-| Backend | [\`Nestjs\`][nestjs] / [\`Prisma\`][prisma] / [\`PostgreSQL\`][postgres] / [\`Rxjs\`][rxjs] |
-| Frontend | [\`React\`][react] / [\`React Router\`][react-router] / [\`React Flow\`][xyflow] / [\`Zustand\`][zustand] / [\`Antd\`][antd] / [\`Ahooks\`][ahooks] / [\`Remark\`][remark] / [\`Tailwindcss\`][tailwindcss] / [\`Vite\`][vite] |
+| Api Service | [\`Nestjs\`][nestjs] / [\`Prisma\`][prisma] / [\`PostgreSQL\`][postgres] / [\`Rxjs\`][rxjs] |
+| Dashboard | [\`React\`][react] / [\`React Router\`][react-router] / [\`React Flow\`][xyflow] / [\`Zustand\`][zustand] / [\`Antd\`][antd] / [\`Ahooks\`][ahooks] / [\`Remark\`][remark] / [\`Tailwindcss\`][tailwindcss] / [\`Vite\`][vite] |
 `
 
 interface Props {

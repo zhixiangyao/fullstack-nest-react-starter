@@ -4,10 +4,10 @@ import { Module } from '@nestjs/common'
 import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({})
-export class FrontendStaticModule {
+export class DashboardStaticModule {
   static forRoot(): DynamicModule {
     return ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../../frontend/dist'),
+      rootPath: join(__dirname, '../../../dashboard/dist'),
       exclude: ['/api/(.*)'],
     })
   }

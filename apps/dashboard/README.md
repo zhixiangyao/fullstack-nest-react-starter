@@ -1,4 +1,4 @@
-# frontend
+# dashboard
 
 This template is based on the template [vite-react-ts-antd-starter](https://github.com/zhixiangyao/vite-react-ts-antd-starter)
 
@@ -9,11 +9,11 @@ This template is based on the template [vite-react-ts-antd-starter](https://gith
 click it http://localhost:3000
 
 ```shell
-pnpm frontend:dev
+pnpm dashboard:dev
 ```
 
 ### Build
 
 ```shell
-pnpm frontend:build
+pnpm dashboard:build
 ```
