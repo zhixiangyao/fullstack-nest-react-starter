@@ -65,6 +65,10 @@ function DrawerEdit(props: Props) {
           <Input showCount placeholder="Please input the Email" />
         </Form.Item>
 
+        <Form.Item<User> label="Avatar" name="avatar">
+          <Input showCount placeholder="Please input the Avatar URL" />
+        </Form.Item>
+
         <Form.Item<User> label="Active" name="isActive">
           <Switch
             checkedChildren="Active"

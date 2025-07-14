@@ -9,6 +9,7 @@ export interface User {
   updatedAt: Date
   lastLogin: Date | null
   email: string | null
+  avatar: string | null
   blogsTotal: number
 }
 
@@ -40,6 +41,7 @@ export interface UserSwitchResponse extends UserCreateResponse {}
 
 export interface UserUpdateRequest extends UserSwitchRequest {
   email?: User['email']
+  avatar?: User['avatar']
 }
 
 export interface UserUpdateResponse extends UserCreateResponse {}

@@ -34,6 +34,7 @@ async function main() {
         roles: {
           create: [{ roleId: adminRole.id }],
         },
+        avatar: `https://avatar.iran.liara.run/username?username=root`,
       },
     }),
   ]
@@ -47,6 +48,7 @@ async function main() {
           roles: {
             create: [{ roleId: userRole.id }],
           },
+          avatar: `https://avatar.iran.liara.run/username?username=user${i}`,
         },
       }),
     )

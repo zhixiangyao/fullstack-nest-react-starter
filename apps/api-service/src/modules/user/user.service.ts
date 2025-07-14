@@ -17,6 +17,7 @@ interface UserUpdateParams {
   username: User['username']
   isActive?: User['isActive']
   email?: User['email']
+  avatar?: User['avatar']
   lastLogin?: User['lastLogin']
   updatedAt?: User['updatedAt']
 }
@@ -38,12 +39,16 @@ export class UserService {
 
   async create(params: UserCreateParams): Promise<User> {
     const hashedPassword = await this.passwordService.hashPassword(params.password)
+    const role = await this.prisma.role.findUnique({ where: { name: 'USER' } })
 
     const user = await this.prisma.user.create({
       data: {
         username: params.username,
         hashedPassword,
         email: params.email,
+        roles: {
+          create: [{ roleId: role.id }],
+        },
       },
     })
 
@@ -56,6 +61,7 @@ export class UserService {
       data: {
         isActive: params.isActive,
         email: params.email,
+        avatar: params.avatar,
         lastLogin: params.lastLogin,
         updatedAt: params.updatedAt,
       },

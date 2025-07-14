@@ -4,7 +4,7 @@ import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-valida
 export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
-  readonly username: User['email']
+  readonly username: User['username']
 
   @IsString()
   @IsNotEmpty()
@@ -29,6 +29,10 @@ export class UserUpdateDto extends UserSwitchDto {
   @IsString()
   @IsOptional()
   readonly email?: User['email']
+
+  @IsString()
+  @IsOptional()
+  readonly avatar?: User['avatar']
 }
 
 export class UserRemoveDto {

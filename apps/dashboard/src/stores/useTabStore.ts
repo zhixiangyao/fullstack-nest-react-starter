@@ -14,6 +14,7 @@ interface Store {
   handleAddTab: (tab: Tab) => void
   handleRemoveTab: (id: string) => void
   handleSetActiveTab: (id: string) => void
+  handleClear: () => void
 }
 
 const useTabStore = create<Store>()(
@@ -60,6 +61,9 @@ const useTabStore = create<Store>()(
       },
       handleSetActiveTab: (id) => {
         set({ activeTabId: id })
+      },
+      handleClear: () => {
+        set({ tabs: [], activeTabId: null })
       },
     }),
     {

@@ -3,7 +3,7 @@ import type { ColumnsType } from 'antd/es/table'
 import type { TField } from '~/components/Filter'
 import type { User, UserFindAllRequest } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
-import { Form, Tag } from 'antd'
+import { Avatar, Form, Tag } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
@@ -46,6 +46,16 @@ function useUserList({ filterHeight }: Prams) {
     () =>
       [
         {
+          title: 'Avatar',
+          dataIndex: 'avatar',
+          key: 'avatar',
+          width: 65,
+          fixed: 'left',
+          render(_, record) {
+            return <Avatar src={record.avatar ?? void 0}>{!record.avatar ? record.username : null}</Avatar>
+          },
+        },
+        {
           title: 'Username',
           dataIndex: 'username',
           key: 'username',
@@ -75,7 +85,7 @@ function useUserList({ filterHeight }: Prams) {
           title: 'Blogs Total',
           dataIndex: 'blogsTotal',
           key: 'blogsTotal',
-          width: 120,
+          width: 100,
         },
         {
           title: 'is Active?',

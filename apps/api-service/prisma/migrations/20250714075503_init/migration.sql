@@ -8,6 +8,7 @@ CREATE TABLE "User" (
     "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "lastLogin" TIMESTAMPTZ,
     "email" TEXT,
+    "avatar" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("uuid")
 );

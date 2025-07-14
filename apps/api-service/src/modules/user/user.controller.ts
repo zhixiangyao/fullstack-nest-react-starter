@@ -14,14 +14,7 @@ import { Public } from '~/common/decorators/public.decorator'
 import { Roles } from '~/common/decorators/roles.decorator'
 import { User } from '~/common/decorators/user.decorator'
 
-import {
-  UserCreateDto,
-  UserFindAllDto,
-  UserFindDto,
-  UserRemoveDto,
-  UserSwitchDto,
-  UserUpdateDto,
-} from './user.dto'
+import { UserCreateDto, UserFindAllDto, UserFindDto, UserRemoveDto, UserSwitchDto, UserUpdateDto } from './user.dto'
 import { UserService } from './user.service'
 
 @Controller('user')
@@ -46,7 +39,7 @@ export class UserController {
   @Header('content-type', 'application/json')
   async switch(@Body() body: UserSwitchDto, @User() user: Request['user']): Promise<ResponseSwitch> {
     if (user.username === body.username && body.isActive !== void 0) {
-      throw new HttpException('Users cannot modify their own isActive status!', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Admin cannot unenable his own isActive!', HttpStatus.BAD_REQUEST)
     }
 
     await this.userService.update(body)
@@ -58,8 +51,8 @@ export class UserController {
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: UserUpdateDto, @User() user: Request['user']): Promise<ResponseUpdate> {
-    if (user.username === body.username && body.isActive !== void 0) {
-      throw new HttpException('Users cannot modify their own isActive status!', HttpStatus.BAD_REQUEST)
+    if (user.username === body.username && body.isActive === false) {
+      throw new HttpException('Admin cannot unenable his own isActive!', HttpStatus.BAD_REQUEST)
     }
 
     await this.userService.update(body)

@@ -23,6 +23,7 @@ function useDrawerEdit() {
       form.setFieldsValue({
         username: data.user.username,
         email: data.user.email,
+        avatar: data.user.avatar,
         isActive: data.user.isActive,
       })
     }
@@ -46,6 +47,7 @@ function useDrawerEdit() {
       await fetchers.userUpdate({
         username: user?.username,
         email: values.email,
+        avatar: values.avatar,
         isActive: values.isActive,
       })
       message.success('Edit successful!')

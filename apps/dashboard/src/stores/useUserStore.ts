@@ -5,6 +5,8 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 import * as fetchers from '~/fetchers'
 
+import { useTabStore } from './useTabStore'
+
 interface Store {
   remember: boolean
   token: string | null
@@ -46,6 +48,7 @@ const useUserStore = create<Store>()(
         }
       },
       handleLogout: async () => {
+        useTabStore.getState().handleClear()
         get().handleClear()
       },
       handleCreate: async (params, cb) => {

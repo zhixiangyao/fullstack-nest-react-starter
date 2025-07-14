@@ -1,7 +1,6 @@
 import type { MenuProps } from 'antd'
-import { HeartTwoTone } from '@ant-design/icons'
 import { useMemoizedFn } from 'ahooks'
-import { Menu } from 'antd'
+import { Avatar, Menu } from 'antd'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -26,7 +25,7 @@ function Nav() {
   return (
     <nav className="min-h-screen relative">
       <div className="sticky top-0 z-[1] flex h-[70px] w-full cursor-pointer select-none items-center justify-center">
-        <HeartTwoTone className="text-xl" />
+        <Avatar src={user?.avatar ?? void 0}>{!user?.avatar ? user?.username : null}</Avatar>
       </div>
 
       <div
