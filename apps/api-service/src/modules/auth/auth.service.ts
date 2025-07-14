@@ -15,7 +15,7 @@ interface AuthSignInParams {
 export class AuthService {
   constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  async signIn(params: AuthSignInParams) {
+  async login(params: AuthSignInParams) {
     if ((await this.userService.validate(params)) === false) {
       throw new UnauthorizedException('Password error or account error!')
     }
