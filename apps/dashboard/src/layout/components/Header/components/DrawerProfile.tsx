@@ -13,7 +13,7 @@ interface Props {
   setOpen: Dispatch<boolean>
 }
 
-function DrawerUserInfo({ open, setOpen }: Props) {
+function DrawerProfile({ open, setOpen }: Props) {
   const { user } = useUserStore()
 
   const handleClose = useMemoizedFn(() => {
@@ -64,7 +64,7 @@ function DrawerUserInfo({ open, setOpen }: Props) {
 
   return (
     <Drawer
-      title="User Info"
+      title="Profile"
       placement="right"
       open={open}
       width={600}
@@ -77,4 +77,4 @@ function DrawerUserInfo({ open, setOpen }: Props) {
   )
 }
 
-export { DrawerUserInfo }
+export { DrawerProfile }

@@ -15,14 +15,14 @@ import { useMemo, useState } from 'react'
 import { useAppStore } from '~/stores/useAppStore'
 import { useUserStore } from '~/stores/useUserStore'
 
-import { DrawerUserInfo } from './components/DrawerUserInfo'
+import { DrawerProfile } from './components/DrawerProfile'
 import { ModalAbout } from './components/ModalAbout'
 import { Tabs } from './components/Tabs'
 
 const MenuKey = {
   THEME_LIGHT: 'THEME_LIGHT',
   THEME_DARK: 'THEME_DARK',
-  USER_INFO: 'USER_INFO',
+  PROFIlE: 'PROFIlE',
   ABOUT: 'ABOUT',
   LOGOUT: 'LOGOUT',
 } as const
@@ -39,8 +39,8 @@ const items: MenuProps['items'] = [
     icon: <MoonOutlined />,
   },
   {
-    label: 'User Info',
-    key: MenuKey.USER_INFO,
+    label: 'Profile',
+    key: MenuKey.PROFIlE,
     icon: <UserOutlined />,
   },
   {
@@ -58,7 +58,7 @@ const items: MenuProps['items'] = [
 function Header() {
   const { token } = theme.useToken()
   const appStore = useAppStore()
-  const [openUserInfo, setOpenUserInfo] = useState(false)
+  const [openProfile, setOpenProfile] = useState(false)
   const [openAbout, setOpenAbout] = useState(false)
   const { handleLogout } = useUserStore()
   const { message } = AntdApp.useApp()
@@ -73,8 +73,8 @@ function Header() {
         appStore.handleSwitchMode('dark')
         break
 
-      case MenuKey.USER_INFO:
-        setOpenUserInfo(true)
+      case MenuKey.PROFIlE:
+        setOpenProfile(true)
         break
 
       case MenuKey.ABOUT:
@@ -113,7 +113,7 @@ function Header() {
         </div>
       </header>
 
-      <DrawerUserInfo open={openUserInfo} setOpen={setOpenUserInfo} />
+      <DrawerProfile open={openProfile} setOpen={setOpenProfile} />
       <ModalAbout open={openAbout} setOpen={setOpenAbout} />
     </>
   )
