@@ -6,7 +6,7 @@ This template is based on the template [vite-react-ts-antd-starter](https://gith
 
 ### Development
 
-click it http://localhost:3000
+click it http://localhost:5089
 
 ```shell
 pnpm dashboard:dev

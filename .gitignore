@@ -1,11 +1,15 @@
+# other
 .DS_Store
+.npmrc
+.cache
 .idea/
 node_modules
 dist
-.npmrc
-.cache
 logs
 generated
+build
+
+# debug
 *.log
 npm-debug.log*
 pnpm-debug.log*

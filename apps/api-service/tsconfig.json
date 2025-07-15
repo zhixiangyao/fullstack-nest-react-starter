@@ -9,7 +9,6 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "typeRoots": ["./node_modules/@types/"],
     "types": ["node"],
     "strict": true,
     "strictBindCallApply": false,
