@@ -9,7 +9,7 @@ export default defineConfig({
     emptyOutDir: false,
     lib: {
       entry: 'src/index.ts',
-      name: 'Utils',
+      name: 'utils',
       formats: ['es'],
       fileName: format => `index.${format}.js`,
     },
