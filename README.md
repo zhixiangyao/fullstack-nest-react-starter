@@ -86,6 +86,9 @@ pnpm build
 pm2 start ecosystem.config.js
 ```
 
+- Frontend: http://localhost:5173
+- Api Service and Dashboard: http://localhost:5088
+
 ## Hint
 
 - Development environment: Access dashboard resources through middleware proxy (5088 → 5089).

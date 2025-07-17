@@ -241,6 +241,9 @@ importers:
       '@remix-run/serve':
         specifier: 2.16.8
         version: 2.16.8(typescript@5.8.3)
+      cross-env:
+        specifier: 7.0.3
+        version: 7.0.3
       isbot:
         specifier: 4.4.0
         version: 4.4.0

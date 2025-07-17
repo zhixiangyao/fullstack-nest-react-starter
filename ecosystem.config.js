@@ -1,8 +1,13 @@
 module.exports = {
   apps: [
     {
-      name: 'fullstack-nest-react-starter',
-      script: 'pnpm start',
+      name: 'Api Service and Dashboard',
+      script: 'pnpm start:dashboard',
+      autorestart: true,
+    },
+    {
+      name: 'Frontend',
+      script: 'pnpm start:frontend',
       autorestart: true,
     },
   ],

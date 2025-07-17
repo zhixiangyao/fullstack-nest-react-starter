@@ -9,11 +9,11 @@ This template is based on the template [vite-react-ts-antd-starter](https://gith
 click it http://localhost:5089
 
 ```shell
-pnpm dashboard:dev
+pnpm dev
 ```
 
 ### Build
 
 ```shell
-pnpm dashboard:build
+pnpm build
 ```

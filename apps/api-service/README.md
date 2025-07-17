@@ -4,23 +4,30 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-## Installation
+## Usage
+
+### Installation
 
 - Prisma
 
 ```bash
 # if it is running for the first time, pls run
-pnpm api-service:db:init
+pnpm db:init
 # generator seed
-pnpm api-service:db:seed
+pnpm db:seed
 ```
 
-## Running the app
+### Development
 
-```bash
-# watch mode
-pnpm run api-service:start:dev
+click it http://localhost:5088
 
-# production mode
-pnpm run api-service:start:prod
+```shell
+pnpm start:dev
+```
+
+### Build
+
+```shell
+pnpm build
+pnpm start:prod
 ```

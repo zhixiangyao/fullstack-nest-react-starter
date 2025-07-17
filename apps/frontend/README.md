@@ -9,11 +9,12 @@
 click it http://localhost:5173
 
 ```shell
-pnpm frontend:dev
+pnpm start:dev
 ```
 
 ### Build
 
 ```shell
-pnpm frontend:build
+pnpm build
+pnpm start:prod
 ```
