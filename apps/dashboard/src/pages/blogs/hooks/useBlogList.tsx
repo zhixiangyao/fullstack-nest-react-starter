@@ -4,7 +4,7 @@ import type { SorterResult } from 'antd/es/table/interface'
 import type { TField } from '~/components/Filter'
 import type { Blog, BlogFindAllRequest } from '~/fetchers'
 import { useMemoizedFn, useRequest } from 'ahooks'
-import { Form, Tag } from 'antd'
+import { Form, Tag, Typography } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo, useRef } from 'react'
 import { FormatOptions, formatTime, getColorByDate, timeAgo } from 'utils'
@@ -116,10 +116,36 @@ function useBlogList(prams: Prams) {
           width: 100,
         },
         {
+          title: 'Category',
+          dataIndex: 'category' satisfies keyof Blog,
+          key: 'category',
+          width: 150,
+          render(_, { category }) {
+            if (!category)
+              return '/'
+
+            return <Tag className="select-none">{category}</Tag>
+          },
+        },
+        {
           title: 'Tags',
           dataIndex: 'tags' satisfies keyof Blog,
           key: 'tags',
           width: 300,
+          render(_, { tags }) {
+            if (tags.length === 0)
+              return '/'
+
+            return (
+              <Typography.Paragraph ellipsis={{ tooltip: `a total of ${tags.length}` }} className="!mb-0">
+                {tags.map(tag => (
+                  <Tag key={tag} className="select-none">
+                    {tag}
+                  </Tag>
+                ))}
+              </Typography.Paragraph>
+            )
+          },
         },
         {
           title: 'Created At',

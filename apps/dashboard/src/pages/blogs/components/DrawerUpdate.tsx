@@ -90,7 +90,7 @@ function DrawerUpdate(props: Props) {
 
               <Col span={12}>
                 <Form.Item<Blog> label="Category" name="category" rules={rules.category}>
-                  <Input showCount placeholder="Please input the Category" maxLength={50} />
+                  <Input showCount placeholder="Please input the Category" maxLength={20} />
                 </Form.Item>
               </Col>
             </Row>

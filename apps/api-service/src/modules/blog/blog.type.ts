@@ -1,4 +1,4 @@
-import type { Blog } from '@prisma/client'
+import type { Blog, User } from '@prisma/client'
 
 export interface ResponseCreate {
   message: string
@@ -12,13 +12,13 @@ export interface ResponseRemove extends ResponseCreate {}
 
 export interface ResponseFind {
   data: {
-    blog: Blog
+    blog: Blog & { authorName: User['username'] }
   }
 }
 
 export interface ResponseFindAll {
   data: {
-    list: Blog[]
+    list: ResponseFind['data']['blog'][]
     total: number
     pageNo: number
     pageSize: number

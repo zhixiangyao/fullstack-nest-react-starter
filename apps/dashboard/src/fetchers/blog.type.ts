@@ -8,6 +8,7 @@ export interface Blog {
   createdAt: Date
   updatedAt: Date
   authorUuid: string
+  authorName: string
   imageUrl: string | null
   tags: string[]
   category: string | null

@@ -2,6 +2,7 @@ import type { Blog, Prisma, User } from '@prisma/client'
 import type { ResponseFind, ResponseFindAll, ResponseFindAllTags } from './blog.type'
 import { Injectable } from '@nestjs/common'
 
+import { deleteProperty } from 'utils'
 import { PrismaService } from '~/modules/prisma/prisma.service'
 
 interface BlogCreateParams {
@@ -94,15 +95,25 @@ export class BlogService {
   }
 
   async find(params: BlogFindParams): Promise<ResponseFind['data']['blog']> {
-    const blog = await this.prisma.blog.findUnique({
+    const _blog = await this.prisma.blog.findUnique({
       where: {
         author: { uuid: params.uuid },
         id: params.id,
         slug: params.slug,
       },
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
     })
 
-    return blog
+    const authorName = _blog.author.username
+    const blogWithoutAuthor = deleteProperty(_blog, 'author')
+
+    return { ...blogWithoutAuthor, authorName }
   }
 
   async findAll(params: BlogFindAllParams): Promise<ResponseFindAll['data']> {
@@ -128,12 +139,27 @@ export class BlogService {
       take,
       where,
       orderBy,
+      include: {
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
     })
 
     const total = await this.prisma.blog.count({ where })
 
     return {
-      list,
+      list: list.map((_blog) => {
+        const authorName = _blog.author.username
+        const blogWithoutAuthor = deleteProperty(_blog, 'author')
+
+        return {
+          ...blogWithoutAuthor,
+          authorName,
+        } satisfies ResponseFindAll['data']['list'][number]
+      }),
       total,
       pageNo,
       pageSize,

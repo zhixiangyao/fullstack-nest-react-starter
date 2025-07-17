@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { lazy, memo, Suspense } from 'react'
 
-import { fetchBlogPost } from '~/fetchers'
+import { fetchBlogFind } from '~/fetchers'
 
 const Markdown = memo(lazy(() => import('markdown').then(({ Markdown }) => ({ default: Markdown }))))
 
@@ -11,8 +11,8 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const blog = await fetchBlogPost(params.slug)
-  return blog.data.blog
+  const res = await fetchBlogFind({ slug: params.slug })
+  return res.data.blog
 }
 
 export default function Blog() {

@@ -29,7 +29,7 @@ export default antfu(
     },
   },
   {
-    files: ['apps/api-service/**/*.ts', 'apps/api-service/**/*.mjs', 'packages/**/*.js'],
+    files: ['apps/api-service/**/*.ts', 'apps/api-service/**/*.mjs', 'packages/api-service/**/*.js'],
     rules: {
       'ts/consistent-type-imports': ['off'],
     },

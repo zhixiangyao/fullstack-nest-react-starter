@@ -1,40 +1,33 @@
 import type { MetaFunction } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
+
+import { BLogList } from '~/components/BlogList'
+import { fetchBlogFindAll } from '~/fetchers'
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'New Remix App' },
-    { name: 'description', content: 'Welcome to Remix!' },
-  ]
+  return [{ title: 'New Remix App' }, { name: 'description', content: 'Welcome to Remix!' }]
+}
+
+export async function loader() {
+  const res = await fetchBlogFindAll()
+  return res.data.list
 }
 
 export default function Index() {
+  const list = useLoaderData<typeof loader>()
+
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
-          <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
-            Welcome to
-            {' '}
-            <span className="sr-only">Remix</span>
-          </h1>
-          <div className="h-[144px] w-[434px]">
-            <img
-              src="/logo-light.png"
-              alt="Remix"
-              className="block w-full dark:hidden"
-            />
-            <img
-              src="/logo-dark.png"
-              alt="Remix"
-              className="hidden w-full dark:block"
-            />
-          </div>
-        </header>
-        <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-          <p className="leading-6 text-gray-700 dark:text-gray-200">
-            What&apos;s next?
-          </p>
-        </nav>
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-10 text-center">Latest Blog Posts 📝</h1>
+
+        {list.length === 0
+          ? (
+              <p className="text-center text-gray-600 text-lg">No blog posts found. Check back soon!</p>
+            )
+          : (
+              <BLogList list={list} />
+            )}
       </div>
     </div>
   )

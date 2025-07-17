@@ -1,5 +1,9 @@
+import type { Blog } from '~/types'
+
 async function fetchPost<T>(url: string, body: BodyInit | null | undefined) {
-  const response = await fetch(url, {
+  const baseURL = 'http://localhost:5088'
+
+  const response = await fetch(`${baseURL}${url}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -12,23 +16,14 @@ async function fetchPost<T>(url: string, body: BodyInit | null | undefined) {
   return result as T
 }
 
-interface Blog {
-  id: number
-  title: string
-  content: string
-  slug: string
-  published: boolean
-  views: number
-  createdAt: Date
-  updatedAt: Date
-  authorUuid: string
-  imageUrl: string | null
-  tags: string[]
-  category: string | null
+export async function fetchBlogFind(data: { slug?: string }) {
+  const result = fetchPost<{ data: { blog: Blog | null } }>('/api/blog/find', JSON.stringify(data))
+
+  return result
 }
 
-export async function fetchBlogPost(slug?: string) {
-  const url = `http://localhost:5088/api/blog/find`
-  const body = JSON.stringify({ slug })
-  return fetchPost<{ data: { blog: Blog | null } }>(url, body)
+export async function fetchBlogFindAll() {
+  const result = await fetchPost<{ data: { list: Blog[] } }>('/api/blog/find-all', JSON.stringify({ pageSize: 10000, published: true }))
+
+  return result
 }
