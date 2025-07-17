@@ -9,7 +9,7 @@
     "dev": "tsc --emitDeclarationOnly && vite build --watch",
     "build": "tsc --emitDeclarationOnly && vite build"
   },
-  "dependencies": {
+  "peerDependencies": {
     "dayjs": "1.11.13"
   },
   "devDependencies": {
