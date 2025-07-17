@@ -2,7 +2,7 @@ import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
 import { Button, Col, Drawer, Form, Input, Row, Switch } from 'antd'
-import { Markdown } from 'markdown'
+import { MarkdownRaw } from 'markdown'
 import { useMemo } from 'react'
 import { stringCapitalization } from 'utils'
 
@@ -111,12 +111,11 @@ function DrawerUpdate(props: Props) {
           <Col xs={0} xl={12} xxl={14}>
             <Form.Item label="Markdown" className="!mb-0">
               <Container className="dark:bg-[#141414]">
-                <Markdown
+                <MarkdownRaw
                   className="overflow-y-auto"
                   style={useMemo(() => ({ height: (appStore.size?.height ?? 0) - 194 }), [appStore.size?.height])}
-                >
-                  {content}
-                </Markdown>
+                  content={content}
+                />
               </Container>
             </Form.Item>
           </Col>

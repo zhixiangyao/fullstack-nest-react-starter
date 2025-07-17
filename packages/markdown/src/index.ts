@@ -1,1 +1,1 @@
-export { Markdown } from './Markdown'
+export { Markdown, MarkdownRaw, processMarkdown } from './Markdown'

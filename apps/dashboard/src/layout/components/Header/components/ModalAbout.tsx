@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react'
 import { useMemoizedFn } from 'ahooks'
 import { Button, Modal } from 'antd'
-import { Markdown } from 'markdown'
+import { MarkdownRaw } from 'markdown'
 
 const content = `
 [project]: https://github.com/zhixiangyao/fullstack-nest-react-starter
@@ -53,9 +53,7 @@ function ModalAbout({ open, setOpen }: Props) {
         <Button type="primary" onClick={handleCancel}>Ok</Button>
       }
     >
-      <Markdown>
-        {content}
-      </Markdown>
+      <MarkdownRaw content={content} />
     </Modal>
   )
 }

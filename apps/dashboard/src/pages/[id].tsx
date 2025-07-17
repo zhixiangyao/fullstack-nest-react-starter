@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks'
 import { Spin } from 'antd'
-import { Markdown } from 'markdown'
+import { MarkdownRaw } from 'markdown'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
@@ -18,7 +18,7 @@ function Blog() {
     <Spin spinning={loading}>
 
       <main className="min-h-full min-w-full flex justify-center overflow-y-auto px-4">
-        <Markdown className="w-[1280px]">{data?.data.blog.content}</Markdown>
+        <MarkdownRaw className="w-[1280px]" content={data?.data.blog.content} />
       </main>
     </Spin>
   )

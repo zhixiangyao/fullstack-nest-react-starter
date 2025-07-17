@@ -1,10 +1,8 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { lazy, memo, Suspense } from 'react'
+import { Markdown, processMarkdown } from 'markdown'
 
 import { fetchBlogFind } from '~/fetchers'
-
-const Markdown = memo(lazy(() => import('markdown').then(({ Markdown }) => ({ default: Markdown }))))
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Blog Post' }, { name: 'description', content: 'Welcome to the blog!' }]
@@ -12,7 +10,12 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const res = await fetchBlogFind({ slug: params.slug })
-  return res.data.blog
+  const title = res.data.blog?.title
+  const content = res.data.blog?.content
+  return {
+    title,
+    html: content ? await processMarkdown(content) : '',
+  }
 }
 
 export default function Blog() {
@@ -21,9 +24,7 @@ export default function Blog() {
     <div className="min-h-full min-w-full flex flex-col items-center overflow-y-auto px-4">
       <div>{blog?.title}</div>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <Markdown className="w-[1280px]">{blog?.content}</Markdown>
-      </Suspense>
+      <Markdown className="max-w-[1280px] w-full" html={blog?.html} />
     </div>
   )
 }

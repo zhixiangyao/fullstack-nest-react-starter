@@ -4,11 +4,7 @@ import { defineConfig } from 'vite'
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    libInjectCss(),
-  ],
+  plugins: [react(), tailwindcss(), libInjectCss()],
   logLevel: 'error',
   build: {
     target: 'esnext',
@@ -21,11 +17,13 @@ export default defineConfig({
       fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: ['react', 'react/jsx-runtime', 'remark-parse'],
       output: {
         globals: {
           react: 'React',
         },
+        // This line is key! It controls all chunk names.
+        chunkFileNames: '[name].js', // Or just '[name].js' if you prefer them directly in 'dist'
       },
     },
   },
