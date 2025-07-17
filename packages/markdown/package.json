@@ -1,0 +1,40 @@
+{
+  "name": "markdown",
+  "type": "module",
+  "version": "0.1.0",
+  "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --emitDeclarationOnly && vite build --watch",
+    "build": "tsc --emitDeclarationOnly && vite build"
+  },
+  "peerDependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "rehype-stringify": "10.0.1",
+    "remark-code-title": "0.2.5",
+    "remark-emoji": "5.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "unified": "11.0.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.11",
+    "@types/node": "22.15.27",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "4.6.0",
+    "tailwindcss": "4.1.11",
+    "typescript": "5.8.3",
+    "vite": "npm:rolldown-vite@latest",
+    "vite-plugin-lib-inject-css": "2.2.2"
+  }
+}

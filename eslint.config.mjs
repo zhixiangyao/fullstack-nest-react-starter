@@ -12,7 +12,14 @@ export default antfu(
     files: ['packages/**/*.ts', 'packages/**/*.mjs', 'packages/**/*.js'],
   },
   {
-    files: ['apps/dashboard/**/*.ts', 'apps/dashboard/**/*.tsx'],
+    files: [
+      'apps/dashboard/**/*.ts',
+      'apps/dashboard/**/*.tsx',
+      'apps/frontend/**/*.ts',
+      'apps/frontend/**/*.tsx',
+      'packages/markdown/**/*.ts',
+      'packages/markdown/**/*.tsx',
+    ],
     rules: {
       'no-template-curly-in-string': ['off'],
       'react/no-clone-element': ['off'],

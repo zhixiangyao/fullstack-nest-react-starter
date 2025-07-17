@@ -1,23 +1,17 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import rehypeStringify from 'rehype-stringify'
-import remarkCodeTitle from 'remark-code-title'
-import remarkEmoji from 'remark-emoji'
-import remarkGfm from 'remark-gfm'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 
 import './Markdown.css'
 
-async function processMarkdown(markdownText: string) {
+export async function processMarkdown(markdownText: string) {
   const file = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkEmoji)
-    .use(remarkCodeTitle)
-    .use(remarkRehype)
-    .use(rehypeStringify)
+    .use((await import('remark-parse')).default)
+    .use((await import('remark-gfm')).default)
+    .use((await import('remark-emoji')).default)
+    .use((await import('remark-code-title')).default)
+    .use((await import('remark-rehype')).default)
+    .use((await import('rehype-stringify')).default)
     .process(markdownText)
   return String(file)
 }

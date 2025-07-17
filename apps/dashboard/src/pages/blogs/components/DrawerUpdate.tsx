@@ -2,12 +2,11 @@ import type { FormProps } from 'antd'
 import type { TUseDrawerUpdateReturnType } from '../hooks/useDrawerUpdate'
 import type { Blog } from '~/fetchers'
 import { Button, Col, Drawer, Form, Input, Row, Switch } from 'antd'
+import { Markdown } from 'markdown'
 import { useMemo } from 'react'
-
 import { stringCapitalization } from 'utils'
 
 import { Container } from '~/components/Container'
-import { Markdown } from '~/components/Markdown'
 import { useAppStore } from '~/stores/useAppStore'
 import { Tags } from './Tags'
 

@@ -5,7 +5,9 @@
     "**/dist": true
   },
   "tailwindCSS.experimental.configFile": {
-    "apps/dashboard/src/styles/app.css": "apps/dashboard/src/**"
+    "apps/dashboard/src/styles/app.css": "apps/dashboard/src/**",
+    "apps/frontend/app/tailwind.css": "apps/frontend/app/**",
+    "packages/markdown/src/Markdown.css": "packages/markdown/src/Markdown.css"
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

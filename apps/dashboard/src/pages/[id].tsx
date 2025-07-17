@@ -1,8 +1,8 @@
 import { useRequest } from 'ahooks'
 import { Spin } from 'antd'
+import { Markdown } from 'markdown'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { Markdown } from '~/components/Markdown'
 
 import * as fetchers from '~/fetchers'
 

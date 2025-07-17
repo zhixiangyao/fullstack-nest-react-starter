@@ -1,8 +1,7 @@
 import type { Dispatch } from 'react'
 import { useMemoizedFn } from 'ahooks'
 import { Button, Modal } from 'antd'
-
-import { Markdown } from '~/components/Markdown'
+import { Markdown } from 'markdown'
 
 const content = `
 [project]: https://github.com/zhixiangyao/fullstack-nest-react-starter
