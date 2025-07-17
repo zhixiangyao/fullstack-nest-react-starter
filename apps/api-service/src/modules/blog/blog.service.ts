@@ -29,7 +29,8 @@ interface BlogUpdateParams {
 
 interface BlogFindParams {
   uuid?: User['uuid']
-  id: Blog['id']
+  id?: Blog['id']
+  slug?: Blog['slug']
 }
 
 interface BlogFindAllParams {
@@ -97,6 +98,7 @@ export class BlogService {
       where: {
         author: { uuid: params.uuid },
         id: params.id,
+        slug: params.slug,
       },
     })
 

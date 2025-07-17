@@ -56,8 +56,12 @@ export class BlogRemoveDto {
 
 export class BlogFindDto {
   @IsInt()
-  @IsNotEmpty()
-  readonly id: Blog['id']
+  @IsOptional()
+  readonly id?: Blog['id']
+
+  @IsString()
+  @IsOptional()
+  readonly slug?: Blog['slug']
 }
 
 export class BlogFindAllDto {
