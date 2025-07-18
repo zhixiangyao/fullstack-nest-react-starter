@@ -5,7 +5,7 @@
   "author": "zhixiangyao <blueskyzx@icloud.com> <https://github.com/zhixiangyao>",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "tsc --noEmit -p tsconfig.app.json && vite build"
   },
   "dependencies": {
     "@ant-design/icons": "6.0.0",
