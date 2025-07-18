@@ -1,11 +1,5 @@
 import type { LinksFunction } from '@remix-run/node'
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from '@remix-run/react'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
 
 import './tailwind.css'
 
@@ -35,6 +29,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                const setting = localStorage.getItem('color-schema') || 'auto'
+                if (setting === 'dark' || (prefersDark && setting !== 'light'))
+                  document.documentElement.classList.toggle('dark', true)
+              })()
+            `,
+          }}
+        />
       </body>
     </html>
   )

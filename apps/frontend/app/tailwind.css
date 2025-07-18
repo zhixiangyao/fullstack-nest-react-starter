@@ -4,9 +4,12 @@
 
 html,
 body {
-  @apply bg-white text-gray-950 dark:bg-gray-950 dark:text-white;
+  @apply m-0 min-h-full min-w-full;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  @apply bg-white text-gray-950 dark:bg-[#14110f] dark:text-white;
 }

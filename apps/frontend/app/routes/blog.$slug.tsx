@@ -21,10 +21,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function Blog() {
   const blog = useLoaderData<typeof loader>()
   return (
-    <div className="min-h-full min-w-full flex flex-col items-center overflow-y-auto px-4">
-      <div>{blog?.title}</div>
-
-      <Markdown className="max-w-[1280px] w-full" html={blog?.html} />
+    <div className="pt-8">
+      <div className="max-w-168 mx-auto px-4 lg:px-0">
+        <Markdown className="max-w-[1280px] w-full" html={blog?.html} />
+      </div>
     </div>
   )
 }

@@ -265,6 +265,9 @@ importers:
       remark-parse:
         specifier: 11.0.0
         version: 11.0.0
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
     devDependencies:
       '@remix-run/dev':
         specifier: 2.16.8
