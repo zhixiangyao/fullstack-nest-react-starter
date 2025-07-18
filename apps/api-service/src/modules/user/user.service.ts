@@ -1,4 +1,4 @@
-import type { Prisma, User } from '@prisma/client'
+import type { Prisma, User } from 'database'
 import type { ResponseFind, ResponseFindAll } from './user.type'
 import { ForbiddenException, Injectable } from '@nestjs/common'
 import { deleteProperty } from 'utils'

@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { User } from 'database'
 import type { JwtSignPayload } from './auth.type'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'

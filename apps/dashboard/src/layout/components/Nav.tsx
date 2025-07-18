@@ -42,7 +42,7 @@ function Nav() {
           'absolute bottom-20 w-full text-center opacity-20 transition-all duration-[0.2s] ease-[ease]',
         )}
       >
-        {stringCapitalization(import.meta.env.VITE_APP_NODE_ENV.slice(0, 3))}
+        {stringCapitalization(import.meta.env.MODE)?.slice(0, 3)}
       </div>
 
       <Menu

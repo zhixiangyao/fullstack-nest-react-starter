@@ -1,4 +1,4 @@
-import type { Blog, User } from '@prisma/client'
+import type { Blog, User } from 'database'
 
 export interface ResponseCreate {
   message: string

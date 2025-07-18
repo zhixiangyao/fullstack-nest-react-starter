@@ -6,17 +6,6 @@
 
 ## Usage
 
-### Installation
-
-- Prisma
-
-```bash
-# if it is running for the first time, pls run
-pnpm db:init
-# generator seed
-pnpm db:seed
-```
-
 ### Development
 
 click it http://localhost:5088

@@ -1,4 +1,4 @@
-import type { Blog, Prisma, User } from '@prisma/client'
+import type { Blog, Prisma, User } from 'database'
 import type { ResponseFind, ResponseFindAll, ResponseFindAllTags } from './blog.type'
 import { Injectable } from '@nestjs/common'
 

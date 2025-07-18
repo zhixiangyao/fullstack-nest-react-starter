@@ -10,6 +10,6 @@ async function sleep(time: number): Promise<void> {
 }
 
 export async function sleepMiddleware(req: Request, res: Response, next: NextFunction) {
-  await sleep(400)
+  await sleep(50)
   next()
 }

@@ -1,4 +1,4 @@
-import type { Role, User } from '@prisma/client'
+import type { Role, User } from 'database'
 
 type UserWithoutPassword = Omit<User, 'hashedPassword'>
 

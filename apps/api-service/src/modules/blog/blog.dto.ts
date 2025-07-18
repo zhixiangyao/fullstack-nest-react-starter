@@ -1,4 +1,4 @@
-import { Blog } from '@prisma/client'
+import type { Blog } from 'database'
 import { IsArray, IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class BlogCreateDto {

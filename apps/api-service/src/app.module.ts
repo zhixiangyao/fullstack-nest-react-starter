@@ -1,5 +1,4 @@
 import type { MiddlewareConsumer, ModuleMetadata, NestModule } from '@nestjs/common'
-import process from 'node:process'
 import { Module, RequestMethod } from '@nestjs/common'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'
@@ -12,13 +11,15 @@ import { AuthModule } from '~/modules/auth/auth.module'
 import { DashboardStaticModule } from '~/modules/dashboard-static.module'
 import { PrismaModule } from '~/modules/prisma/prisma.module'
 import { UserModule } from '~/modules/user/user.module'
+
+import { AUTH_SECRET, isDev } from './config'
 import { BlogModule } from './modules/blog/blog.module'
 import { RoleModule } from './modules/role/role.module'
 
 const imports: ModuleMetadata['imports'] = [
   JwtModule.register({
     global: true,
-    secret: process.env.AUTH_SECRET,
+    secret: AUTH_SECRET,
     // https://github.com/vercel/ms
     signOptions: { expiresIn: '3d' },
   }),
@@ -30,7 +31,7 @@ const imports: ModuleMetadata['imports'] = [
 ]
 
 // Directly use DashboardStaticModule to provide packaged static.
-if (process.env.NODE_ENV !== 'dev') {
+if (!isDev) {
   imports.push(DashboardStaticModule.forRoot())
 }
 
