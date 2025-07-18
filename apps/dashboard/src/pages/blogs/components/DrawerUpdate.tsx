@@ -57,7 +57,7 @@ function DrawerUpdate(props: Props) {
       )}
       onClose={handleClose}
     >
-      <Form<Blog>
+      <Form<Partial<Blog>>
         {...formItemLayout}
         name="blog-update"
         autoComplete="off"
