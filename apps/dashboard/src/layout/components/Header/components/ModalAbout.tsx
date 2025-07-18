@@ -21,6 +21,7 @@ const content = `
 [tailwindcss]: https://github.com/tailwindlabs/tailwindcss
 [react-router]: https://github.com/remix-run/react-router
 [postgres]: https://github.com/postgres/postgres
+[remix]: https://remix.run
 
 - [Github: fullstack-nest-react-starter][project]
 - [Author: zhixiangyao][zhixiangyao]
@@ -30,6 +31,7 @@ const content = `
 | Common | [\`Dayjs\`][dayjs] / [\`TypeScript\`][ts] |
 | Api Service | [\`Nestjs\`][nestjs] / [\`Prisma\`][prisma] / [\`PostgreSQL\`][postgres] / [\`Rxjs\`][rxjs] |
 | Dashboard | [\`React\`][react] / [\`React Router\`][react-router] / [\`React Flow\`][xyflow] / [\`Zustand\`][zustand] / [\`Antd\`][antd] / [\`Ahooks\`][ahooks] / [\`Remark\`][remark] / [\`Tailwindcss\`][tailwindcss] / [\`Vite\`][vite] |
+| Frontend | [\`Remix\`][remix] / [\`React\`][react] / [\`Remark\`][remark] / [\`Tailwindcss\`][tailwindcss] / [\`Vite\`][vite] |
 `
 
 interface Props {
