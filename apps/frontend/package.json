@@ -13,6 +13,7 @@
     "@remix-run/react": "2.16.8",
     "@remix-run/serve": "2.16.8",
     "cross-env": "7.0.3",
+    "database": "workspace:*",
     "isbot": "4.4.0",
     "markdown": "workspace:*",
     "react": "18.3.1",

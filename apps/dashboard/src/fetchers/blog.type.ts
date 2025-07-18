@@ -1,25 +1,10 @@
-export interface Blog {
-  id: number
-  title: string
-  content: string
-  slug: string
-  published: boolean
-  views: number
-  createdAt: Date
-  updatedAt: Date
-  authorUuid: string
+import type { Blog as _Blog } from 'database'
+
+export interface Blog extends _Blog {
   authorName: string
-  imageUrl: string | null
-  tags: string[]
-  category: string | null
 }
 
-export interface BlogCreateRequest {
-  title: Blog['title']
-  content: Blog['content']
-  slug: Blog['slug']
-  published: Blog['published']
-  tags: Blog['tags']
+export interface BlogCreateRequest extends Pick<Blog, 'title' | 'content' | 'slug' | 'published' | 'tags'> {
   imageUrl?: Blog['imageUrl']
   category?: Blog['category']
 }

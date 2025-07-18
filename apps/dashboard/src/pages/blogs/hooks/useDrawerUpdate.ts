@@ -4,8 +4,8 @@ import { useMemoizedFn } from 'ahooks'
 import { App as AntdApp, Form } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-
 import { isValidHttpUrl, stringCapitalization } from 'utils'
+
 import * as fetchers from '~/fetchers'
 
 type TType = 'add' | 'edit' | 'copy'
@@ -31,7 +31,7 @@ function useDrawerUpdate() {
   const navigate = useNavigate()
   const { message } = AntdApp.useApp()
   const [type, setType] = useState<TType>('add')
-  const [form] = Form.useForm<Blog>()
+  const [form] = Form.useForm<Partial<Blog>>()
   const [blog, setBlog] = useState<Blog>()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -102,16 +102,16 @@ function useDrawerUpdate() {
     setOpen(false)
   })
 
-  const handleFinish = useMemoizedFn(async (values: Blog, cb: () => void) => {
+  const handleFinish = useMemoizedFn(async (values: Partial<Blog>, cb: () => void) => {
     try {
       setLoadingConfirm(true)
       if (['add', 'copy'].includes(type)) {
         await fetchers.blogCreate({
-          title: values.title,
-          content: values.content,
-          slug: values.slug,
-          published: values.published,
-          tags: values.tags,
+          title: values.title!,
+          content: values.content!,
+          slug: values.slug!,
+          published: values.published!,
+          tags: values.tags!,
           imageUrl: values.imageUrl,
           category: values.category,
         })
@@ -119,11 +119,11 @@ function useDrawerUpdate() {
       if (type === 'edit' && typeof blog?.id === 'number') {
         await fetchers.blogUpdate({
           id: blog.id,
-          title: values.title,
-          content: values.content,
-          slug: values.slug,
-          published: values.published,
-          tags: values.tags,
+          title: values.title!,
+          content: values.content!,
+          slug: values.slug!,
+          published: values.published!,
+          tags: values.tags!,
           imageUrl: values.imageUrl,
           category: values.category,
         })

@@ -1,15 +1,5 @@
-export interface Blog {
-  id: number
-  title: string
-  content: string
-  slug: string
-  published: boolean
-  views: number
-  createdAt: Date
-  updatedAt: Date
-  authorUuid: string
+import type { Blog as _Blog } from 'database'
+
+export interface Blog extends _Blog {
   authorName: string
-  imageUrl: string | null
-  tags: string[]
-  category: string | null
 }

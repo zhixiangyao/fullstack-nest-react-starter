@@ -1,15 +1,8 @@
+import type { User as _User } from 'database'
 import type { Role } from './role.type'
 
-export interface User {
-  uuid: string
-  username: string
+export interface User extends Omit<_User, 'hashedPassword'> {
   roles: Omit<Role, 'users'>[]
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
-  lastLogin: Date | null
-  email: string | null
-  avatar: string | null
   blogsTotal: number
 }
 

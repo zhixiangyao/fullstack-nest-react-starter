@@ -1,8 +1,7 @@
+import type { Role as _Role } from 'database'
 import type { User } from './user.type'
 
-export interface Role {
-  id: number
-  name: string
+export interface Role extends _Role {
   users: Omit<User, 'roles'>[]
 }
 

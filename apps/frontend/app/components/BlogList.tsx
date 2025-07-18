@@ -1,4 +1,4 @@
-import type { Blog } from '~/types' // Assuming '~/types' correctly exports your Blog interface
+import type { Blog } from '~/types'
 import { Link } from '@remix-run/react'
 
 function BLogList({ list }: { list: Blog[] }) {
