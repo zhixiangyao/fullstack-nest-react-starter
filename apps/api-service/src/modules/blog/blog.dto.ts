@@ -1,4 +1,4 @@
-import type { Blog } from 'database'
+import type { Blog, User } from 'database'
 import { IsArray, IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class BlogCreateDto {
@@ -65,6 +65,10 @@ export class BlogFindDto {
 }
 
 export class BlogFindAllDto {
+  @IsString()
+  @IsOptional()
+  readonly uuid?: User['uuid']
+
   @IsString()
   @IsOptional()
   readonly title?: Blog['title']

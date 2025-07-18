@@ -77,10 +77,15 @@ export class UserController {
     return { message: 'Remove successful!' }
   }
 
+  @Public()
   @Post('find')
   @Header('content-type', 'application/json')
-  async find(@Body() body: UserFindDto, @User() user: Request['user']): Promise<ResponseFind> {
-    const username = body.username ?? user.username
+  async find(@Body() body: UserFindDto, @User('username') _username?: string): Promise<ResponseFind> {
+    const username = body.username ?? _username
+
+    if (!username) {
+      throw new HttpException('Must provide username!', HttpStatus.BAD_REQUEST)
+    }
 
     const _user = await this.userService.find(username)
     const userWithoutPassword = deleteProperty(_user, 'hashedPassword')

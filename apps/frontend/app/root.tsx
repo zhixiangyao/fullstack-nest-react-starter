@@ -10,15 +10,11 @@ export const links: LinksFunction = () => [
     href: 'https://fonts.gstatic.com',
     crossOrigin: 'anonymous',
   },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
-  },
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,18 +25,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-                const setting = localStorage.getItem('color-schema') || 'auto'
-                if (setting === 'dark' || (prefersDark && setting !== 'light'))
-                  document.documentElement.classList.toggle('dark', true)
-              })()
-            `,
-          }}
-        />
       </body>
     </html>
   )

@@ -23,7 +23,8 @@ export class BlogController {
   @Post('create')
   @Header('content-type', 'application/json')
   async create(@Body() body: BlogCreateDto, @User() user: Request['user']): Promise<ResponseCreate> {
-    await this.blogService.create({ ...body, uuid: user.uuid })
+    const uuid = user.uuid
+    await this.blogService.create({ ...body, uuid })
 
     return { message: 'Create successful!' }
   }
@@ -31,7 +32,8 @@ export class BlogController {
   @Post('switch')
   @Header('content-type', 'application/json')
   async switch(@Body() body: BlogSwitchDto, @User() user: Request['user']): Promise<ResponseSwitch> {
-    await this.blogService.update({ ...body, uuid: user.uuid })
+    const uuid = user.uuid
+    await this.blogService.update({ ...body, uuid })
 
     return { message: 'Update successful!' }
   }
@@ -39,7 +41,8 @@ export class BlogController {
   @Post('update')
   @Header('content-type', 'application/json')
   async update(@Body() body: BlogUpdateDto, @User() user: Request['user']): Promise<ResponseUpdate> {
-    await this.blogService.update({ ...body, uuid: user.uuid })
+    const uuid = user.uuid
+    await this.blogService.update({ ...body, uuid })
 
     return { message: 'Update successful!' }
   }
@@ -56,7 +59,8 @@ export class BlogController {
   @Post('find')
   @Header('content-type', 'application/json')
   async find(@Body() body: BlogFindDto, @User() user: Request['user']): Promise<ResponseFind> {
-    const blog = await this.blogService.find({ ...body, uuid: user.uuid })
+    const uuid = user.uuid
+    const blog = await this.blogService.find({ ...body, uuid })
 
     return { data: { blog } }
   }
@@ -65,7 +69,8 @@ export class BlogController {
   @Post('find-all')
   @Header('Content-Type', 'application/json')
   async findAll(@Body() body: BlogFindAllDto, @User() user: Request['user']): Promise<ResponseFindAll> {
-    const data = await this.blogService.findAll({ ...body, uuid: user.uuid })
+    const uuid = body.uuid ?? user.uuid
+    const data = await this.blogService.findAll({ ...body, uuid })
 
     return { data }
   }
@@ -74,7 +79,8 @@ export class BlogController {
   @Post('find-all-tags')
   @Header('Content-Type', 'application/json')
   async findAllTags(@User() user: Request['user']): Promise<ResponseFindAllTags> {
-    const data = await this.blogService.findAllTags({ uuid: user.uuid })
+    const uuid = user.uuid
+    const data = await this.blogService.findAllTags({ uuid })
 
     return { data }
   }
