@@ -1,9 +1,10 @@
+import type { ConfigEnv, UserConfig } from 'vite'
+import { resolve } from 'node:path'
 import { vitePlugin as remix } from '@remix-run/dev'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
+const baseConfig: UserConfig = {
   plugins: [
     remix({
       future: {
@@ -14,7 +15,21 @@ export default defineConfig({
         v3_lazyRouteDiscovery: true,
       },
     }),
-    tsconfigPaths(),
     tailwindcss(),
   ],
-})
+  resolve: {
+    alias: [{ find: '~', replacement: resolve(__dirname, './app') }],
+  },
+}
+
+export default ({ command }: ConfigEnv) => {
+  if (command === 'serve') {
+    return defineConfig(baseConfig)
+  }
+  else {
+    return defineConfig({
+      ...baseConfig,
+      logLevel: 'error',
+    })
+  }
+}
