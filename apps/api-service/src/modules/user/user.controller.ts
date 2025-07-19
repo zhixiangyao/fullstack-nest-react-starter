@@ -88,6 +88,11 @@ export class UserController {
     }
 
     const _user = await this.userService.find(username)
+
+    if (!_user) {
+      throw new HttpException('No such user found!', HttpStatus.BAD_REQUEST)
+    }
+
     const userWithoutPassword = deleteProperty(_user, 'hashedPassword')
 
     return { data: { user: userWithoutPassword } }
