@@ -36,7 +36,7 @@
     "@vitejs/plugin-react": "4.6.0",
     "tailwindcss": "4.1.11",
     "typescript": "5.8.3",
-    "vite": "npm:rolldown-vite@latest",
+    "vite": "7.0.5",
     "vite-plugin-checker": "0.10.0",
     "vite-plugin-compression": "0.5.1"
   }
